@@ -1,13 +1,18 @@
 {
-  "name": "dimeshift.js",
-  "version": "1.0.0",
+  "name": "dimeshift",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "node_modules/.bin/mocha test"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/jeka-kiselyov/dimeshift.git"
+  },
   "author": "Jeka Kiselyov <jeka911@gmail.com> (http://www.jeka911.com/)",
-  "license": "ISC",
+  "license": "AGPL-3.0",
   "dependencies": {
     "assert-plus": "^0.1.5",
     "async": "^1.4.2",

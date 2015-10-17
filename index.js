@@ -58,8 +58,7 @@ server.get(/\/vendors\/?.*/, restify.serveStatic({
 
 db.sequelize.sync()
 .then(function(err) {
-    // Listening in 8080 Port
-	
-	server.listen(process.env.PORT);
-	console.log("Server started: http://localhost:"+process.env.PORT+"/");
+    var port = process.env.PORT || 8080;
+	server.listen(port);
+	console.log("Server started: http://localhost:"+port+"/");
 });
