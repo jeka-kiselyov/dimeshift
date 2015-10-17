@@ -1,0 +1,45 @@
+#wrap {
+	background-color: #F8F8F8;
+}
+
+.row.no-gutter {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.row.no-gutter [class*='col-']:not(:first-child),
+.row.no-gutter [class*='col-']:not(:last-child) {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.hideme {
+	display: none;
+}
+
+.disable-selection {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.disable-selection a:hover {
+	outline: 0;
+}
+
+.navbar-default {
+	  -webkit-box-shadow: none;
+	  box-shadow: none;
+	  background-image: none;
+}
+
+.btn-danger, .btn-default, .btn-info, .btn-primary, .btn-success, .btn-warning {
+	text-shadow: none;
+}
+
+.modal-footer {
+	border-top: 0;
+}

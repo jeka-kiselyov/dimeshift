@@ -1,0 +1,60 @@
+
+.dialog_signin {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+
+
+.dialog_signin_container input[type="password"],
+.dialog_signin_container input[type="text"] {
+	width: 355px;
+	height: 25px;
+}
+
+.dialog_signin_container h3, .dialog_signin_container h4 {
+	cursor: default;
+}
+
+.dialog_signin_container .alert{
+	position: absolute;
+	z-index: 9999999;
+	width: 318px;
+	display: none;
+	margin-top: -5px;
+}
+
+.dialog_signin_container .modal-social {
+	background: white;
+}
+
+.dialog_signin_container .modal-forget-password {
+	float: right;
+	padding: 5px 2px 3px 0;
+}
+
+.dialog_signin_container .modal-link-to-registration {
+}
+
+.modal-link-to-registration a {
+	color: white;
+	display: block;
+	text-align: center;
+}
+
+.social_button_icon {
+	float: left;
+	width: 30px; 
+	text-align: center; 
+	font-weight: bold;
+	display: block;
+	border-right: 1px solid #ccc;
+	height: 24px;
+	margin-top: -3px;
+	padding-top: 3px;
+	overflow: hidden;
+}

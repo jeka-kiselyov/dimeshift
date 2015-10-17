@@ -1,0 +1,64 @@
+{
+	"javascript": {
+		"type": "javascript",
+		"cache": {
+			"cache": "tmp/min/javascript.min",
+			"gzip": "tmp/min/javascript.min.gz",
+			"raw": "tmp/min/javascript.raw"
+		},
+		"minify": false,
+		"files": [
+			"./public/vendors/jquery/jquery.min.js",
+			"./public/vendors/bootstrap/js/modal.js",
+			"./public/vendors/bootstrap/js/button.js",
+			"./public/vendors/bootstrap/js/collapse.js",
+			"./public/vendors/underscore/underscore-min.js",
+			"./public/vendors/backbone/backbone.js",
+			"./public/vendors/backbone.paginator/lib/backbone.paginator.min.js",
+			"./public/vendors/bootstrap-clickonmouseover/bootstrap.clickonmouseover.js",
+			"./public/vendors/magnific-popup/dist/jquery.magnific-popup.min.js",
+			"./public/vendors/mprogress/build/js/mprogress.min.js",
+			"./public/vendors/chartist/dist/chartist.js",
+			"./public/vendors/jsmart/jsmart.js",
+			"./public/scripts/functions.js",
+			"./public/scripts/app.js",
+			"./public/scripts/app/view_stack.js",
+			"./public/scripts/app/settings.js",
+			"./public/scripts/app/local_storage.js",
+			"./public/scripts/app/template_manager.js",
+			"./public/scripts/app/i18n.js",
+
+			"./public/scripts/app/abstract/",
+			"./public/scripts/app/models/",
+			"./public/scripts/app/collections/",
+
+			"./public/scripts/app/views/dialogs/",
+			"./public/scripts/app/views/widgets/",
+			"./public/scripts/app/views/parts/",
+			"./public/scripts/app/views/pages/",
+			"./public/scripts/app/views/charts/",
+
+			"./public/scripts/app/views/header.js",
+
+			"./public/scripts/app/log.js",
+			"./public/scripts/app/router.js",
+			"./public/scripts/setup.js"
+		]
+	},
+	"css": {
+		"type": "css",
+		"cache": {
+			"cache": "tmp/min/css.min",
+			"gzip": "tmp/min/css.min.gz",
+			"raw": "tmp/min/css.raw"
+		},
+		"minify": true,
+		"files": [
+			"./public/vendors/mprogress/build/css/mprogress.css",
+			"./public/vendors/magnific-popup/dist/magnific-popup.css",
+			"./public/vendors/chartist/dist/chartist.min.css",
+			"./public/vendors/bootstrap/dist/css/bootstrap.min.css",
+			"./public/css/main.css"
+		]
+	}
+}

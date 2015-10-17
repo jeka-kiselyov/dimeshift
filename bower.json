@@ -1,0 +1,27 @@
+{
+  "name": "DimeShift",
+  "version": "0.0.1",
+  "authors": [
+    "jeka911 <jeka911@gmail.com>"
+  ],
+  "description": "",
+  "main": "app/public/scripts/app.js",
+  "moduleType": [
+    "globals"
+  ],
+  "dependencies": {
+    "jquery": "1.10.2",
+    "jasmine": "https://github.com/pivotal/jasmine/releases/download/v2.0.2/jasmine-standalone-2.0.2.zip",
+    "jasmine-ajax": "https://raw.githubusercontent.com/pivotal/jasmine-ajax/master/lib/mock-ajax.js",
+    "jsmart": "2.13.1",
+    "backbone": "1.0.0",
+    "backbone.paginator": "https://github.com/backbone-paginator/backbone.paginator/archive/2.0.2.zip",
+    "underscore": "1.7.0",
+    "ckeditor": "4.4.4",
+    "bootstrap": "3.3.4",
+    "magnific-popup": "*",
+    "chartist": "*",
+    "bootstrap-clickonmouseover": "https://github.com/jeka-kiselyov/bootstrap-clickonmouseover/archive/master.zip",
+    "mprogress": "https://github.com/lightningtgc/MProgress.js/archive/master.zip"
+  }
+}

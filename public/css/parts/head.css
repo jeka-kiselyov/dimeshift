@@ -1,0 +1,144 @@
+.navbar-inverse {
+	border-radius: 0;
+	background: white;
+	border-bottom: 1px solid #DDDDDD;
+	min-height: 45px;
+	overflow: hidden;
+	padding-top: 0px;
+	margin-bottom: 0;
+}
+
+.btn-logo {
+	border-radius: 0;
+}
+
+.navbar-inverse *:focus {
+	outline: 0;
+}
+
+@media (max-width: 767px) {
+	.navbar-inverse {
+		background: rgba(255,255,255,.9);
+	}
+	.navbar-toggle {
+		margin-top: 7px;
+		border-color: #31B0D5;
+		margin-bottom: 0;
+	}
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+	background-color: #31B0D5;
+}
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+	background-color: #EEEEEE;
+}
+
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-nav > .open ul > a {
+	color: rgba(0, 0, 0, .7);
+	padding-bottom: 0;
+	padding-top: 0;
+	line-height: 45px;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+	color: rgba(0, 0, 0, 1);
+	background: none;
+	padding-bottom: 0;
+}
+
+.navbar-inverse .navbar-nav > .open > a {
+	background: none;
+	color: rgba(0, 0, 0, 1);
+}
+
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+	background: none;
+	color: rgba(0, 0, 0, 1);
+}
+
+.navbar-inverse .navbar-nav > .active > a {
+	background: none;
+	color: rgba(0, 0, 0, 1);
+}
+
+.navbar-inverse .navbar-brand img {
+	margin-top: -20px;
+	height: 60px;
+}
+
+.navbar-nav .dropdown-menu {
+	left: -5px;
+	font-size:  13px;
+	background-color: rgba(0, 0, 0, .7);
+	border: 0px none;
+	-webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+
+.navbar-nav .dropdown-menu > li > a {
+	color: rgba(0, 0, 0, .7);
+	padding: 7px 20px;
+}
+
+.navbar-nav .dropdown-menu > li > a:hover, .navbar-nav .dropdown-menu > li > a:focus, .navbar-nav .dropdown-menu > .active > a:hover {
+	background: rgba(0, 0, 0, .1);
+	color: white;
+}
+
+.navbar-nav .dropdown-menu > .active > a, .navbar-nav .dropdown-menu > .active > a:focus {
+	background: none;
+	color: #fff;
+}
+
+.navbar-nav .btn {
+	border: 0;
+	margin: 10px 0 0 10px;
+	border-radius: 5px;
+	padding: 5px;
+	box-shadow: none;
+}
+
+.navbar-nav a.btn:focus, .navbar-nav a.btn:hover {
+	border: 0;
+	box-shadow: none;
+}
+
+.navbar-collapse {
+	border: 0 none;
+	border-top: 0 none;
+	box-shadow: none;
+}
+
+@media (max-width: 767px) {
+	.navbar-collapse ul {
+		text-align: center;
+		width: 100%;
+		padding-bottom: 10px;
+	}
+
+	.navbar-collapse ul .btn{
+		max-width: 50%;
+		margin:0 auto;
+	}
+}
+
+.navbar-static-top, .navbar-fixed-top, .navbar-fixed-bottom {
+	border-radius: 0;
+}
+
+.slideUp {
+	top: -45px;
+}
+
+.headroom {
+	-webkit-transition: all 0.4s ease-out;
+	-moz-transition: all 0.4s ease-out;
+	-o-transition: all 0.4s ease-out;
+	transition: all 0.4s ease-out;
+}
+
+#container {
+	padding-top: 55px;
+}

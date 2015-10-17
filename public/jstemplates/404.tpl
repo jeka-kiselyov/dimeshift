@@ -1,0 +1,1 @@
+<h1>{t}Nothing is found{/t}</h1>

@@ -1,0 +1,54 @@
+.wallet_total {
+	font-size: 24px;
+}
+
+a.action {
+	border-bottom: 1px dashed #2a6496;
+	text-decoration: none;
+}
+
+a.action:hover {
+	border-bottom: 1px dashed #2a6496;
+	text-decoration: none;
+}
+
+.transaction_amount {
+	text-align: right;
+}
+
+.transaction_time {
+	font-size: 12px;
+	width: 170px;
+	overflow: hidden;
+}
+
+.transaction_time_date {
+	float: left;
+	width: 100px;
+	overflow: hidden;
+	font-weight: bold;
+	margin-bottom: 5px;
+	line-height: 1.1;
+}
+
+.transaction_time_time {
+	float: left;
+	width: 70px;
+	overflow: hidden;
+	font-weight: bold;
+	margin-bottom: 5px;
+	line-height: 1.1;
+}
+
+#add_transaction_amount {
+	margin-top: 3px;
+}
+
+.wallet_item {
+
+}
+
+.wallet_item .wallet_buttons {
+	float: right;
+	margin-right: 10px;
+}

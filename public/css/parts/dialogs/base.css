@@ -1,0 +1,5 @@
+.modal-loading {
+	height: 100px;
+	text-indent: -9999px;
+	background: white url('/images/loading.gif') center center no-repeat;	
+}

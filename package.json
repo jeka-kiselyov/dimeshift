@@ -1,0 +1,41 @@
+{
+  "name": "dimeshift.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha test"
+  },
+  "author": "Jeka Kiselyov <jeka911@gmail.com> (http://www.jeka911.com/)",
+  "license": "ISC",
+  "dependencies": {
+    "assert-plus": "^0.1.5",
+    "async": "^1.4.2",
+    "clean-css": "^3.4.5",
+    "cookie": "^0.2.2",
+    "cookies": "^0.5.1",
+    "dotenv": "^1.2.0",
+    "escape-regexp-component": "^1.0.2",
+    "mime": "^1.3.4",
+    "mysql": "^2.9.0",
+    "restify": "^4.0.3",
+    "restify-cookies": "^0.1.2",
+    "rfr": "^1.2.2",
+    "sequelize": "^3.10.0",
+    "sequelize-cli": "^1.9.1",
+    "sqlite3": "^3.1.0",
+    "uglify-js": "^2.4.24"
+  },
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^2.0.3",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-cli": "^1.14.0",
+    "grunt-node-inspector": "^0.4.1",
+    "grunt-nodemon": "^0.4.0",
+    "hippie": "^0.4.0",
+    "mocha": "^2.3.3",
+    "open": "0.0.5"
+  }
+}

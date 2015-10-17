@@ -1,0 +1,156 @@
+* {
+	margin: 0;
+}
+html, body {
+	height: 100%;
+}
+.wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -30px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+	height: 30px; /* .push must be the same height as .footer */
+}
+
+.hidden {
+	display: none;
+}
+
+.navbar-header {
+	float: none !important;
+}
+
+.navbar-toggle-admin {
+	position: relative;
+	float: right;
+	margin-right: 15px;
+	padding: 9px 10px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	background-color: transparent;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	border-color: #ddd;
+}
+.navbar-toggle-admin .icon-bar {
+	display: block;
+	width: 22px;
+	height: 2px;
+	border-radius: 1px;
+	background: #888;
+	margin-top: 4px;
+}
+
+@media (min-width: 992px) {
+	.navbar-toggle-admin {
+		visibility: hidden;
+	}
+	#admin_panel_menu {
+		visibility: visible;
+		display: block;
+	}
+}
+
+.breadcrumb {
+	margin-top: 5px;
+}
+
+.form-horizontal .control-group {
+margin-bottom: 8px;
+}
+
+
+.filter {
+ margin-top: -53px;
+	margin-right: 3px;
+	height: 32px;
+	overflow: hidden;
+	text-align: right;
+}
+
+.filter_pagination {
+	float: right;
+	margin-top: -5px;
+}
+
+.filter_pagination_container {
+	position: absolute; 
+	z-index: 999; 
+	width: 300px; 
+	right: 300px; 
+}
+
+.panel-table {
+	margin-top: 10px;
+	margin-right: 1px;
+}
+
+.table thead th {
+	cursor: pointer;
+}
+
+.table thead th:hover {
+	background: #f0f0f0;
+}
+
+.table {
+ margin: 0px;
+ overflow: hidden;
+}
+
+.th_ordered {
+ background: #ddd;
+}
+
+.th_asc {
+
+}
+
+.pagination {
+	height: auto;
+	margin: 5px 0px 10px 5px;
+}
+
+.pagination-mini ul > li > a,
+.pagination-mini   ul > li > span {
+	padding: 1px 6px 1px 6px;
+	font-size: 12px;
+	line-height: 17px;
+}
+
+
+.menu_childs {
+	font-size: 80%;
+	line-height: 35px;
+}
+
+.list-group-item-child {
+	padding: 0;
+}
+
+.list-group-item-child-a {
+	padding-left: 20px;
+}
+
+.additional_menu_item {
+	padding-right: 10px;
+}
+
+.list-group-item-no-radius {
+	border-top-right-radius: 0 !important;
+	border-top-left-radius: 0 !important;
+}
+
+.menu_childs a {
+	display: block;
+}
+
+
+
+.cke_toolbar {
+	height: 27px !important;
+	overflow: hidden;
+}

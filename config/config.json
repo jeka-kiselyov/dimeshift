@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "walletjs",
+    "host": "127.0.0.1",
+    "dialect": "sqlite",
+	"storage": "tmp/database.sqlite"
+  }
+}
