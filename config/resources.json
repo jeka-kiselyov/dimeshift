@@ -2,9 +2,9 @@
 	"javascript": {
 		"type": "javascript",
 		"cache": {
-			"cache": "tmp/min/javascript.min",
-			"gzip": "tmp/min/javascript.min.gz",
-			"raw": "tmp/min/javascript.raw"
+			"cache": "data/min/javascript.min",
+			"gzip": "data/min/javascript.min.gz",
+			"raw": "data/min/javascript.raw"
 		},
 		"minify": false,
 		"files": [
@@ -48,9 +48,9 @@
 	"css": {
 		"type": "css",
 		"cache": {
-			"cache": "tmp/min/css.min",
-			"gzip": "tmp/min/css.min.gz",
-			"raw": "tmp/min/css.raw"
+			"cache": "data/min/css.min",
+			"gzip": "data/min/css.min.gz",
+			"raw": "data/min/css.raw"
 		},
 		"minify": true,
 		"files": [
