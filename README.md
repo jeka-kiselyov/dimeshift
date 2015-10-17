@@ -27,11 +27,11 @@ Open [localhost:8080](http://localhost:8080) in your browser.
 
 Screenshots:
 ----
-![Dimeshift transactions](https://github.com/jeka-kiselyov/dimeshift/blob/master/public/images/homepage/screenshots/transactions.jpg)
+![Dimeshift transactions](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/transactions.jpg)
 
-![Dimeshift wallets](https://github.com/jeka-kiselyov/dimeshift/blob/master/public/images/homepage/screenshots/wallets.jpg)
+![Dimeshift wallets](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/wallets.jpg)
 
-![Dimeshift i18n](https://github.com/jeka-kiselyov/dimeshift/blob/master/public/images/homepage/screenshots/i18n.jpg)
+![Dimeshift i18n](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/i18n.jpg)
 
 License
 ----
