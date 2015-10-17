@@ -1,5 +1,5 @@
 var rfr = require('rfr');
-var db = rfr('models');
+var db = rfr('includes/models');
 var errors = rfr('includes/errors.js');
 
 exports.route = '/api/users/:user_id';

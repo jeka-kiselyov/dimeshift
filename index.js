@@ -1,8 +1,9 @@
 var CookieParser = require('restify-cookies');
 var restify = require('restify');
-var db = require('./models');
-var routes = require('./routes');
-var servers = require('./includes/servers');
+var rfr = require('rfr');
+var db = rfr('includes/models');
+var routes = rfr('includes/routes');
+var servers = rfr('includes/servers');
 
 var server = restify.createServer({
   name: 'DimeShift',

@@ -1,9 +1,9 @@
 var rfr = require('rfr');
-var db = rfr('models');
+var db = rfr('includes/models');
 var errors = rfr('includes/errors.js');
 
-exports.route = '/api/wallets/:wallet_id/transactions';
-exports.method = 'post';
+exports.route = '/api/wallets/:wallet_id/transactions/:transaction_id';
+exports.method = 'del';
 
 exports.handler = function(req, res, next){
 
@@ -12,11 +12,8 @@ exports.handler = function(req, res, next){
 	var cookies = req.cookies;
 	var auth_code = cookies.logged_in_user || '';
 
-    var body = req.body || {};
-	var wallet_id = parseInt(body.wallet_id, 10) || 0;
-	var amount = parseFloat(body.amount, 10) || 0;
-	var description = body.description || '';
-	var subtype = body.subtype || 'confirmed';
+	var wallet_id = parseInt(req.params.wallet_id || 0, 10);
+	var transaction_id = parseInt(req.params.transaction_id || 0, 10);
 
 	var authUser = null;
 
@@ -26,15 +23,19 @@ exports.handler = function(req, res, next){
 	}).then(function(wallet){
 		if (wallet.user_id == authUser.id)  /// @todo: or is shared
 		{
-			if (subtype == 'setup')
-				return wallet.setTotalTo({description: description, amount: amount});
-			else
-				return wallet.insertTransaction({description: description, amount: amount});
+			return db.Transaction.findById(transaction_id);			
 		} else {
 			throw new errors.HaveNoRightsError();
 		}
 	}).then(function(transaction){
-		res.send(transaction);
+		if (transaction && transaction.wallet_id == wallet_id)
+		{
+			return transaction.deleteAndCheckWallet();
+		} else {
+			throw new errors.HaveNoRightsError();
+		}
+	}).then(function(){
+		res.send(true);
 		next();
 	});
 };

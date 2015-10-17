@@ -1,5 +1,6 @@
-var crypto = require('crypto');
-var demo = require('../includes/demo.js');
+var crypto 	= require('crypto');
+var rfr 	= require('rfr');
+var demo 	= rfr('includes/demo.js');
 
 module.exports = function(sequelize, DataTypes) {
 	var User = sequelize.define('User', {

@@ -1,4 +1,5 @@
-var db = require('../models');
+var rfr = require('rfr');
+var db = rfr('includes/models');
 
 // GET: 
 exports.handler = function(req, res, next){

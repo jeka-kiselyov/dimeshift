@@ -15,6 +15,7 @@ describe('Server', function () {
       hippie()
         .json()
         .base('http://localhost:8080')
+        .timeout(5000)
         .post('/api/users')
         .send({ login: login, email: email, password: password })
         .expectStatus(200)
