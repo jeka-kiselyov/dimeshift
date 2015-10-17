@@ -2,15 +2,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var escapeRE = require('escape-regexp-component');
-
-var assert = require('assert-plus');
 var mime = require('mime');
-var errors = require('../../node_modules/restify/lib/errors');
-
-var MethodNotAllowedError = errors.MethodNotAllowedError;
-var NotAuthorizedError = errors.NotAuthorizedError;
-var ResourceNotFoundError = errors.ResourceNotFoundError;
 
 function serveImage(opts) {
 

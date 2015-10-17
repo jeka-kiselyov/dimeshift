@@ -2,52 +2,23 @@
 
 var fs = require('fs');
 var path = require('path');
+var mime = require('mime');
 var escapeRE = require('escape-regexp-component');
 
-var assert = require('assert-plus');
-var mime = require('mime');
-var errors = require('../../node_modules/restify/lib/errors');
-
-
-///--- Globals
-
-var MethodNotAllowedError = errors.MethodNotAllowedError;
-var NotAuthorizedError = errors.NotAuthorizedError;
-var ResourceNotFoundError = errors.ResourceNotFoundError;
-
-
-///--- Functions
-
-/**
- * serves static files.
- * @public
- * @function serveStatic
- * @param    {Object} opts an options object
- * @throws   {MethodNotAllowedError |
- *            NotAuthorizedError |
- *            ResourceNotFoundError}
- * @returns  {Function}
- */
 function serveStatic(opts) {
     opts = opts || {};
-    assert.object(opts, 'options');
-    assert.string(opts.directory, 'options.directory');
-    assert.optionalNumber(opts.maxAge, 'options.maxAge');
-    assert.optionalObject(opts.match, 'options.match');
-    assert.optionalString(opts.charSet, 'options.charSet');
-    assert.optionalString(opts.file, 'options.file');
-    assert.optionalString(opts.suffix, 'options.suffix');
 
     var p = path.normalize(opts.directory).replace(/\\/g, '/');
     var re = new RegExp('^' + escapeRE(p) + '/?.*');
 
     function serveFileFromStats(file, err, stats, isGzip, req, res, next) {
         if (err) {
-            next(new ResourceNotFoundError(err,
-                req.path()));
+            res.writeHead( 404, "Not Found" );
+            next();
             return;
         } else if (!stats.isFile()) {
-            next(new ResourceNotFoundError('%s does not exist', req.path()));
+            res.writeHead( 404, "Not Found" );
+            next()
             return;
         }
 
@@ -115,8 +86,6 @@ function serveStatic(opts) {
     function serve(req, res, next) {
         var file;
 
-        console.log('Static: '+req.path());
-
         if (opts.file) {
             //serves a direct file
             file = path.join(opts.directory,
@@ -130,17 +99,20 @@ function serveStatic(opts) {
             file += opts.suffix;
 
         if (req.method !== 'GET' && req.method !== 'HEAD') {
-            next(new MethodNotAllowedError(req.method));
+            res.writeHead( 404, "Not Found" );
+            next();
             return;
         }
 
         if (!re.test(file.replace(/\\/g, '/'))) {
-            next(new NotAuthorizedError(req.path()));
+            res.writeHead( 404, "Not Found" );
+            next();
             return;
         }
 
         if (opts.match && !opts.match.test(file)) {
-            next(new NotAuthorizedError(req.path()));
+            res.writeHead( 404, "Not Found" );
+            next();
             return;
         }
 

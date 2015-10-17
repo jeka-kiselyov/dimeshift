@@ -59,7 +59,7 @@ module.exports = function(grunt) {
             reporter: 'spec',
             bail: true
         },
-        all: ['test/*.js']
+        all: ['includes/test/*.js']
     }
   });
 
