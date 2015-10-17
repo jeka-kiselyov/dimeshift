@@ -1,3 +1,4 @@
 node_modules
 public/vendors
 npm-debug.log
+data/database.sqlite
