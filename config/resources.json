@@ -6,7 +6,7 @@
 			"gzip": "data/min/javascript.min.gz",
 			"raw": "data/min/javascript.raw"
 		},
-		"minify": false,
+		"minify": true,
 		"files": [
 			"./public/vendors/jquery/jquery.min.js",
 			"./public/vendors/bootstrap/js/modal.js",
