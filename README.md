@@ -4,6 +4,10 @@
 * Front-end: jQuery, Bootstrap, Backbone.js with JSmart template engine.
 * Back-end: Sequelize, SQLite database by default, easy to switch to MySQL or Postgree for production.
 
+Demo:
+----
+ [DimeShift](https://dimeshift.herokuapp.com/)
+
 Installation:
 ----
 
