@@ -15,8 +15,8 @@ module.exports = function(sequelize, DataTypes) {
 		login: DataTypes.STRING(255),
 		is_demo: {type: DataTypes.BOOLEAN, defaultValue: false, allowNull: false},
 		is_admin: {type: DataTypes.BOOLEAN, defaultValue: false, allowNull: false},
-		registration_date: DataTypes.DATE,
-		activity_date: DataTypes.DATE,
+		registration_date: DataTypes.INTEGER,
+		activity_date: DataTypes.INTEGER,
 		registration_ip: DataTypes.STRING(20),
 		activity_ip: DataTypes.STRING(20),
 		confirmation_code: DataTypes.STRING(255),
@@ -54,7 +54,7 @@ module.exports = function(sequelize, DataTypes) {
 
 				return new sequelize.Promise(function(resolve, reject) {
 					var user = sequelize.db.User.build({ type: type, email: email, login: login, password: password });
-					user.registration_date = new Date();
+					user.registration_date = Date.now() / 1000 | 0;
 					user.registration_ip = '';
 					user.is_demo = is_demo;
 
