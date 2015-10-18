@@ -6,6 +6,9 @@
 
 Installation:
 ----
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+Note that default storage in DimeShift is SQLite, which is [a bad fit for running on Heroku](https://devcenter.heroku.com/articles/sqlite3). But this is the easiest and fastest way for you to check it out in action. Switch to MySQL or Postgree for production.
 
 ```bash
 mkdir dimeshift
