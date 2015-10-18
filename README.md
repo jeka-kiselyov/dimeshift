@@ -7,7 +7,7 @@
 Installation:
 ----
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/jeka-kiselyov/dimeshift
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/jeka-kiselyov/dimeshift)
 
 or install from CLI:
 
