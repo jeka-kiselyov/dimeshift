@@ -13,15 +13,15 @@ module.exports = function(sequelize, DataTypes) {
 		} },
 		password: DataTypes.STRING(50),
 		login: DataTypes.STRING(255),
-		is_demo: {type: DataTypes.BOOLEAN, defaultValue: false, allowNull: false},
-		is_admin: {type: DataTypes.BOOLEAN, defaultValue: false, allowNull: false},
+		is_demo: {type: DataTypes.INTEGER, defaultValue: 0, allowNull: false},
+		is_admin: {type: DataTypes.INTEGER, defaultValue: 0, allowNull: false},
 		registration_date: DataTypes.INTEGER,
 		activity_date: DataTypes.INTEGER,
 		registration_ip: DataTypes.STRING(20),
 		activity_ip: DataTypes.STRING(20),
 		confirmation_code: DataTypes.STRING(255),
 		password_restore_code: DataTypes.STRING(255),
-		is_banned: {type: DataTypes.BOOLEAN, defaultValue: false, allowNull: false}
+		is_banned: {type: DataTypes.INTEGER, defaultValue: 0, allowNull: false}
 	},
 	{
 		timestamps: false,
@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
 				var login = params.login || '';
 				var password = params.password || '';
 				var email = params.email || '';
-				var is_demo = false;
+				var is_demo = 0;
 
 				if (email == 'demo@demo.com')
 				{
@@ -47,7 +47,7 @@ module.exports = function(sequelize, DataTypes) {
 					login = 'login'+Math.random();
 					password = 'password'+Math.random();
 					type = 'default';
-					is_demo = true;
+					is_demo = 1;
 				}
 
 				password = this.hashPassword(password);
