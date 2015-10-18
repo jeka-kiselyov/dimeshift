@@ -1,0 +1,7 @@
+{
+  "name": "dimeshift",
+  "description": "Webapp to track and manage personal finances",
+  "repository": "https://github.com/jeka-kiselyov/dimeshift",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "finances", "money", "HTML5", "Sequelize", "Backbone.js", "Restify"]
+}
