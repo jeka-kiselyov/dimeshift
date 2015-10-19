@@ -6,7 +6,7 @@
 
 Demo:
 ----
- [DimeShift](https://dimeshift.herokuapp.com/)
+ [DimeShift](https://dimeshift.com/)
 
 Installation:
 ----
