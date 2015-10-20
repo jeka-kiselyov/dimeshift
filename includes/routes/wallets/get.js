@@ -25,9 +25,6 @@ exports.handler = function(req, res, next){
 		} else {
 			throw new errors.HaveNoRightsError();
 		}
-	}).then(function(transactions){
-		res.send(transactions);
-		next();
 	});
 };
 
