@@ -43,16 +43,16 @@ db.Sequelize = Sequelize;
 
 //// Foreign keys
 db['Authentication'].belongsTo(db['User'], {foreignKey: 'user_id', constraints: false}); 
-db['User'].hasMany(db['Authentication'], {foreignKey: 'user_id', constraints: false}); 
+db['User'].hasMany(db['Authentication'], {foreignKey: 'user_id', constraints: false, onDelete: 'CASCADE'}); 
 
 db['Wallet'].belongsTo(db['User'], {foreignKey: 'user_id', constraints: false});  
-db['User'].hasMany(db['Wallet'], {foreignKey: 'user_id', constraints: false}); 
+db['User'].hasMany(db['Wallet'], {foreignKey: 'user_id', constraints: false, onDelete: 'CASCADE'}); 
 
 db['Transaction'].belongsTo(db['User'], {foreignKey: 'user_id', constraints: false});
 db['Transaction'].belongsTo(db['Wallet'], {foreignKey: 'wallet_id', constraints: false});
   
 db['User'].hasMany(db['Transaction'], {foreignKey: 'user_id', constraints: false}); 
-db['Wallet'].hasMany(db['Transaction'], {foreignKey: 'wallet_id', constraints: false});  
+db['Wallet'].hasMany(db['Transaction'], {foreignKey: 'wallet_id', constraints: false, onDelete: 'CASCADE'});  
 
 
 module.exports = db;
