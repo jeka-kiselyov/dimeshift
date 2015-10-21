@@ -87,6 +87,8 @@ module.exports = function(sequelize, DataTypes) {
 							return reject('Invalid auth code');
 						return authentication.getUser();						
 					}).then(function(user){
+						user.activity_date = Date.now() / 1000 | 0;
+						user.save();
 						return resolve(user);
 					}).catch(function(e){
 						return reject('Invalid auth code');
