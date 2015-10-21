@@ -26,5 +26,17 @@ function HaveNoRightsError() {
 };
 util.inherits(HaveNoRightsError, restify.RestError);
 
+function NotFoundError() {
+  restify.RestError.call(this, {
+    restCode: 'NotFoundError',
+    statusCode: 404,
+    message: 'Nothing is found. Please check item id',
+    constructorOpt: NotFoundError
+  });
+  this.name = 'NotFoundError';
+};
+util.inherits(NotFoundError, restify.RestError);
+
 exports.ValidationError = ValidationError;
 exports.HaveNoRightsError = HaveNoRightsError;
+exports.NotFoundError = NotFoundError;

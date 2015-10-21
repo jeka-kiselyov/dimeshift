@@ -13,14 +13,4 @@ exports.handler = function(req, res, next){
 
 	res.send(true);
 	next();
-	
-	// db.User.getByAuthCode(auth_code).then(function(user)
-	// {
-	// 	user.signOut();
-	// 	res.send(true);
-	// 	next();
-	// }, function(e){
-	// 	res.send(true);
-	// 	next();
-	// });
 };

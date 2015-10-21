@@ -20,19 +20,31 @@ window.App = {
 	{
 		var that = this;
 		$.ajaxSetup({ cache: false });
-		$.get(this.settings.apiEntryPoint+'users', function(user){
-			console.log(user);
-			console.log(user);
-			if (user)
-				that.setUser(user);
-			else
-				that.setUser();
 
+		var doneCallback = function() {
 			that.localStorage.invalidate(that.settings.version);
 			that.i18n.setLanguage(that.settings.detectLanguage());
 			that.router.init();
 			that.loadingStatus(false);
-		},'json');
+		};
+
+		if (document.cookie.indexOf("is_logged_in_user") >= 0)
+		{
+			$.get(this.settings.apiEntryPoint+'users', function(user){
+				if (user)
+					that.setUser(user);
+				else
+					that.setUser();
+			},'json')
+			.fail(function() {
+				that.setUser();
+			}).always(function() {
+				doneCallback();
+			});
+		} else {
+			that.setUser();
+			doneCallback();
+		}
 	},
 	showDialog: function(dialogName, params) {
 		if (typeof(App.Views.Dialogs[dialogName]) === 'undefined') /// this page is already current

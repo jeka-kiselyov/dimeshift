@@ -7,8 +7,6 @@ exports.method = 'post';
 
 exports.handler = function(req, res, next){
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
     var body = req.body || {};
     
 	var login = body.login || '';

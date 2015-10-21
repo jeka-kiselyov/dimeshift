@@ -1,17 +1,15 @@
 var rfr = require('rfr');
 var db = rfr('includes/models');
+var api = rfr('includes/api.js');
 
 exports.route = '/api/wallets';
 exports.method = 'get';
 
 exports.handler = function(req, res, next){
-	var cookies = req.cookies;
-	var auth_code = cookies.logged_in_user || '';
-
-	db.User.getByAuthCode(auth_code).then(function(user){
-		return user.getWallets();
-	}).then(function(wallets){
-		res.send(wallets);
-		next();
+	api.requireSignedIn(req, function(user){
+		user.getWallets().then(function(wallets){
+			res.send(wallets);
+			next();
+		});
 	});
 };

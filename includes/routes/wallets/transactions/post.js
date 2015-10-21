@@ -1,16 +1,12 @@
 var rfr = require('rfr');
 var db = rfr('includes/models');
 var errors = rfr('includes/errors.js');
+var api = rfr('includes/api.js');
 
 exports.route = '/api/wallets/:wallet_id/transactions';
 exports.method = 'post';
 
 exports.handler = function(req, res, next){
-
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-	var cookies = req.cookies;
-	var auth_code = cookies.logged_in_user || '';
 
     var body = req.body || {};
 	var wallet_id = parseInt(body.wallet_id, 10) || 0;
@@ -18,25 +14,20 @@ exports.handler = function(req, res, next){
 	var description = body.description || '';
 	var subtype = body.subtype || 'confirmed';
 
-	var authUser = null;
-
-	db.User.getByAuthCode(auth_code).then(function(user){
-		authUser = user;
-		return db.Wallet.findById(wallet_id);
-	}).then(function(wallet){
-		if (wallet.user_id == authUser.id)  /// @todo: or is shared
-		{
+	api.requireSignedIn(req, function(user){
+		db.Wallet.findOne({ where: {id: wallet_id, user_id: user.id}})
+		.then(function(wallet){
+			if (!wallet) throw new errors.HaveNoRightsError();	
 			if (subtype == 'setup')
 				return wallet.setTotalTo({description: description, amount: amount});
 			else
 				return wallet.insertTransaction({description: description, amount: amount});
-		} else {
-			throw new errors.HaveNoRightsError();
-		}
-	}).then(function(transaction){
-		res.send(transaction);
-		next();
+		}).then(function(transaction){
+			res.send(transaction);
+			next();
+		});
 	});
+	
 };
 
 

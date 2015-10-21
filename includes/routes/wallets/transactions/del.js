@@ -1,43 +1,30 @@
 var rfr = require('rfr');
 var db = rfr('includes/models');
 var errors = rfr('includes/errors.js');
+var api = rfr('includes/api.js');
 
 exports.route = '/api/wallets/:wallet_id/transactions/:transaction_id';
 exports.method = 'del';
 
 exports.handler = function(req, res, next){
 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-	var cookies = req.cookies;
-	var auth_code = cookies.logged_in_user || '';
-
 	var wallet_id = parseInt(req.params.wallet_id || 0, 10);
 	var transaction_id = parseInt(req.params.transaction_id || 0, 10);
 
-	var authUser = null;
-
-	db.User.getByAuthCode(auth_code).then(function(user){
-		authUser = user;
-		return db.Wallet.findById(wallet_id);
-	}).then(function(wallet){
-		if (wallet.user_id == authUser.id)  /// @todo: or is shared
-		{
-			return db.Transaction.findById(transaction_id);			
-		} else {
-			throw new errors.HaveNoRightsError();
-		}
-	}).then(function(transaction){
-		if (transaction && transaction.wallet_id == wallet_id)
-		{
+	api.requireSignedIn(req, function(user){
+		db.Wallet.findOne({ where: {id: wallet_id, user_id: user.id}})
+		.then(function(wallet){
+			if (!wallet) throw new errors.NotFoundError();
+			return db.Transaction.findOne({ where: {id: transaction_id, wallet_id: wallet.id}});
+		}).then(function(transaction){
+			if (!transaction) throw new errors.NotFoundError();
 			return transaction.deleteAndCheckWallet();
-		} else {
-			throw new errors.HaveNoRightsError();
-		}
-	}).then(function(){
-		res.send(true);
-		next();
+		}).then(function(){
+			res.send(true);
+			next();
+		})
 	});
+	
 };
 
 
