@@ -1,6 +1,7 @@
 var crypto 	= require('crypto');
 var rfr 	= require('rfr');
 var demo 	= rfr('includes/demo.js');
+var mailer = rfr('includes/mailer.js');
 
 module.exports = function(sequelize, DataTypes) {
 	var User = sequelize.define('User', {
@@ -76,6 +77,55 @@ module.exports = function(sequelize, DataTypes) {
 			registerDemo: function(params, callback)
 			{
 
+			},
+			updatePassword: function(code, hash, password)
+			{
+				return new sequelize.Promise(function(resolve, reject) {
+					if (password.length < 6)
+						return reject('Password is too short');
+
+					sequelize.db.User.findOne({
+						where: {password_restore_code: code}
+					}).then(function(user){
+						if (!user)
+							return reject('Invalid reset password code');
+						restore_password_hash = sequelize.db.User.hashPassword(user.id+user.password_restore_code);
+						if (hash != restore_password_hash)
+							return reject('Invalid reset password code');
+
+						password = sequelize.db.User.hashPassword(password);
+						user.password = password;
+						return user.save();
+					}).then(function(user){
+						resolve(user);
+					}, function(err){
+						reject(err);
+					});
+				});
+			},
+			resetPassword: function(email) {
+				var restore_password_hash = '';
+				return new sequelize.Promise(function(resolve, reject) {
+					sequelize.db.User.findOne({
+						where: {email: email}
+					}).then(function(user){
+						if (!user)
+							return reject('Can not find this email in our database');
+						user.password_restore_code = sequelize.db.User.hashPassword(""+user.id+Math.random());
+						restore_password_hash = sequelize.db.User.hashPassword(user.id+user.password_restore_code);
+						return user.save();
+					}).then(function(user){
+						mailer.sendTemplate('restore_password', user.email, 
+							{
+								login: user.login, 
+								password_restore_code: user.password_restore_code, 
+								password_restore_hash: restore_password_hash
+							});
+						return resolve(user);
+					}).catch(function(e){
+						return reject('Can not find this email in our database');						
+					});
+				});
 			},
 			getByAuthCode: function(auth_code, callback)
 			{

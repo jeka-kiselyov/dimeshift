@@ -1,6 +1,7 @@
 var rfr = require('rfr');
 var db = rfr('includes/models');
 var api = rfr('includes/api.js');
+var mailer = rfr('includes/mailer.js');
 
 exports.route = '/api/users';
 exports.method = 'get';

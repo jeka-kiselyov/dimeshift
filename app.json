@@ -4,7 +4,7 @@
   "repository": "https://github.com/jeka-kiselyov/dimeshift",
   "logo": "https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/transactions.jpg",
   "keywords": ["node", "finances", "money", "HTML5", "Sequelize", "Backbone.js", "Restify"],
-  "addons": ["heroku-postgresql:hobby-dev"],
+  "addons": ["heroku-postgresql:hobby-dev", "sparkpost:free"],
   "env": {
   	"NODE_ENV": "heroku"
   }

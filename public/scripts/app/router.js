@@ -9,28 +9,22 @@ App.router = new (Backbone.Router.extend({
       App.loadingStatus(false);
     this.navigate(path, {trigger: true});
   },
+
   routes: {
     "(/)": "index",// #help
     "help": "help",// #help
     "wallets(/)": "wallets",// #wallets
     "profile(/)": "profile",// #wallets
     "wallets/:id": "wallet",// #wallets/4
-    "static/view/:id": "static",// #wallets/4
-    "news/recent/:page(/)": "newsItems",// #news/recent/3
-    "news/recent(/)": "newsItems",// #news/recent
-    "news/category/:id/:page(/)": "newsCategory",// #news/category/1/2
-    "news/category/:id(/)": "newsCategory",// #news/category/1
-    "news/view/:slug.html": "newsItem",// #news/view/someslug.html
+    "user/updatepassword/:code/:hash": "updatePassword"
   },
 
   dialogs: {
     "user/signin": "Signin",
     "user/registration": "Registration",
     "user/restore": "Restore",
-    "user/newpassword": "NewPassword",
     "user/logout": "Logout",
     "user/fillprofile": "FillProfile",
-
     "wallets/add": "AddWallet"
   },
 
@@ -42,12 +36,8 @@ App.router = new (Backbone.Router.extend({
     App.showPage('Profile');
   },
 
-  static: function(id) {
-    App.showPage('Static', {slug: id});
-  },
-
-  help: function() {
-    console.log('routing help');
+  updatePassword: function(code, hash) {
+    App.showPage('UpdatePassword', {password_restore_code: code, password_restore_hash: hash});
   },
 
   wallet: function(id) {
@@ -56,23 +46,6 @@ App.router = new (Backbone.Router.extend({
 
   wallets: function() {
     App.showPage('Wallets');
-  },
-
-  newsItems: function(page) {
-    if (typeof(page) === 'undefined') 
-      page = 1;
-    App.showPage('NewsItems', {page: page});
-  },
-
-  newsCategory: function(newsCategoryId, page) {
-    if (typeof(page) === 'undefined') 
-      page = 1;
-
-    App.showPage('NewsItems', {page: page, newsCategoryId: newsCategoryId});    
-  },
-
-  newsItem: function(slug) {
-    App.showPage('NewsItem', {slug: slug});
   },
 
   init: function() {

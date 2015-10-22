@@ -221,7 +221,7 @@ App.Models.User = Backbone.Model.extend({
 				console.log('Error restoring password');
 
 				that.validationError = [];
-				if (typeof(data.responseJSON) != 'undefined' && typeof(data.responseJSON.code) != 'undefined' && typeof(data.responseJSON.message) != 'undefined')
+				if (typeof(data.responseJSON) != 'undefined' && typeof(data.responseJSON.message) != 'undefined')
 					if (data.responseJSON.message instanceof Array)
 					{
 						for (var k in data.responseJSON.message)

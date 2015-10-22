@@ -49,6 +49,8 @@ server.get('/\/?.*/', index);
 server.get('wallets', index);
 server.get('profile', index);
 server.get('wallets/:wallet_id', index);
+server.get('user/newpassword', index);
+server.get('user/updatepassword/:code/:hash', index);
 
 server.get(/\/scripts\/?.*/, restify.serveStatic({
   directory: './public'
