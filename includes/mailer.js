@@ -10,14 +10,14 @@ else
   config = config[env];
 
 if (config.smtp.use_env_variables) {
-	var transporter = nodemailer.createTransport(smtpTransport({
+	var transporter = nodemailer.createTransport({
 	    host: process.env[config.smtp.host],
 	    port: process.env[config.smtp.port],
 	    auth: {
 	        user: process.env[config.smtp.username],
 	        pass: process.env[config.smtp.password]
 	    }
-	}));
+	});
 } else {
 	var transporter = nodemailer.createTransport({
 	    host: config.smtp.host,
