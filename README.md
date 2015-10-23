@@ -6,7 +6,7 @@
 
 Demo:
 ----
- [DimeShift](https://dimeshift.com/)
+ [DimeShift](http://dimeshift.com/)
 
 Installation:
 ----
