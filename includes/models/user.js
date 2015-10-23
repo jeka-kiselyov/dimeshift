@@ -67,7 +67,10 @@ module.exports = function(sequelize, DataTypes) {
 							});
 						} 
 						else
+						{
+							sequelize.db.WalletAccess.checkAccessForNewUser(user);
 							resolve(user);
+						}
 					}, function(err) {
 						reject(err);
 					});
@@ -185,6 +188,8 @@ module.exports = function(sequelize, DataTypes) {
 					this.email = email;
 					this.password = password;
 					this.is_demo = false;
+
+					sequelize.db.WalletAccess.checkAccessForNewUser(this);
 				} else
 				return false;
 
@@ -213,6 +218,15 @@ module.exports = function(sequelize, DataTypes) {
 				var currency = params.currency || 'USD';
 
 				return this.createWallet({name: name, currency: currency});
+			},
+			getSharedWallets: function()
+			{
+				return sequelize.query("SELECT wallets.* FROM wallets JOIN wallet_accesses ON wallet_accesses.wallet_id = wallets.id WHERE wallet_accesses.to_user_id = :user_id", 
+					{ replacements: { user_id: this.id }, model: sequelize.db.Wallet });
+			},
+			getWalletIfHasAccess: function(wallet_id)
+			{
+				return sequelize.db.WalletAccess.getWalletIfHasAccess(this, wallet_id);
 			}
 		}
 	});

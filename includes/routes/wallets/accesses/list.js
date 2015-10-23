@@ -3,7 +3,7 @@ var db = rfr('includes/models');
 var errors = rfr('includes/errors.js');
 var api = rfr('includes/api.js');
 
-exports.route = '/api/wallets/:wallet_id/transactions';
+exports.route = '/api/wallets/:wallet_id/accesses';
 exports.method = 'get';
 
 exports.handler = function(req, res, next){
@@ -13,17 +13,13 @@ exports.handler = function(req, res, next){
 	var from = parseInt(req.params.from || 0, 10);
 
 	api.requireSignedIn(req, function(user){
-		user.getWalletIfHasAccess(wallet_id)
+		db.Wallet.findOne({ where: {id: wallet_id, user_id: user.id}})
 		.then(function(wallet){
 			if (!wallet) throw new errors.HaveNoRightsError();	
-			return db.Transaction.findAll({
-				where: {
-					wallet_id: wallet.id,
-					datetime: {$lte: to, $gt: from}
-				}
-			});
-		}).then(function(transactions){
-			res.send(transactions);
+			return db.WalletAccess.findAll({ where: {wallet_id: wallet_id}});
+		})
+		.then(function(wallet_accesses){
+			res.send(wallet_accesses);
 			next();
 		});
 	});

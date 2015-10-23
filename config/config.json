@@ -4,7 +4,7 @@
     "password": null,
     "database": "walletjs",
     "host": "127.0.0.1",
-    "dialect": "mysql",
+    "dialect": "sqlite",
     "storage": "data/database.sqlite",
     "smtp": {
       "host": "mailtrap.io",

@@ -54,5 +54,11 @@ db['Transaction'].belongsTo(db['Wallet'], {foreignKey: 'wallet_id', constraints:
 db['User'].hasMany(db['Transaction'], {foreignKey: 'user_id', constraints: false}); 
 db['Wallet'].hasMany(db['Transaction'], {foreignKey: 'wallet_id', constraints: false, onDelete: 'CASCADE'});  
 
+db['WalletAccess'].belongsTo(db['Wallet'], {foreignKey: 'wallet_id', constraints: false}); 
+db['WalletAccess'].belongsTo(db['User'], {as: 'OriginalUser', foreignKey: 'original_user_id'});
+db['WalletAccess'].belongsTo(db['User'], {as: 'ToUser', foreignKey: 'to_user_id'});
+
+db['Wallet'].hasMany(db['WalletAccess'], {foreignKey: 'wallet_id', constraints: false, onDelete: 'CASCADE'});
+db['User'].hasMany(db['WalletAccess'], {foreignKey: 'to_user_id', constraints: false, onDelete: 'SET NULL'});   
 
 module.exports = db;

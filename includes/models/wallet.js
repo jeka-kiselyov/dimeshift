@@ -23,6 +23,27 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods: {
 		},
 		instanceMethods: {
+			giveAccess: function(params) {
+				var params = params || {};
+				var email = params.email || '';
+				var original_user_id = this.user_id;
+
+				var that = this;
+				return new sequelize.Promise(function(resolve, reject) {
+					sequelize.db.User.findOne({where: {email: email}}).
+					then(function(user){
+						if (user)
+							return that.createWalletAccess({to_email: email, to_user_id: user.id, original_user_id: original_user_id});
+						else
+							return that.createWalletAccess({to_email: email, original_user_id: original_user_id});							
+					})
+					.then(function(wallet_access){
+						resolve(wallet_access);
+					},function(err){
+						reject(err);
+					});
+				});
+			},
 			setTotalTo: function(params) {
 				var params = params || {};
 				var amount = parseFloat(params.amount,10) || 0;
