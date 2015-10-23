@@ -9,17 +9,29 @@ App.settings = {
 		return title+' | '+'Wallet';
 	},
 
-	appLanguage: 'en',
+	availiableLocales: {
+		'default': ['12', 'mdy'],
+		'ua': ['24', 'dmy'],
+		'ru': ['24', 'dmy']
+	},
 	detectLanguage: function() {
+		
 		var language = window.navigator.userLanguage || window.navigator.language;
 		if (language && language.indexOf('-') != -1)
 		{
 			language = language.split('-')[0];
 		}
+
+		if (typeof(this.availiableLocales[language]) == 'undefined')
+			language = 'default';
+
+		this.timeFormat = this.availiableLocales[language][0];
+		this.dateFormat = this.availiableLocales[language][1];
+
 		return language;
 	},
-	timeFormat: '12', // 12 or 24
-	dateFormat: 'mdy',  // mdy or dmy
+	timeFormat: '24', // 12 or 24
+	dateFormat: 'dmy',  // mdy or dmy
 
 	allowRealTimeTranslation: true,
 

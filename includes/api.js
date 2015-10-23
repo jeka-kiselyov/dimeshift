@@ -1,6 +1,8 @@
 var rfr = require('rfr');
 var db = rfr('includes/models');
 var errors = rfr('includes/errors.js');
+var fs = require('fs');
+var path = require('path');
 
 exports.requireSignedIn = function (req, callback) 
 {
@@ -16,4 +18,15 @@ exports.requireSignedIn = function (req, callback)
 	}, function(err){
 		throw new errors.HaveNoRightsError();
 	});
+}
+
+var i18n_path = path.join(__dirname, '../data/i18n');
+var i18n_cache = {};
+exports.geti18njson = function(code) 
+{
+	if (typeof(i18n_cache[code]) !== 'undefined')
+		return i18n_cache[code];
+
+	i18n_cache[code] = fs.readFileSync(path.join(i18n_path, code+'.json'), 'utf8');
+	return i18n_cache[code];
 }

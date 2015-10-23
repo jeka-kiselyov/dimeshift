@@ -13,7 +13,7 @@ App.i18n = {
 	translate: function(string, stringId) {
 		if (typeof(stringId) == 'undefined')
 			stringId = string;
-		if (typeof(this.strings[stringId]) === 'undefined' || this.strings[stringId] === false)
+		if (typeof(this.strings[stringId]) === 'undefined' || this.strings[stringId] === false || this.strings[stringId] === '')
 			return string;
 		else
 			return this.strings[stringId];
@@ -36,14 +36,18 @@ App.i18n = {
 		};
 
 		this.loaded = false;
-		$.ajax({
-			url: App.settings.apiEntryPoint + 'i18n/bycode/'+this.languageCode,
-			data: {},
-			success: process,
-			dataType: 'json',
-			mimeType: 'application/json',
-			cache: true
-		});
+		
+		if (this.languageCode == 'default')
+			process({});
+		else
+			$.ajax({
+				url: App.settings.apiEntryPoint + 'i18n/bycode/'+this.languageCode,
+				data: {},
+				success: process,
+				dataType: 'json',
+				mimeType: 'application/json',
+				cache: true
+			});
 	}
 
 

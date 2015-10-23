@@ -7,7 +7,7 @@ App.Views.Dialogs.TransactionDetails = App.Views.Abstract.Dialog.extend({
 		"click #remove_transaction_button": "removeTransaction"
 	},
 	removeTransaction: function() {
-		App.showDialog('RemoveTransaction', {item: this.item});
+		App.showDialog('RemoveTransaction', {item: this.item, wallet: this.wallet});
 		return false;
 	},
 	initialize: function(params) {

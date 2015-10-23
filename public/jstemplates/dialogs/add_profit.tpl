@@ -16,7 +16,7 @@
 
         <div class="form-group">
           <label class="sr-only" for="input_description">{t}Description{/t}</label>
-          <input type="text" name="description" class="form-control" id="input_description" placeholder="{t}Desciption{/t}">
+          <input type="text" name="description" class="form-control" id="input_description" placeholder="{t}Description{/t}">
         </div>
 
         <div class="alert alert-danger errors-container" style="display: none;">
