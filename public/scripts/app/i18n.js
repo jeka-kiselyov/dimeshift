@@ -3,9 +3,10 @@ App.i18n = {
 
 	strings: {},
 	loaded: false,
-	setLanguage: function(languageCode) {
+	setLanguage: function(languageCode, callback) {
 		this.languageCode = languageCode;
-		this.loadStrings();
+		App.localStorage.set('selected_interface_locale', languageCode);
+		this.loadStrings(callback);
 	},
 	getLanguage: function(languageCode) {
 		return this.languageCode;
@@ -25,14 +26,22 @@ App.i18n = {
 			string = that.translate(string);
 			$(this).text(string);
 		});
+		$("[data-i18nvalue]").each(function(){
+			var string = $(this).data('i18nvalue');
+			string = that.translate(string);
+			$(this).val(string);
+		});
 	},
-	loadStrings: function() {
+	loadStrings: function(callback) {
 
 		var that = this;
 		var process = function(data) {
 			that.strings = data;
 			that.loaded = true;
 			that.translateDOM();
+
+			if (typeof(callback) == 'function')
+				callback();
 		};
 
 		this.loaded = false;

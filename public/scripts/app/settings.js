@@ -10,16 +10,21 @@ App.settings = {
 	},
 
 	availiableLocales: {
-		'default': ['12', 'mdy'],
-		'ua': ['24', 'dmy'],
-		'ru': ['24', 'dmy']
+		'default': {code: 'en', name: 'English', timeFormat: '12', dateFormat:'mdy'},
+		'ua': {name: 'Українська', timeFormat: '24', dateFormat:'dmy'},
+		'ru': {name: 'Русский', timeFormat: '24', dateFormat:'dmy'}
 	},
 	detectLanguage: function() {
 		
-		var language = window.navigator.userLanguage || window.navigator.language;
-		if (language && language.indexOf('-') != -1)
-		{
-			language = language.split('-')[0];
+		var language = 'default';
+		if (App.localStorage.get('selected_interface_locale'))
+			language = App.localStorage.get('selected_interface_locale');
+		else {
+			language = window.navigator.userLanguage || window.navigator.language;
+			if (language && language.indexOf('-') != -1)
+			{
+				language = language.split('-')[0];
+			}
 		}
 
 		if (typeof(this.availiableLocales[language]) == 'undefined')
@@ -27,9 +32,11 @@ App.settings = {
 
 		this.timeFormat = this.availiableLocales[language][0];
 		this.dateFormat = this.availiableLocales[language][1];
+		this.language = language;
 
 		return language;
 	},
+	language: 'en',
 	timeFormat: '24', // 12 or 24
 	dateFormat: 'dmy',  // mdy or dmy
 

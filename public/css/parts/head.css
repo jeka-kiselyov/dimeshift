@@ -100,6 +100,7 @@
 	box-shadow: none;
 }
 
+
 .navbar-nav a.btn:focus, .navbar-nav a.btn:hover {
 	border: 0;
 	box-shadow: none;
@@ -141,4 +142,10 @@
 
 #container {
 	padding-top: 55px;
+}
+
+.navbar-nav a.icon_holder {
+	padding-top: 11px !important;
+	line-height: 20px !important;
+	font-size: 20px;
 }

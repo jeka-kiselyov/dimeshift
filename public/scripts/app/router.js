@@ -25,7 +25,8 @@ App.router = new (Backbone.Router.extend({
     "user/restore": "Restore",
     "user/logout": "Logout",
     "user/fillprofile": "FillProfile",
-    "wallets/add": "AddWallet"
+    "wallets/add": "AddWallet",
+    "user/change_language": "ChangeLanguage"
   },
 
   index: function() {

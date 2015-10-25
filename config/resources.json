@@ -6,11 +6,12 @@
 			"gzip": "data/min/javascript.min.gz",
 			"raw": "data/min/javascript.raw"
 		},
-		"minify": true,
+		"minify": false,
 		"files": [
 			"./public/vendors/jquery/jquery.min.js",
 			"./public/vendors/bootstrap/js/modal.js",
 			"./public/vendors/bootstrap/js/button.js",
+			"./public/vendors/bootstrap/js/dropdown.js",
 			"./public/vendors/bootstrap/js/collapse.js",
 			"./public/vendors/underscore/underscore-min.js",
 			"./public/vendors/backbone/backbone.js",
