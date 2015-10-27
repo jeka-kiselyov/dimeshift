@@ -31,6 +31,11 @@ App.i18n = {
 			string = that.translate(string);
 			$(this).val(string);
 		});
+		$("[data-i18nplaceholder]").each(function(){
+			var string = $(this).data('i18nplaceholder');
+			string = that.translate(string);
+			$(this).attr('placeholder', string);
+		});
 	},
 	loadStrings: function(callback) {
 

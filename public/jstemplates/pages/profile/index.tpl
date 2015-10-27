@@ -21,24 +21,24 @@
 				<label for="current_password_input">{tp}Current Password{/tp}</label>
 				<input type="password" class="form-control" 
 					id="current_password_input" 
-					placeholder="{tp}Current Password{/tp}">
+					placeholder="{t}Current Password{/t}" data-i18nplaceholder="Current Password">
 			</div>
 
 			<div class="form-group">
 				<label for="new_password_input">{tp}New Password{/tp}</label>
 				<input type="password" class="form-control" 
 					id="new_password_input" 
-					placeholder="{tp}New Password{/tp}">
+					placeholder="{t}New Password{/t}" data-i18nplaceholder="New Password">
 			</div>
 
 			<div class="form-group">
 				<label for="new_password_repeat_input">{tp}Repeat Password{/tp}</label>
 				<input type="password" class="form-control" 
 					id="new_password_repeat_input" 
-					placeholder="{tp}Repeat Password{/tp}">
+					placeholder="{t}Repeat Password{/t}" data-i18nplaceholder="Repeat Password">
 			</div>
 
-			<input type="submit" class="btn btn-primary" value="{tp}Change Password{/tp}">
+			<input type="submit" class="btn btn-primary" data-i18nvalue="Change Password" value="{t}Change Password{/t}">
 		</form>
 	</div>
 

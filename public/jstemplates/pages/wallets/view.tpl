@@ -31,8 +31,8 @@
 
 				<div class="form-group">
 					<form method="post" id="add_transaction_form">
-						<input type="text" class="form-control" id="add_transaction_text" placeholder="{t}Describe expense and press Enter to add{/t}">
-						<input type="number" min="0" step="0.01" class="form-control hideme" id="add_transaction_amount" placeholder="{t}Transaction amount{/t}">
+						<input type="text" class="form-control" id="add_transaction_text" placeholder="{t}Describe expense and press Enter to add{/t}" data-i18nplaceholder="Describe expense and press Enter to add">
+						<input type="number" min="0" step="0.01" class="form-control hideme" id="add_transaction_amount" placeholder="{t}Transaction amount{/t}" data-i18nplaceholder="Transaction amount">
 						<button type="submit" class="hideme">
 					</form>
 				</div>
