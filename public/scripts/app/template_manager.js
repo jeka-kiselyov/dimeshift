@@ -112,6 +112,18 @@ App.templateManager = {
 	        }
 	    );
 
+	    jSmart.prototype.registerPlugin(
+	        'block',
+	        'tp',
+	        function(params, content, data, repeat)
+	        {
+	        	if (typeof(App) === 'undefined' || typeof(App.i18n) === 'undefined')
+	        		return '<span data-i18n="'+content+'">'+content+"</span>";
+	        	else
+	        		return '<span data-i18n="'+content+'">'+App.i18n.translate(content)+"</span>";
+	        }
+	    );
+
 	    this._initialized = true;
 	},
 	commonData: function()

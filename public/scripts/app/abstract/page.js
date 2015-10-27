@@ -137,10 +137,6 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.setTitle();
 		this.setURL();
 		this.isReady = true;
-		// var that = this;
-		// setTimeout(function(){
-		// 	that.proccessWidgets();
-		// }, 1);
 		
 		return this;
 	},

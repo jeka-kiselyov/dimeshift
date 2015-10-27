@@ -46,7 +46,7 @@
 		{/foreach}
 	{else}
 	<div class="list-group-item">
-		{t}No transactions for{/t} {$collection.periodToReadableFormat()}
+		{tp}No transactions for{/tp} {$collection.periodToReadableFormat()}
 	</div>	
 	{/if}
 
