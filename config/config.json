@@ -13,7 +13,11 @@
       "port": "465"
     },
     "default_from_email": "noreply@dimeshift.com",
-    "site_path": "http://localhost:8080/"
+    "site_path": "http://localhost:8080/",
+    "minify": {
+      "javascript": false,
+      "css": false
+    }
   },
   "heroku": {
   	"use_env_variable": "DATABASE_URL",
@@ -25,6 +29,10 @@
       "port": "SPARKPOST_SMTP_PORT"
     },
     "default_from_email": "noreply@dimeshift.com",
-    "site_path": "http://dimeshift.com/"
+    "site_path": "http://dimeshift.com/",
+    "minify": {
+      "javascript": true,
+      "css": true
+    }
   }
 }

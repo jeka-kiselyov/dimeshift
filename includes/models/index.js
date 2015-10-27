@@ -5,14 +5,8 @@ var path      = require('path');
 var Sequelize = require('sequelize');;
 var rfr       = require('rfr');
 var basename  = path.basename(module.filename);
-var env       = process.env.NODE_ENV || 'development';
-var config    = rfr('config/config.json');
+var config    = rfr('includes/config.js');
 var db        = {};
-
-if (typeof(config[env]) == 'undefined')
-  config = config['development'];
-else
-  config = config[env];
 
 if (config.use_env_variable) {
   var sequelize = new Sequelize(process.env[config.use_env_variable]);

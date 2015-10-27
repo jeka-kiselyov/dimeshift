@@ -31,13 +31,8 @@ routes(function(routes){
 server.get(/jstemplates\/?.*/, servers['static_file_server']({ directory: './public', suffix: '.tpl' }));
 server.get(/images\/?.*/, servers['images_server']());
 
-server.get('/resources/js.js', servers['minify_server'](
-	require('./config/resources.json')['javascript']
-));
-
-server.get('/resources/css.css', servers['minify_server'](
-	require('./config/resources.json')['css']
-));
+server.get('/resources/js.js', servers['minify_server']('javascript'));
+server.get('/resources/css.css', servers['minify_server']('css'));
 
 
 var index = restify.serveStatic({

@@ -7,19 +7,27 @@ var path = require('path');
 var UglifyJS = require("uglify-js");
 var CleanCSS = require('clean-css');
 
-function serve(opts) {
-    opts = opts || {};
-    var type = opts.type || 'guess';
-    var cachePath = opts.cache || {cache: false, gzip: false, raw: false};
-    var items = opts.files || [];
+var rfr       = require('rfr');
+var config    = rfr('includes/config.js');
+
+function serve(name) {
+    var name = name || 'css';
+    var type = 'guess';
+
+    var cachePath = {
+        cache: 'data/min/'+name+'.min', 
+        gzip: 'data/min/'+name+'.min.gz', 
+        raw: 'data/min/'+name+'.raw'
+    };
+
+    var need_to_minify = config.minify[name] || false;
+    var items = config.resources[name] || [];
 
     var files = [];
 
     var __result = '';
     var __raw = '';
     var __gzip = '';
-
-    var need_to_minify = opts.minify;
 
 
     var mostRecentMTime = 0;
@@ -182,12 +190,14 @@ function serve(opts) {
             console.log('Minify css files...');
             new CleanCSS({ root: path.join(process.cwd(), 'public'), relativeTo: path.join(process.cwd(), 'public') }).minify(files, function (error, minified) {
                 __result = minified.styles;
+                __raw = __result;
                 var buf = new Buffer(__result, 'utf-8');
 
                 zlib.gzip(buf, function (_, res) {
                     __gzip = res;
 
                     fs.writeFile(cachePath.cache, __result);
+                    fs.writeFile(cachePath.raw, __raw);
                     fs.writeFile(cachePath.gzip, __gzip);
 
                     console.log('Minify css files. Done.');
