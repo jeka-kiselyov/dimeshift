@@ -143,5 +143,7 @@
   "Internalization": "Локализации",
   "English and Russian languages supported. Ukrainian and Belarusian coming soon.": "Доступны несколько языков интерфейса",
   "Open Source!": "Открытый исходный код!",
-  "GNU Affero GPL Licensed. Please feel free to check out the code and fork it!": "Под лицензией GNU Affero GPL. Подключайтесь к разработке!"
+  "GNU Affero GPL Licensed. Please feel free to check out the code and fork it!": "Под лицензией GNU Affero GPL. Подключайтесь к разработке!",
+  "Please don't forget to let us know your email address, so you can sign in to DimeShift on your next visit": "Пожалуйста, заполните ваш профиль, чтобы вы смогли войти в вашу учетную запись в следующий раз",
+  "Do it": "Заполнить"
 }
