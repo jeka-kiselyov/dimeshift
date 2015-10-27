@@ -30,17 +30,22 @@ var harvester = function(dirname, callback) {
   var foundItems = {};
   var foundItemsCount = 0;
 
-  var parseFile = function(filename)
+  var parseFile = function(filename, transalateTag)
   {
-    var regex = /\{t\}([^\{]+)\{\/t\}/g;
+    var transalateTag = transalateTag || 't';
+    var regex = new RegExp("\{"+transalateTag+"\}([^\{]+)\{\/"+transalateTag+"\}", 'g');
     var data = ""+fs.readFileSync(filename, 'utf8');
     var matches = data.match(regex);
+
+    var openingTagLength = ('{'+transalateTag+'}').length;
+    var closingTag = '{/'+transalateTag+'}';
+    var closingTagLength = closingTag.length;
 
     if (matches != null)
     matches.forEach(function(match){
       var string = '';
       if (match.length > 7)
-        string = match.substr(3, match.length-7);
+        string = match.substr(openingTagLength, match.indexOf(closingTag)-openingTagLength);
       else
         return false;
 
@@ -76,15 +81,26 @@ var harvester = function(dirname, callback) {
 
   walk(dirname, function(err, results){
 
-    console.log('Found '+results.length+' template files');
+    console.log('Found '+results.length+' files');
     if (err) throw err;
+
+    var foundTplCount = 0;
+    var foundHtmlCount = 0;
     results.forEach(function(file) {
       if (file.slice(-4) === '.tpl')
+      {
         parseFile(file);
-      if (file.slice(-5) === '.html' || file.slice(-4) === '.htm')
+        parseFile(file, 'ts');
+        foundTplCount++;
+      }
+      if (file.slice(-5) === '.html' || file.slice(-4) === '.htm'){
         parseHTMLFile(file);
+        foundHtmlCount++;
+      }
     });
 
+    console.log('Found '+foundTplCount+' tpl files');
+    console.log('Found '+foundHtmlCount+' html files');
     console.log('Found '+foundItemsCount+' i18n strings');
 
     callback(Object.keys(foundItems));
@@ -95,7 +111,7 @@ var harvester = function(dirname, callback) {
 var dirname = path.join(__dirname, '..', 'public');
 var i18n_dirname = path.join(__dirname, '..', 'data/i18n');
 harvester(dirname, function(strings){
-console.log(strings);
+// console.log(strings);
   var i18n_files = fs.readdirSync(i18n_dirname);
   i18n_files.filter(function(file){
     if (file.slice(-5) !== '.json')
@@ -128,8 +144,8 @@ console.log(strings);
   }
 
   console.log("There're "+i18n_files.length+' i18n files');
-  console.log(i18n_files);
-  console.log(strings);
+  // console.log(i18n_files);
+  // console.log(strings);
 
   i18n_files.forEach(function(i18n_file){
     console.log('Updating '+i18n_file);
