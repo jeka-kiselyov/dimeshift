@@ -86,6 +86,10 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 				this.parts[k].render();
 			for (var k in this.charts)
 				this.charts[k].render();
+
+			// Instance the tour
+			if (typeof(App.Tours.Wallet) !== 'undefined')
+				App.Tours.Wallet.init(this);
 		});
 		this.renderHTML({ item: this.model.toJSON() });
 	},

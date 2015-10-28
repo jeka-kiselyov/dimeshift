@@ -9,12 +9,12 @@
 
 	{if $items|count == 0}
 		{if $status|default:'active' == 'active'}
-			<div class="alert alert-warning" role="alert">{tp}You have no wallets{/tp} <a href="{$settings->site_path}/wallets/add" class="btn btn-primary btn-xs">{tp}Add{/tp}</a></div>
+			<div class="alert alert-warning" role="alert">{tp}You have no wallets{/tp} <a href="{$settings->site_path}/wallets/add" class="btn btn-primary btn-xs" id="add_wallet_button">{tp}Add{/tp}</a></div>
 		{else}
 			<div class="alert alert-warning" role="alert">{tp}You have no hidden wallets{/tp}</div>			
 		{/if}
 	{else}
-		<div class="list-group wallet_item">
+		<div class="list-group wallet_item" id="wallet_items">
 		{foreach from=$items item=i}
 			<a href="{$settings->site_path}/wallets/{$i->id}" class="list-group-item item" data-id="{$i->id}" 
 				{if $i->origin|default:'mine' == 'shared'}style="background: #eee"{/if}>
@@ -43,7 +43,7 @@
 		{/foreach}
 
 		{if $status|default:'active' == 'active'}
-			<div class="list-group-item list-group-item-info"><a href="{$settings->site_path}/wallets/add" class="btn btn-primary">{tp}Add{/tp}</a></div>
+			<div class="list-group-item list-group-item-info"><a href="{$settings->site_path}/wallets/add" class="btn btn-primary" id="add_wallet_button">{tp}Add{/tp}</a></div>
 		{/if}
 		</div>	
 	{/if}
@@ -78,4 +78,13 @@
 
 
 </div>
+</div>
+
+
+<div class="hidden">
+	<span id="tour_step_0">{t}Here is quick introdution to DimeShift.<br><br>Our demo robot has created few sample wallets for you to check out.{/t}</span>
+	<span id="tour_step_1">{t}But you can add as many as you want.<br><br>Different name, different currencies{/t}</span>
+	<span id="tour_step_2">{t}There're few options availiable when you move your mouse over your wallet.<br><br>
+	But lets jump directly to wallet page.<br><br>Click any row to jump to it.
+	{/t}</span>
 </div>

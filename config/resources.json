@@ -5,6 +5,9 @@
 		"./public/vendors/bootstrap/js/button.js",
 		"./public/vendors/bootstrap/js/dropdown.js",
 		"./public/vendors/bootstrap/js/collapse.js",
+		"./public/vendors/bootstrap/js/tooltip.js",
+		"./public/vendors/bootstrap/js/popover.js",
+		"./public/vendors/bootstrap-tour/build/js/bootstrap-tour.js",
 		"./public/vendors/underscore/underscore-min.js",
 		"./public/vendors/backbone/backbone.js",
 		"./public/vendors/backbone.paginator/lib/backbone.paginator.min.js",
@@ -29,6 +32,7 @@
 		"./public/scripts/app/views/widgets/",
 		"./public/scripts/app/views/parts/",
 		"./public/scripts/app/views/pages/",
+		"./public/scripts/app/views/tours/",
 		"./public/scripts/app/views/charts/",
 
 		"./public/scripts/app/views/header.js",
@@ -42,6 +46,7 @@
 		"./public/vendors/magnific-popup/dist/magnific-popup.css",
 		"./public/vendors/chartist/dist/chartist.min.css",
 		"./public/vendors/bootstrap/dist/css/bootstrap.min.css",
+		"./public/vendors/bootstrap-tour/build/css/bootstrap-tour.min.css",
 		"./public/css/main.css"
 	]
 }

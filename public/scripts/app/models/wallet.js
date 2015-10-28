@@ -85,6 +85,7 @@ App.Models.Wallet = Backbone.Model.extend({
         this.getTransactions().add(expense);
         this.set('total', this.getTotal()+amountValue);
         this.trigger('addTransaction', expense);
+        this.trigger('addExpense');
         //this.trigger('change');
     },
     removeTransaction: function(transaction) {

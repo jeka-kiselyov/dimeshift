@@ -10,6 +10,8 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 	demoSignUp: function() {
 		App.log.event('registration', 'Demo Sign Up', 'From Homepage');
 		this.renderLoading();
+		App.createCookie('show_tour_Wallets', 1);
+		App.createCookie('show_tour_Wallet', 1);
 		App.currentUser.demoRegister();
 	},
 	title: function() {

@@ -22,6 +22,7 @@
     "magnific-popup": "*",
     "chartist": "*",
     "bootstrap-clickonmouseover": "https://github.com/jeka-kiselyov/bootstrap-clickonmouseover/archive/master.zip",
-    "mprogress": "https://github.com/lightningtgc/MProgress.js/archive/master.zip"
+    "mprogress": "https://github.com/lightningtgc/MProgress.js/archive/master.zip",
+    "bootstrap-tour": "~0.10.2"
   }
 }

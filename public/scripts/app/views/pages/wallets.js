@@ -97,6 +97,13 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 			var filtered = this.items.search({status: this.status});
 		else
 			var filtered = this.items.search({status: this.status, origin: this.origin}); 
+
+		this.once('render',function(){
+			// Instance the tour
+			if (typeof(App.Tours.Wallets) !== 'undefined')
+				App.Tours.Wallets.init(this);
+		});
+
 		this.renderHTML({items: filtered.toJSON(), status: this.status, origin: this.origin});
 	},
 	wakeUp: function() {

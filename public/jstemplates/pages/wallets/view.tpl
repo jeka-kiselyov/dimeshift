@@ -62,3 +62,19 @@
 
 
 </div>
+
+
+<div class="hidden">
+	<span id="tour_step_0">{t}Let's start by adding some money to your wallet.<br><br>Click "Add Profit" button and fill the form in modal window. It's simple.{/t}</span>
+	<span id="tour_step_1">{t}You can also set current total with "Set Total To" dialog.<br><br>
+					We don't ask you to track every transaction you've done(though you can). 
+					Feel free to update your DimeShift wallet every evening, or even once in few days.<br><br>
+					Click "set total to" action link and fill the form to check how it works.{/t}</span>
+	<span id="tour_step_2">{t}It's time to add some expense.<br><br>
+	You can add transaction with one string, e.g. "99.93, best expense ever".<br><br>
+	Press Enter when tranasction description is ready.
+	{/t}</span>
+	<span id="tour_step_3">{t}Check out updated transactions list{/t}</span>
+	<span id="tour_step_4">{t}Check out expenses per day trends. Simple chart that gets updated every time you add another tranasction.{/t}</span>
+	<span id="tour_step_5">{t}Don't forget to fill your profile, so you can sign in to DimeShift next time.{/t}</span>
+</div>
