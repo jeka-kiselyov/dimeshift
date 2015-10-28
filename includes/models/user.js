@@ -85,7 +85,7 @@ module.exports = function(sequelize, DataTypes) {
 			removeOldDemoAccounts: function()
 			{
 				var maxTimestamp = (Date.now() / 1000 | 0) - 2*24*60*60;
-				return sequelize.query("DELETE FROM users WHERE registration_date < :max_timestamp", 
+				return sequelize.query("DELETE FROM users WHERE is_demo = 1 AND registration_date < :max_timestamp", 
 					{ replacements: { max_timestamp: maxTimestamp } });
 
 			},
