@@ -12,7 +12,12 @@ var server = restify.createServer({
 server.pre(restify.pre.sanitizePath());
 server.on('uncaughtException', function (req, res, route, err) 
 {
-	return res.json(500, err);
+	try {
+		res.json(500, err);
+	} catch (e) {
+		res.end();
+	}
+	return true;
 });
 db.Sequelize.Promise.onPossiblyUnhandledRejection(function(reason) {
 	throw reason;

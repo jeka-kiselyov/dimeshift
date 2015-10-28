@@ -16,6 +16,8 @@ exports.handler = function(req, res, next){
 
 	var gotUser = null;
 
+	db.User.removeOldDemoAccounts();
+
 	db.User.register({
 			login: login,
 			type: type,
