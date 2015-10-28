@@ -1,6 +1,7 @@
 var rfr = require('rfr');
 var db = rfr('includes/models');
 var ValidationError = rfr('includes/errors.js');
+var api = rfr('includes/api.js');
 
 exports.route = '/api/users';
 exports.method = 'post';
@@ -14,7 +15,7 @@ exports.handler = function(req, res, next){
 	var password = body.password || '';
 	var email = body.email || '';
 
-	var ip = req.connection.remoteAddress || null;
+	var ip = api.getVisitorIp(req);
 
 	var gotUser = null;
 

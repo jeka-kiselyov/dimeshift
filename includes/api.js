@@ -4,12 +4,25 @@ var errors = rfr('includes/errors.js');
 var fs = require('fs');
 var path = require('path');
 
+var getVisitorIp = function(req)
+{
+	var ipAddr = req.headers["x-forwarded-for"];
+	if (ipAddr){
+		var list = ipAddr.split(",");
+		ipAddr = list[list.length-1];
+	} else {
+		ipAddr = req.connection.remoteAddress;
+	}
+
+	return ipAddr;
+}
+
 exports.requireSignedIn = function (req, callback) 
 {
 	var cookies = req.cookies;
 	var auth_code = cookies.logged_in_user || '';
 
-	var ip = req.connection.remoteAddress || null;
+	var ip = getVisitorIp(req);
 
 	if (auth_code == '')
 		throw new errors.HaveNoRightsError();
@@ -21,6 +34,8 @@ exports.requireSignedIn = function (req, callback)
 		throw new errors.HaveNoRightsError();
 	});
 }
+
+exports.getVisitorIp = getVisitorIp;
 
 var i18n_path = path.join(__dirname, '../data/i18n');
 var i18n_cache = {};

@@ -16,7 +16,7 @@ exports.handler = function(req, res, next){
 	var email = body.email || null;
 	var login = body.login || null;
 
-	var ip = req.connection.remoteAddress || null;
+	var ip = api.getVisitorIp(req);
 
 	var current_password = body.current_password || null;
 
