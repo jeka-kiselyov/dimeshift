@@ -14,6 +14,8 @@ exports.handler = function(req, res, next){
 	var password = body.password || '';
 	var email = body.email || '';
 
+	var ip = req.connection.remoteAddress || null;
+
 	var gotUser = null;
 
 	db.User.removeOldDemoAccounts();
@@ -22,7 +24,8 @@ exports.handler = function(req, res, next){
 			login: login,
 			type: type,
 			password: password,
-			email: email
+			email: email,
+			ip: ip
 	}).then(function(user) {
 		gotUser = user;
 		return user.auth();

@@ -9,10 +9,12 @@ exports.requireSignedIn = function (req, callback)
 	var cookies = req.cookies;
 	var auth_code = cookies.logged_in_user || '';
 
+	var ip = req.connection.remoteAddress || null;
+
 	if (auth_code == '')
 		throw new errors.HaveNoRightsError();
 	
-	db.User.getByAuthCode(auth_code).then(function(user){
+	db.User.getByAuthCode({auth_code: auth_code, ip: ip}).then(function(user){
 		if (typeof(callback) == 'function')
 			callback(user);
 	}, function(err){

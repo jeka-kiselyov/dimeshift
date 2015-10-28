@@ -16,13 +16,15 @@ exports.handler = function(req, res, next){
 	var email = body.email || null;
 	var login = body.login || null;
 
+	var ip = req.connection.remoteAddress || null;
+
 	var current_password = body.current_password || null;
 
 	api.requireSignedIn(req, function(user){
 
 		var promise = false;
 		if (user.is_demo)
-			promise = user.fillProfile({email: email, login: login, password: password});
+			promise = user.fillProfile({email: email, login: login, password: password, ip: ip});
 		else
 			promise = user.update({password: password, current_password: current_password});
 

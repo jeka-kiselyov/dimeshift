@@ -40,6 +40,7 @@ module.exports = function(sequelize, DataTypes) {
 				var login = params.login || '';
 				var password = params.password || '';
 				var email = params.email || '';
+				var ip = params.ip || null;
 				var is_demo = 0;
 
 				if (email == 'demo@demo.com')
@@ -56,7 +57,7 @@ module.exports = function(sequelize, DataTypes) {
 				return new sequelize.Promise(function(resolve, reject) {
 					var user = sequelize.db.User.build({ type: type, email: email, login: login, password: password });
 					user.registration_date = Date.now() / 1000 | 0;
-					user.registration_ip = '';
+					user.registration_ip = ip;
 					user.is_demo = is_demo;
 
 					user.save().then(function(user) {
@@ -137,8 +138,12 @@ module.exports = function(sequelize, DataTypes) {
 					});
 				});
 			},
-			getByAuthCode: function(auth_code, callback)
+			getByAuthCode: function(params, callback)
 			{
+				var params = params || {};
+				var ip = params.ip || null;
+				var auth_code = params.auth_code || null;
+
 				return new sequelize.Promise(function(resolve, reject) {
 					sequelize.db.Authentication.findOne({
 						where: {auth_code: auth_code}
@@ -147,6 +152,7 @@ module.exports = function(sequelize, DataTypes) {
 							return reject('Invalid auth code');
 						return authentication.getUser();						
 					}).then(function(user){
+						user.activity_ip = ip;
 						user.activity_date = Date.now() / 1000 | 0;
 						user.save();
 						return resolve(user);
@@ -169,7 +175,7 @@ module.exports = function(sequelize, DataTypes) {
 			}
 		},
 		instanceMethods: {
-			auth: function()
+			auth: function(params)
 			{
 				var md5sum = crypto.createHash('md5');
 				var hash = '' + md5sum.update(''+Math.random()+this.id).digest('hex');
@@ -186,6 +192,7 @@ module.exports = function(sequelize, DataTypes) {
 				var login = params.login || '';
 				var email = params.email || '';
 				var password = params.password || '';
+				var ip = params.ip || null;
 
 				password = sequelize.db.User.hashPassword(password);
 
@@ -195,6 +202,7 @@ module.exports = function(sequelize, DataTypes) {
 					this.email = email;
 					this.password = password;
 					this.is_demo = false;
+					this.registration_ip = ip;
 
 					sequelize.db.WalletAccess.checkAccessForNewUser(this);
 				} else

@@ -15,9 +15,6 @@ exports.handler = function(req, res, next){
 
 	var signedInUser = null;
 
-	console.log(username);
-	console.log(password);
-
 	db.User.signIn({
 			username: username,
 			password: password
