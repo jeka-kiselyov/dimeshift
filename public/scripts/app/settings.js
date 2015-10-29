@@ -6,7 +6,7 @@ App.settings = {
 	templatePath: site_path+'/jstemplates/',
 	version: (typeof(app_version) !== 'undefined') ? app_version : '',
 	title: function(title) {
-		return title+' | '+'Wallet';
+		return title+' | '+'DimeShift';
 	},
 
 	availiableLocales: {
