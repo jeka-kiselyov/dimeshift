@@ -18,6 +18,7 @@
 		"./public/vendors/jsmart/jsmart.js",
 		"./public/scripts/functions.js",
 		"./public/scripts/app.js",
+		"./public/scripts/app/helper.js",
 		"./public/scripts/app/view_stack.js",
 		"./public/scripts/app/settings.js",
 		"./public/scripts/app/local_storage.js",

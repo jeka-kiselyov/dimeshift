@@ -23,6 +23,8 @@
     "chartist": "*",
     "bootstrap-clickonmouseover": "https://github.com/jeka-kiselyov/bootstrap-clickonmouseover/archive/master.zip",
     "mprogress": "https://github.com/lightningtgc/MProgress.js/archive/master.zip",
-    "bootstrap-tour": "~0.10.2"
+    "bootstrap-tour": "~0.10.2",
+    "js-xlsx": "~0.8.0",
+    "moment": "~2.10.6"
   }
 }
