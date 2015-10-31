@@ -14,7 +14,7 @@ App.Views.Dialogs.AddWallet = App.Views.Abstract.Dialog.extend({
 	},
 	onSubmit: function() {
 		var that = this;
-
+		
 		this.$('.btn-primary').button('loading');
 		var name = this.$('#input_name').val();
 		var currency = this.$('#input_currency').val();

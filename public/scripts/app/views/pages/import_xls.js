@@ -10,12 +10,23 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 	events: {
 		'change #file_input': 'fileInputChanged',
 		'change .import_row_type': 'checkRowsToImport',
-		'click .select_file_button': 'selectFile'
+		'click .select_file_button': 'selectFile',
+		'click #proccess_step1_button': 'goToPreview',
+		'click #proccess_step2_cancel': 'goToFirstStep'
 	},
 	worksheet: null,
 	sample: null,
 	sampleWidth: null,
 	sampleHeight: null,
+	importPreview: null,
+	step: 1,
+	selectedFields: {
+		date: false,
+		time: false,
+		description: false,
+		amount: false,
+		abs_amount: false
+	},
 	dateFormats: [
 		'DD.MM.YYYY',
 		'MM.DD.YYYY',
@@ -36,11 +47,20 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 	selectFile: function() {
 		this.$('#file_input').click();
 	},
+	goToFirstStep: function() {
+		this.step = 1;
+		this.render();
+	},
+	goToPreview: function() {
+		this.step = 2;
+		this.render();
+	},
 	render: function() {
-		console.log(3);
+		// console.log(3);
 		this.renderHTML({sample: this.sample, sampleHeight: this.sampleHeight, sampleWidth: this.sampleWidth,
-			dateFormats: this.dateFormats, timeFormats: this.timeFormats});
-		console.log(3);
+			dateFormats: this.dateFormats, timeFormats: this.timeFormats, importPreview: this.importPreview, 
+			step: this.step, selectedFields: this.selectedFields});
+		// console.log(3);
 	},
 	wakeUp: function() {
 		this.holderReady = false;
@@ -55,6 +75,11 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 
 		var date_column_x = false;
 		var time_column_x = false;
+
+		var has_date = false;
+		var has_amount = false;
+
+		var importPreview = {};
 
 		$('.import_row_type').each(function(){
 			var type = $(this).val();
@@ -71,23 +96,46 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 				if (type == 'amount')
 				{
 					if (isNaN(parseFloat(value))) badToImport.push(y);
+					else {
+						if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
+						importPreview[y]['amount'] = value;
+						has_amount = true;
+
+						that.selectedFields.amount = x;	
+					}
 				}
 				else if (type == 'abs_amount')
 				{
-					if (isNaN(parseFloat(value)) || value < 0) badToImport.push(y);					
+					if (isNaN(parseFloat(value)) || value < 0) badToImport.push(y);
+					else {
+						if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
+						importPreview[y]['amount'] = value;
+						has_amount = true;			
+
+						that.selectedFields.abs_amount = x;		
+					}
+				}
+				else if (type == 'description')
+				{
+					if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
+					importPreview[y]['description'] = value;
+					that.selectedFields.description = x;
 				}
 				else if (type == 'date')
 				{
 					date_column_x = x;
+					that.selectedFields.date = x;
 				}
 				else if (type == 'time')
 				{
 					time_column_x = x;
+					that.selectedFields.time = x;
 				}
 				else if (type == 'datetime')
 				{
 					date_column_x = x;
 					time_column_x = x;
+					that.selectedFields.datetime = x;
 				}
 			}
 			x++;
@@ -109,14 +157,39 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 
 			if (!parsed.isValid())
 				badToImport.push(y);
+			else {
+				if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
+				importPreview[y]['date'] = parsed.unix();
+				has_date = true;
+			}
 		}
 
+		this.importPreview = null;
+		for (var k in importPreview)
+		{
+			if (typeof(importPreview[k]['date']) != 'undefined' && typeof(importPreview[k]['amount']) != 'undefined')
+			if (!this.importPreview || this.importPreview.length < 10)
+			{
+				if (!this.importPreview) 
+					this.importPreview = [];
+				this.importPreview.push(importPreview[k]);
+			}
+		}
 
 		console.log(badToImport);
 		$('.sample_import_row').addClass('info');
 		badToImport.forEach(function(y){
 			$('#sample_import_row_'+y).removeClass('info');
 		});
+
+		if (has_date && has_amount)
+		{
+			this.$('#proccess_step1_warning').hide();
+			this.$('#proccess_step1_button').prop('disabled', false);
+		} else {
+			this.$('#proccess_step1_warning').show();	
+			this.$('#proccess_step1_button').prop('disabled', 'disabled');		
+		}
 	},
 	getValueForCell: function(x, y)
 	{
@@ -152,16 +225,11 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 			}
 		}
 
-		console.log(sample);
 		this.sample = sample;
 
 		this.sampleWidth = width;
 		this.sampleHeight = height;
 		this.render();
-
-		console.log(width);
-		console.log(height);
-		console.log(sample);
 	},
 	fileInputChanged: function(e) {
 		this.$('.select_file_button').button('loading');
@@ -196,7 +264,6 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		App.helper.loadAdditionalScripts(this.additionalScripts, function(){
 
 			that.on('render', function(){
-
 
 			});
 
