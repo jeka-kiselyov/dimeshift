@@ -8,6 +8,7 @@
 		"./public/vendors/bootstrap/js/tooltip.js",
 		"./public/vendors/bootstrap/js/popover.js",
 		"./public/vendors/bootstrap-tour/build/js/bootstrap-tour.js",
+		"./public/vendors/bootstrap-select/dist/js/bootstrap-select.js",
 		"./public/vendors/underscore/underscore-min.js",
 		"./public/vendors/backbone/backbone.js",
 		"./public/vendors/backbone.paginator/lib/backbone.paginator.min.js",
@@ -18,6 +19,7 @@
 		"./public/vendors/jsmart/jsmart.js",
 		"./public/scripts/functions.js",
 		"./public/scripts/app.js",
+		"./public/scripts/app/helper.js",
 		"./public/scripts/app/view_stack.js",
 		"./public/scripts/app/settings.js",
 		"./public/scripts/app/local_storage.js",
@@ -47,6 +49,7 @@
 		"./public/vendors/chartist/dist/chartist.min.css",
 		"./public/vendors/bootstrap/dist/css/bootstrap.min.css",
 		"./public/vendors/bootstrap-tour/build/css/bootstrap-tour.min.css",
+		"./public/vendors/bootstrap-select/dist/css/bootstrap-select.min.css",
 		"./public/css/main.css"
 	]
 }
