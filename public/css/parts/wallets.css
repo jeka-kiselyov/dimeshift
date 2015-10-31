@@ -16,6 +16,10 @@ a.action:hover {
 	text-align: right;
 }
 
+.transaction_description {
+	margin-left: 170px;
+}
+
 .transaction_time {
 	font-size: 12px;
 	width: 170px;

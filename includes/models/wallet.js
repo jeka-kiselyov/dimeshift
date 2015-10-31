@@ -60,7 +60,16 @@ module.exports = function(sequelize, DataTypes) {
 				var amount = parseFloat(params.amount,10) || 0;
 				var abs_amount = Math.abs(amount);
 				var subtype = params.subtype || 'confirmed';
-				var datetime = parseInt(params.datetime) || (Date.now() / 1000 | 0);
+
+				var currentDateTime = (Date.now() / 1000 | 0);
+				var datetime = currentDateTime;
+				var inThePast = false;
+				if (parseInt(params.datetime))
+				{
+					datetime = parseInt(params.datetime);
+					if (datetime < currentDateTime)
+						inThePast = true;
+				}
 
 				var type = 'expense'; 
 				if (amount >= 0)
@@ -74,10 +83,39 @@ module.exports = function(sequelize, DataTypes) {
 					abs_amount: abs_amount, subtype: subtype, datetime: datetime, 
 					type: type, user_id: user_id}).then(function(transaction){
 						/// proccess successful calculation
-						that.total = that.total + transaction.amount;
-						that.save().done(function(res){
-							resolve(transaction);
-						});
+						if (!inThePast)
+						{
+							that.total = that.total + transaction.amount;
+							that.save().done(function(res){
+								resolve(transaction);
+							});	
+						} else {
+							/// need to recalculate
+							/// find setup transaction after this current one we've added
+							sequelize.db.Transaction.findOne({
+								where: {
+									wallet_id: that.id,
+									subtype: 'setup',
+									datetime: {$gt: datetime}
+								},
+								order: 'datetime ASC'
+								}).then(function(setup_transaction){
+									if (setup_transaction)
+									{
+										/// there's setup transaction
+										setup_transaction.amount = setup_transaction.amount + transaction.amount;
+										setup_transaction.save().done(function(res){
+											resolve(transaction);
+										});	
+									} else {
+										/// no setup transaction, update wallet
+										that.total = that.total + transaction.amount;
+										that.save().done(function(res){
+											resolve(transaction);
+										});
+									}
+								});
+						}
 					},function(err){
 						reject(err);
 					});

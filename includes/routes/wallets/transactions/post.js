@@ -13,6 +13,7 @@ exports.handler = function(req, res, next){
 	var amount = parseFloat(body.amount, 10) || 0;
 	var description = body.description || '';
 	var subtype = body.subtype || 'confirmed';
+	var datetime = body.datetime || null;
 
 	api.requireSignedIn(req, function(user){
 		db.Wallet.findOne({ where: {id: wallet_id, user_id: user.id}})
@@ -21,7 +22,7 @@ exports.handler = function(req, res, next){
 			if (subtype == 'setup')
 				return wallet.setTotalTo({description: description, amount: amount});
 			else
-				return wallet.insertTransaction({description: description, amount: amount});
+				return wallet.insertTransaction({description: description, amount: amount, datetime: datetime});
 		}).then(function(transaction){
 			res.send(transaction);
 			next();
