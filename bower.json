@@ -17,7 +17,6 @@
     "backbone": "1.0.0",
     "backbone.paginator": "https://github.com/backbone-paginator/backbone.paginator/archive/2.0.2.zip",
     "underscore": "1.7.0",
-    "ckeditor": "4.4.4",
     "bootstrap": "3.3.4",
     "magnific-popup": "*",
     "chartist": "*",
