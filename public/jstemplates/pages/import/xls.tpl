@@ -128,12 +128,6 @@
 				</label>
 			</div>
 
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" checked="checked" id="recalculate_wallet_total"> {tp}Also recalculate wallet total{/tp}
-				</label>
-			</div>
-
 			<input type="button" id="proccess_step2_button" class="btn btn-primary pull-right" value="{t}Import{/t}">
 			<input type="button" id="proccess_step2_cancel" class="btn btn-default pull-right" value="{t}Back{/t}">
 		</div>
