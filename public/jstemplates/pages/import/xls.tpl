@@ -21,7 +21,7 @@
 			<input type="file" id="file_input" style="display: none;">
 			<input type="button" class="select_file_button btn btn-primary" value="{t}Select file{/t}" data-loading-text="{t}Uploading...{/t}">
 			<p>{tp}Please select your local .xls file{/tp}</p>
-			<a href="#" class="btn btn-default">{tp}Cancel{/tp}</a>
+			<a href="{$settings->site_path}/wallets/{$wallet_id}" class="btn btn-default">{tp}Cancel{/tp}</a>
 
 		</div>
 	</div>
@@ -134,6 +134,34 @@
 	</div>
 	{/if}
 
+	{if $step == 3}
+
+	<div class="panel panel-default" id="step_2">
+		<div class="panel-heading">Step 4. Import</div>
+		<div class="panel-body">
+			<div class="progress">
+				<div class="progress-bar progress-bar-striped active" id="import_progress_bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 1%">
+				<span class="sr-only">&nbsp;</span>
+			</div>
+			</div>
+		</div>
+	</div>
+
+
+	{/if}
+
+
+	{if $step == 4}
+
+	<div class="panel panel-default" id="step_2">
+		<div class="panel-heading">Finished</div>
+		<div class="panel-body">
+			<p>Import operation is finished. <a href="{$settings->site_path}/wallets/{$wallet_id}">Check out you updated wallet</a></p>
+		</div>
+	</div>
+
+
+	{/if}
 
 </div>
 </div>

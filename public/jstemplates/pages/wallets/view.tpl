@@ -27,7 +27,9 @@
 
 		<div class="list-group">
 			<div class="list-group-item ">
-				<h3 class="panel-title">{tp}Transactions{/tp}</h3>
+				<h3 class="panel-title">{tp}Transactions{/tp}
+					<span class="pull-right"><a href="{$settings->site_path}/wallets/{$item->id}/import_xls" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> {tp}import{/tp}</a></span>
+				</h3>
 
 				<div class="form-group">
 					<form method="post" id="add_transaction_form">
