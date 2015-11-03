@@ -91,6 +91,7 @@ var harvester = function(dirname, callback) {
       {
         parseFile(file);
         parseFile(file, 'ts');
+        parseFile(file, 'tp');
         foundTplCount++;
       }
       if (file.slice(-5) === '.html' || file.slice(-4) === '.htm'){

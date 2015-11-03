@@ -11,7 +11,7 @@
 
 	{if $step == 1 && !$sample}
 	<div class="panel panel-default" id="step_1">
-		<div class="panel-heading">Step 1. Select .xls file to import</div>
+		<div class="panel-heading">{tp}Step 1. Select .xls file to import{/tp}</div>
 		<div class="panel-body">
 
 			<div class="alert alert-danger" role="alert" style="display: none;">
@@ -19,7 +19,7 @@
 			</div>
 
 			<input type="file" id="file_input" style="display: none;">
-			<input type="button" class="select_file_button btn btn-primary" value="{t}Select file{/t}" data-loading-text="{t}Uploading...{/t}">
+			<input type="button" class="select_file_button btn btn-primary" value="{t}Select file{/t}" data-loading-text="{t}Uploading...{/t}" data-i18nvalue="Select file">
 			<p>{tp}Please select your local .xls file{/tp}</p>
 			<a href="{$settings->site_path}/wallets/{$wallet_id}" class="btn btn-default">{tp}Cancel{/tp}</a>
 
@@ -29,7 +29,7 @@
 
 	{if $step == 1 && $sample}
 	<div class="panel panel-default" id="step_2">
-		<div class="panel-heading">Step 2. Select columns to import</div>
+		<div class="panel-heading">{tp}Step 2. Select columns to import{/tp}</div>
 		<div class="panel-body">
 
 			<div style="overflow-x: scroll">
@@ -39,12 +39,12 @@
 				{for $var=1 to $sampleWidth}
 					<td>
 						<select name="import_row_{$var}_type" class="import_row_type">
-							<option value=''>Do not import</option>
-							<option value='description' {if $selectedFields.description==$var} selected="selected"{/if}>Description</option>
-							<option value='date' {if $selectedFields.date==$var} selected="selected"{/if}>Date</option>
-							<option value='time' {if $selectedFields.time==$var} selected="selected"{/if}>Time</option>
-							<option value='amount' {if $selectedFields.amount==$var} selected="selected"{/if}>Amount</option>
-							<option value='abs_amount' {if $selectedFields.abs_amount==$var} selected="selected"{/if}>Expense amount</option>
+							<option value=''>{t}Do not import{/t}</option>
+							<option value='description' {if $selectedFields.description==$var} selected="selected"{/if}>{t}Description{/t}</option>
+							<option value='date' {if $selectedFields.date==$var} selected="selected"{/if}>{t}Date{/t}</option>
+							<option value='time' {if $selectedFields.time==$var} selected="selected"{/if}>{t}Time{/t}</option>
+							<option value='amount' {if $selectedFields.amount==$var} selected="selected"{/if}>{t}Amount{/t}</option>
+							<option value='abs_amount' {if $selectedFields.abs_amount==$var} selected="selected"{/if}>{t}Expense amount{/t}</option>
 						</select>
 
 						<div>
@@ -75,7 +75,7 @@
 					</tr>
 					{else}
 					<tr class="active">
-						<td colspan="{$sampleWidth}">... {$row.skiped} more rows</td>
+						<td colspan="{$sampleWidth}">... {$row.skiped} {tp}more rows{/tp}</td>
 					</tr>
 					{/if}
 					</tr>
@@ -88,7 +88,7 @@
 				<p class="text-danger pull-left bg-warning" id="proccess_step1_warning" style="padding: 7px; display: block;">
 					{tp}Amount and Date fields are required{/tp}
 				</p>
-				<input type="button" disabled="disabled" id="proccess_step1_button" class=" btn btn-primary pull-right" value="{t}Preview{/t}">
+				<input type="button" disabled="disabled" id="proccess_step1_button" class=" btn btn-primary pull-right" value="{t}Preview{/t}" data-i18nvalue="Preview">
 			</div>
 		</div>
 	</div>
@@ -96,16 +96,16 @@
 
 	{if $step == 2}
 	<div class="panel panel-default" id="step_2">
-		<div class="panel-heading">Step 3. Preview and settings</div>
+		<div class="panel-heading">{tp}Step 3. Preview and settings{/tp}</div>
 		<div class="panel-body">
 
 			{if $importPreview}
 			<table class="table table-striped  table-condensed table-bordered">
 				<tr>
-					<th>Date</th>
-					<th>Time</th>
-					<th>Description</th>
-					<th>Amount</th>
+					<th>{tp}Date{/tp}</th>
+					<th>{tp}Time{/tp}</th>
+					<th>{tp}Description{/tp}</th>
+					<th>{tp}Amount{/tp}</th>
 				</tr>
 				{foreach from=$importPreview item=i}
 				<tr>
@@ -128,8 +128,8 @@
 				</label>
 			</div>
 
-			<input type="button" id="proccess_step2_button" class="btn btn-primary pull-right" value="{t}Import{/t}">
-			<input type="button" id="proccess_step2_cancel" class="btn btn-default pull-right" value="{t}Back{/t}">
+			<input type="button" id="proccess_step2_button" class="btn btn-primary pull-right" data-i18nvalue="Import" value="{t}Import{/t}">
+			<input type="button" id="proccess_step2_cancel" class="btn btn-default pull-right" data-i18nvalue="Back" value="{t}Back{/t}">
 		</div>
 	</div>
 	{/if}
@@ -137,7 +137,7 @@
 	{if $step == 3}
 
 	<div class="panel panel-default" id="step_2">
-		<div class="panel-heading">Step 4. Import</div>
+		<div class="panel-heading">{tp}Step 4. Import{/tp}</div>
 		<div class="panel-body">
 			<div class="progress">
 				<div class="progress-bar progress-bar-striped active" id="import_progress_bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 1%">
@@ -154,9 +154,9 @@
 	{if $step == 4}
 
 	<div class="panel panel-default" id="step_2">
-		<div class="panel-heading">Finished</div>
+		<div class="panel-heading">{tp}Finished{/tp}</div>
 		<div class="panel-body">
-			<p>Import operation is finished. <a href="{$settings->site_path}/wallets/{$wallet_id}">Check out you updated wallet</a></p>
+			<p>{tp}Import operation is finished{/tp}. <a href="{$settings->site_path}/wallets/{$wallet_id}">{tp}Check out you updated wallet{/tp}</a></p>
 		</div>
 	</div>
 

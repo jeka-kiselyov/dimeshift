@@ -28,6 +28,8 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		amount: false,
 		abs_amount: false
 	},
+	selectedTimeFormat: false,
+	selectedDateFormat: false,
 	dateFormats: [
 		'DD.MM.YYYY',
 		'MM.DD.YYYY',
@@ -43,7 +45,7 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		'h:m a'
 	],
 	title: function() {
-		return 'Import XLS';
+		return 'Import';
 	},
 	selectFile: function() {
 		this.$('#file_input').click();
@@ -62,11 +64,9 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		this.import();
 	},
 	render: function() {
-		// console.log(3);
 		this.renderHTML({sample: this.sample, sampleHeight: this.sampleHeight, sampleWidth: this.sampleWidth,
 			dateFormats: this.dateFormats, timeFormats: this.timeFormats, importPreview: this.importPreview, 
 			step: this.step, selectedFields: this.selectedFields, wallet_id: this.model.id});
-		// console.log(3);
 	},
 	wakeUp: function() {
 		this.holderReady = false;
@@ -98,8 +98,8 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		var amount = null;
 
 		/// date
-		var date_format = 'DD.MM.YYYY';
-		var time_format = 'H:m';
+		var date_format = this.selectedDateFormat;
+		var time_format = this.selectedTimeFormat;
 		if (this.selectedFields.date){
 			var txt_date = that.getValueForCell(this.selectedFields.date, this.alreadyGotDataRowN);
 			if (this.selectedFields.time && this.selectedFields.time != this.selectedFields.date)
@@ -129,9 +129,15 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		/// amount
 		if (this.selectedFields.amount) {
 			var value = that.getValueForCell(this.selectedFields.amount, this.alreadyGotDataRowN);
-			value = parseFloat(value, 10)
+			value = parseFloat(value, 10);
 			if (!isNaN(value))
 				amount = value;
+		}
+		if (this.selectedFields.abs_amount) {
+			var value = that.getValueForCell(this.selectedFields.amount, this.alreadyGotDataRowN);
+			value = Math.abs(parseFloat(value, 10));
+			if (!isNaN(value))
+				amount = -value;
 		}
 
 		if (amount !== null && date !== null)
@@ -146,7 +152,6 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 				that.getNextRowData();
 			}, 100);
 		} else {
-			console.log(this.rowsToImport);
 			this.rowToImportCount = this.rowsToImport.length;
 			setTimeout(function(){
 				that.getTransactionsToCheckForDuplicates();
@@ -255,6 +260,10 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 
 		var importPreview = {};
 
+
+		$('.import_row_date_format').hide();
+		$('.import_row_time_format').hide();
+
 		$('.import_row_type').each(function(){
 			var type = $(this).val();
 
@@ -283,7 +292,7 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 					if (isNaN(parseFloat(value)) || value < 0) badToImport.push(y);
 					else {
 						if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
-						importPreview[y]['amount'] = value;
+						importPreview[y]['amount'] = -parseFloat(value);
 						has_amount = true;			
 
 						that.selectedFields.abs_amount = x;		
@@ -299,24 +308,28 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 				{
 					date_column_x = x;
 					that.selectedFields.date = x;
+					that.selectedDateFormat = that.$('#import_row_'+x+'_date_format').val();
 				}
 				else if (type == 'time')
 				{
 					time_column_x = x;
 					that.selectedFields.time = x;
+					that.selectedTimeFormat = that.$('#import_row_'+x+'_time_format').val();
 				}
 				else if (type == 'datetime')
 				{
 					date_column_x = x;
 					time_column_x = x;
 					that.selectedFields.datetime = x;
+					that.selectedDateFormat = that.$('#import_row_'+x+'_date_format').val();
+					that.selectedTimeFormat = that.$('#import_row_'+x+'_time_format').val();
 				}
 			}
 			x++;
 		});
 
-		var date_format = 'DD.MM.YYYY';
-		var time_format = 'H:m';
+		var date_format = this.selectedDateFormat;
+		var time_format = this.selectedTimeFormat;
 		if (date_column_x)
 		for (y = 1; y < height; y++)
 		{
@@ -327,7 +340,6 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 			}
 
 			var parsed = moment(date, date_format);
-			// console.log('Date: '+date+'  parsed as: '+parsed.format());
 
 			if (!parsed.isValid())
 				badToImport.push(y);
@@ -350,7 +362,6 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 			}
 		}
 
-		console.log(badToImport);
 		$('.sample_import_row').addClass('info');
 		badToImport.forEach(function(y){
 			$('#sample_import_row_'+y).removeClass('info');

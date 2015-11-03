@@ -16,7 +16,7 @@ App.router = new (Backbone.Router.extend({
     "wallets(/)": "wallets",// #wallets
     "profile(/)": "profile",// #wallets
     "wallets/:id": "wallet",// #wallets/4
-    "wallets/:id/import_xls": "importXLS",// #wallets/4
+    "wallets/:id/import(/)": "importXLS",// #wallets/4
     "user/updatepassword/:code/:hash": "updatePassword"
   },
 
