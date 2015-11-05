@@ -22,6 +22,9 @@ App.Tours.Wallet = {
 
 		this.page = page;
 		this.tour = new Tour({
+			onEnd: function (tour) {
+				App.eraseCookie('show_tour_Wallet');
+			},
 			steps: [
 				{
 					element: "#add_profit_button",

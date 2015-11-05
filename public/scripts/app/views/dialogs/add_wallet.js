@@ -40,12 +40,13 @@ App.Views.Dialogs.AddWallet = App.Views.Abstract.Dialog.extend({
 			item.set('currency', currency);
 			item.set('total', 0);
 			item.set('status', 'active');
-			item.save();
 
 			if (typeof(App.page) !== 'undefined' && App.page && typeof(App.page.items) !== 'undefined' && App.page.items.model == App.Models.Wallet)
 			{
 				App.page.items.add(item);
 			}
+			
+			item.save();
 
 			this.hide();			
 		}
