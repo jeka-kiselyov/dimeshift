@@ -175,5 +175,6 @@
   "Finished": "Завершено",
   "Import operation is finished": "Імпорт завершений",
   "Check out you updated wallet": "Перегляньте ваш оновлений гаманець",
-  "Step 3. Preview and settings": "Крок 3. Перегляд"
+  "Step 3. Preview and settings": "Крок 3. Перегляд",
+  "You don't have access to other users' wallets": "Інші користувачі не надавали вам доступ до своїх гаманців"
 }

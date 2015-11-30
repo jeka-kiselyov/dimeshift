@@ -9,7 +9,11 @@
 
 	{if $items|count == 0}
 		{if $status|default:'active' == 'active'}
+			{if $origin|default:'mine' == 'shared'}
+			<div class="alert alert-warning" role="alert">{tp}You don't have access to other users' wallets{/tp}</div>	
+			{else}
 			<div class="alert alert-warning" role="alert">{tp}You have no wallets{/tp} <a href="{$settings->site_path}/wallets/add" class="btn btn-primary btn-xs" id="add_wallet_button">{tp}Add{/tp}</a></div>
+			{/if}
 		{else}
 			<div class="alert alert-warning" role="alert">{tp}You have no hidden wallets{/tp}</div>			
 		{/if}
