@@ -9,8 +9,8 @@ function serveImage(opts) {
     var __cache = {};
 
     function serveFileFromStats(file, err, stats, isGzip, req, res, next) {
-        if (err ||!stats.isFile() ) {
-            res.writeHead( 404, "Not Found" );
+        if (err || !stats.isFile()) {
+            res.writeHead(404, "Not Found");
             res.end();
             return next(false);
         }
@@ -19,7 +19,11 @@ function serveImage(opts) {
         var vmime = mime.lookup(file);
         var vmtime = stats.mtime;
 
-        __cache[file] = {size: vsize, mime: vmime, mtime: vmtime};
+        __cache[file] = {
+            size: vsize,
+            mime: vmime,
+            mtime: vmtime
+        };
 
         res.setHeader("Cache-Control", "public, max-age=2592000");
         res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
@@ -30,16 +34,16 @@ function serveImage(opts) {
         res.set('Last-Modified', __cache[file]['mtime']);
 
         res.writeHead(200);
-        fs.readFile(file, function (err, data) {
-             __cache[file]['content'] = data;
-             res.end(data);
-             return next(false);
+        fs.readFile(file, function(err, data) {
+            __cache[file]['content'] = data;
+            res.end(data);
+            return next(false);
         });
     }
 
     function serveNormal(file, req, res, next) {
         if (typeof(__cache[file]) !== 'undefined') {
-            
+
             res.setHeader("Cache-Control", "public, max-age=2592000");
             res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
 
@@ -53,7 +57,7 @@ function serveImage(opts) {
 
             next(false);
         } else {
-            fs.stat(file, function (err, stats) {
+            fs.stat(file, function(err, stats) {
                 serveFileFromStats(file,
                     err,
                     stats,
@@ -66,8 +70,8 @@ function serveImage(opts) {
     }
 
     function serve(req, res, next) {
-        if (req.headers[ "if-modified-since" ]) {
-            res.writeHead( 304, "Not Modified" );
+        if (req.headers["if-modified-since"]) {
+            res.writeHead(304, "Not Modified");
             res.end();
             return next(false);
         }
@@ -77,7 +81,7 @@ function serveImage(opts) {
         file = path.join('./public/images/', file);
 
         if (req.method !== 'GET' && req.method !== 'HEAD') {
-            res.writeHead( 404, "Not Found" );
+            res.writeHead(404, "Not Found");
             res.end();
             return next(false);
         }

@@ -7,7 +7,10 @@ App.Views.Dialogs.TransactionDetails = App.Views.Abstract.Dialog.extend({
 		"click #remove_transaction_button": "removeTransaction"
 	},
 	removeTransaction: function() {
-		App.showDialog('RemoveTransaction', {item: this.item, wallet: this.wallet});
+		App.showDialog('RemoveTransaction', {
+			item: this.item,
+			wallet: this.wallet
+		});
 		return false;
 	},
 	initialize: function(params) {
@@ -20,7 +23,10 @@ App.Views.Dialogs.TransactionDetails = App.Views.Abstract.Dialog.extend({
 		else
 			throw 'Can not initialize dialog without param.wallet';
 
-		this.show({item: this.item.toJSON(), wallet: this.wallet.toJSON()});
+		this.show({
+			item: this.item.toJSON(),
+			wallet: this.wallet.toJSON()
+		});
 	},
 	onSubmit: function() {
 		var that = this;

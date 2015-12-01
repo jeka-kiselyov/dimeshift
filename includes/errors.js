@@ -9,13 +9,12 @@ function ValidationError(err) {
     constructorOpt: ValidationError
   });
   this.name = 'ValidationError';
-  if (typeof(err.errors) !== 'undefined')
-  {
+  if (typeof(err.errors) !== 'undefined') {
     for (var k in err.errors)
-      this.message.push(err.errors[k].message); 
+      this.message.push(err.errors[k].message);
   } else {
     console.log(err);
-    this.message.push(""+err);
+    this.message.push("" + err);
   }
 };
 util.inherits(ValidationError, restify.RestError);

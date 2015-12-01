@@ -2,13 +2,11 @@
 App.Views.Header = Backbone.View.extend({
 
 	el: $("#header"),
-	events: {
-	},
+	events: {},
 
 	render: function() {
 		this.setElement($("#header"));
-		if (App.currentUser.isSignedIn())
-		{
+		if (App.currentUser.isSignedIn()) {
 			console.log('header.js | Rendering for signed in user');
 
 			this.$('.header_is_not_signed_in').hide();
@@ -21,9 +19,8 @@ App.Views.Header = Backbone.View.extend({
 
 
 		$(".menu_category").parent().removeClass('active');
-		if (typeof(App.page) !== 'undefined' && App.page && typeof(App.page.category) !== 'undefined')
-		{
-			$(".menu_category_"+App.page.category).parent().addClass('active');
+		if (typeof(App.page) !== 'undefined' && App.page && typeof(App.page.category) !== 'undefined') {
+			$(".menu_category_" + App.page.category).parent().addClass('active');
 		} else {
 			$(".menu_category_home").parent().addClass('active');
 		}

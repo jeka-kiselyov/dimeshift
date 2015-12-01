@@ -21,12 +21,13 @@ App.Views.Dialogs.FillProfile = App.Views.Abstract.Dialog.extend({
 		var password = this.$('#input_password').val();
 		var email = this.$('#input_email').val();
 
-		this.listenTo(App.currentUser, 'invalid', function(){
-			var html = ""; for (var k in App.currentUser.validationError) html+=App.currentUser.validationError[k].msg+"<br>";
+		this.listenTo(App.currentUser, 'invalid', function() {
+			var html = "";
+			for (var k in App.currentUser.validationError) html += App.currentUser.validationError[k].msg + "<br>";
 			this.$('.errors-container').html(html);
 			this.$('.errors-container').slideDown();
 
-			this.$('#input_login').focus();	/// @todo: focus to input with error
+			this.$('#input_login').focus(); /// @todo: focus to input with error
 			this.$('.btn-primary').button('reset');
 			var that = this;
 			setTimeout(function() {
@@ -34,16 +35,16 @@ App.Views.Dialogs.FillProfile = App.Views.Abstract.Dialog.extend({
 			}, 2000);
 		});
 
-		this.listenTo(App.currentUser, 'filled', function(){
+		this.listenTo(App.currentUser, 'filled', function() {
 			$('#fill_profile_invitation').slideUp();
 			this.$('.modal-body-default').slideUp();
 			this.$('.modal-body-success').slideDown();
 
-			setTimeout(function(){
+			setTimeout(function() {
 				App.dialog.hide();
-			},2000);
+			}, 2000);
 		});
-		
+
 		App.currentUser.fillProfile(login, email, password);
 
 		return false;

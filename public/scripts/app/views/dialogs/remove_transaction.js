@@ -17,13 +17,15 @@ App.Views.Dialogs.RemoveTransaction = App.Views.Abstract.Dialog.extend({
 		else
 			throw 'Can not initialize dialog without param.wallet';
 
-		this.show({item: this.item.toJSON()});
+		this.show({
+			item: this.item.toJSON()
+		});
 	},
 	doProcess: function() {
 
 		var that = this;
 
-		this.$('.btn-danger').button('loading');	
+		this.$('.btn-danger').button('loading');
 		App.page.model.removeTransaction(this.item);
 
 		this.hide();
@@ -40,7 +42,10 @@ App.Views.Dialogs.RemoveTransaction = App.Views.Abstract.Dialog.extend({
 		// this.item.destroy();
 	},
 	onSubmit: function() {
-		App.showDialog('TransactionDetails', {item: this.item, wallet: this.wallet});
+		App.showDialog('TransactionDetails', {
+			item: this.item,
+			wallet: this.wallet
+		});
 		return false;
 	}
 });

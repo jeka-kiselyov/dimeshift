@@ -1,15 +1,15 @@
 var hippie = require('hippie');
 var expect = require('chai').expect;
 
-describe('Server', function () {
-  describe('/api/users endpoint', function () {
+describe('Server', function() {
+  describe('/api/users endpoint', function() {
 
-    it('GET returns a user based on the id', function (done) {
+    it('GET returns a user based on the id', function(done) {
       hippie()
         .json()
         .base('http://localhost:8080')
         .get('/api/users')
-        .expectStatus(500)  /// auth code is empty == invalid
+        .expectStatus(500) /// auth code is empty == invalid
         .end(function(err, res, body) {
           // expect(body).to.equal(false);
           done();
@@ -17,11 +17,11 @@ describe('Server', function () {
     });
 
 
-    it('POST registers user', function (done) {
+    it('POST registers user', function(done) {
 
-      var email = 'email'+Math.random()+'@example.com';
-      var login = 'login'+Math.random();
-      var password = 'password'+Math.random();
+      var email = 'email' + Math.random() + '@example.com';
+      var login = 'login' + Math.random();
+      var password = 'password' + Math.random();
 
       var auth_code = false;
 
@@ -29,13 +29,17 @@ describe('Server', function () {
         .json()
         .base('http://localhost:8080')
         .post('/api/users')
-        .send({ login: login, email: email, password: password })
+        .send({
+          login: login,
+          email: email,
+          password: password
+        })
         .expectStatus(200)
         .end(function(err, res, body) {
           if (err) throw err;
           var cookieHeader = res.headers['set-cookie'];
           res.cookies = {};
-          cookieHeader && cookieHeader.forEach(function( cookie ) {
+          cookieHeader && cookieHeader.forEach(function(cookie) {
             var parts = cookie.split('=');
             res.cookies[parts.shift().trim()] = decodeURI(parts.join('=').split('; ')[0]);
           });
@@ -59,10 +63,10 @@ describe('Server', function () {
             .json()
             .base('http://localhost:8080')
             .get('/api/users')
-            .header('Cookie', 'is_logged_in_user=1; logged_in_user='+auth_code)
+            .header('Cookie', 'is_logged_in_user=1; logged_in_user=' + auth_code)
             .expectStatus(200)
             .end(function(err, res, body) {
-              
+
               expect(body).to.be.an('object');
               expect(body.id).to.be.a('number');
               expect(body.login).to.equal(login);
@@ -74,12 +78,15 @@ describe('Server', function () {
                 .json()
                 .base('http://localhost:8080')
                 .post('/api/users/signin')
-                .send({ username: login, password: password })
+                .send({
+                  username: login,
+                  password: password
+                })
                 .expectStatus(200)
                 .end(function(err, res, body) {
                   var cookieHeader = res.headers['set-cookie'];
                   res.cookies = {};
-                  cookieHeader && cookieHeader.forEach(function( cookie ) {
+                  cookieHeader && cookieHeader.forEach(function(cookie) {
                     var parts = cookie.split('=');
                     res.cookies[parts.shift().trim()] = decodeURI(parts.join('=').split('; ')[0]);
                   });

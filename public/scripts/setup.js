@@ -1,7 +1,6 @@
 // setup.js
 $(function() {
 
-  App.init();
+	App.init();
 
 });
-

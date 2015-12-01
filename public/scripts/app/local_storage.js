@@ -30,7 +30,9 @@ App.localStorage = {
 			return false;
 		try {
 			return ('localStorage' in window && window.localStorage);
-		} catch(err) { return false; }
+		} catch (err) {
+			return false;
+		}
 
 		return true;
 	},
@@ -42,8 +44,9 @@ App.localStorage = {
 			return undefined;
 		try {
 			return JSON.parse(data);
+		} catch (e) {
+			return data || undefined;
 		}
-		catch(e) { return data || undefined; }
 	}
 
 };

@@ -2,7 +2,7 @@
 App.Views.Pages.Profile = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/profile/index',
-    category: 'user',
+	category: 'user',
 	title: function() {
 		return 'User Profile';
 	},
@@ -12,7 +12,9 @@ App.Views.Pages.Profile = App.Views.Abstract.Page.extend({
 	initializeParts: function() {
 		console.info('views/pages/profile.js | initializing parts');
 		this.parts = [];
-		this.parts.push(new App.Views.Parts.ProfileChangePassword({id: 'profile_change_password_container'}));
+		this.parts.push(new App.Views.Parts.ProfileChangePassword({
+			id: 'profile_change_password_container'
+		}));
 		this.partsInitialized = true;
 	},
 	render: function() {
@@ -20,7 +22,7 @@ App.Views.Pages.Profile = App.Views.Abstract.Page.extend({
 		if (!this.partsInitialized)
 			this.initializeParts();
 
-		this.once('render',function(){
+		this.once('render', function() {
 			for (var k in this.parts)
 				this.parts[k].render();
 		});
@@ -31,7 +33,7 @@ App.Views.Pages.Profile = App.Views.Abstract.Page.extend({
 		console.log('views/pages/profile.js | waking up');
 		this.holderReady = false;
 		var that = this;
-		this.requireSingedIn(function(){
+		this.requireSingedIn(function() {
 
 			that.render();
 		});
@@ -40,7 +42,7 @@ App.Views.Pages.Profile = App.Views.Abstract.Page.extend({
 		console.log('views/pages/profile.js | initializing');
 		this.renderLoading();
 		var that = this;
-		this.requireSingedIn(function(){
+		this.requireSingedIn(function() {
 			that.render();
 		});
 	}

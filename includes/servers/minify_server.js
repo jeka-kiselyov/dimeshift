@@ -7,17 +7,17 @@ var path = require('path');
 var UglifyJS = require("uglify-js");
 var CleanCSS = require('clean-css');
 
-var rfr       = require('rfr');
-var config    = rfr('includes/config.js');
+var rfr = require('rfr');
+var config = rfr('includes/config.js');
 
 function serve(name) {
     var name = name || 'css';
     var type = 'guess';
 
     var cachePath = {
-        cache: 'data/min/'+name+'.min', 
-        gzip: 'data/min/'+name+'.min.gz', 
-        raw: 'data/min/'+name+'.raw'
+        cache: 'data/min/' + name + '.min',
+        gzip: 'data/min/' + name + '.min.gz',
+        raw: 'data/min/' + name + '.raw'
     };
 
     var need_to_minify = config.minify[name] || false;
@@ -43,7 +43,7 @@ function serve(name) {
             return next();
         }
 
-        var callback = function(){
+        var callback = function() {
             doServe(req, res, next);
         };
 
@@ -53,8 +53,7 @@ function serve(name) {
             callback();
     }
 
-    function echoContentType(res)
-    {
+    function echoContentType(res) {
         if (type == 'javascript')
             res.setHeader('Content-Type', 'application/javascript');
         else
@@ -66,15 +65,13 @@ function serve(name) {
         return res;
     }
 
-    function doServe(req, res, next)
-    {
-        if (req.acceptsEncoding('gzip') && need_to_minify)
-        {
+    function doServe(req, res, next) {
+        if (req.acceptsEncoding('gzip') && need_to_minify) {
             res = echoContentType(res);
             res.setHeader('Content-Encoding', 'gzip');
             res.writeHead(200);
             res.end(__gzip);
-            console.log('Send '+type+' resources as gzip');
+            console.log('Send ' + type + ' resources as gzip');
         } else {
             res = echoContentType(res);
             res.writeHead(200);
@@ -82,15 +79,14 @@ function serve(name) {
                 res.end(__result);
             else
                 res.end(__raw);
-            console.log('Send '+type+' resources as plain');   
+            console.log('Send ' + type + ' resources as plain');
         }
 
         next();
     }
 
     function addFile(filename) {
-        if (type == 'guess')
-        {
+        if (type == 'guess') {
             if (filename.slice(-3) == '.js')
                 type = 'javascript';
             if (filename.slice(-4) == '.css')
@@ -101,7 +97,7 @@ function serve(name) {
 
     function addFolder(pathname) {
         fs.readdirSync(pathname).forEach(function(file) {
-            if (file.slice(-3) !== '.js' && file.slice(-4) !== '.css') 
+            if (file.slice(-3) !== '.js' && file.slice(-4) !== '.css')
                 return;
             addFile(path.join(pathname, file));
         });
@@ -118,8 +114,7 @@ function serve(name) {
                 callback();
         }
 
-        files.forEach(function(file) 
-        {
+        files.forEach(function(file) {
             fs.stat(file, function(err, stats) {
                 if (err)
                     return cbReady();
@@ -129,8 +124,7 @@ function serve(name) {
             });
         });
 
-        var cbCached = function(err, stats)
-        {
+        var cbCached = function(err, stats) {
             if (err)
                 return cbReady();
             if (typeof(stats['mtime']) !== 'undefined')
@@ -144,22 +138,20 @@ function serve(name) {
         fs.stat(cachePath.raw, cbCached);
     }
 
-    function generateJSHTML(callback)
-    {
+    function generateJSHTML(callback) {
         __raw = '';
-        __raw+= "function inc_js_file(fname) { var js = document.createElement('script'); js.type = 'text/javascript';";
-        __raw+= "js.src = fname; js.async = false; document.body.appendChild(js); }\n";
+        __raw += "function inc_js_file(fname) { var js = document.createElement('script'); js.type = 'text/javascript';";
+        __raw += "js.src = fname; js.async = false; document.body.appendChild(js); }\n";
 
-        files.forEach(function(file){
+        files.forEach(function(file) {
             file = file.split('./public/').join('/').split('public/').join('/');
-            __raw+="inc_js_file(\""+file+"\");\n";
+            __raw += "inc_js_file(\"" + file + "\");\n";
         })
     }
 
     function minify(callback) {
 
-        if (type == 'javascript')
-        {        
+        if (type == 'javascript') {
             console.log('Minify javascript files...');
             var result = UglifyJS.minify(files, {
                 compress: false
@@ -171,7 +163,7 @@ function serve(name) {
 
             var buf = new Buffer(__result, 'utf-8');
 
-            zlib.gzip(buf, function (_, res) {
+            zlib.gzip(buf, function(_, res) {
                 console.log('Minify javascript files. Done.');
                 __gzip = res;
 
@@ -183,17 +175,19 @@ function serve(name) {
                     callback();
             });
         } else
-        if (type == 'css')
-        {
+        if (type == 'css') {
 
 
             console.log('Minify css files...');
-            new CleanCSS({ root: path.join(process.cwd(), 'public'), relativeTo: path.join(process.cwd(), 'public') }).minify(files, function (error, minified) {
+            new CleanCSS({
+                root: path.join(process.cwd(), 'public'),
+                relativeTo: path.join(process.cwd(), 'public')
+            }).minify(files, function(error, minified) {
                 __result = minified.styles;
                 __raw = __result;
                 var buf = new Buffer(__result, 'utf-8');
 
-                zlib.gzip(buf, function (_, res) {
+                zlib.gzip(buf, function(_, res) {
                     __gzip = res;
 
                     fs.writeFile(cachePath.cache, __result);
@@ -208,8 +202,7 @@ function serve(name) {
         }
     }
 
-    function loadFromCache(callback)
-    {
+    function loadFromCache(callback) {
         var gotCount = 0;
         var expectedCount = 3;
         if (!cachePath.gzip) expectedCount--;
@@ -218,13 +211,12 @@ function serve(name) {
 
         var cbReady = function() {
             gotCount++;
-            if (gotCount == expectedCount && typeof callback == 'function')
-            {
-                console.log(type+' loaded');
-                callback();            
+            if (gotCount == expectedCount && typeof callback == 'function') {
+                console.log(type + ' loaded');
+                callback();
             }
         };
-        
+
 
         fs.readFile(cachePath.cache, function read(err, data) {
             if (err)
@@ -246,26 +238,24 @@ function serve(name) {
         });
     }
 
-    function init(callback)
-    {
-        items.forEach(function(item){
+    function init(callback) {
+        items.forEach(function(item) {
             if (item.slice(-3) === '.js' || item.slice(-4) === '.css')
                 addFile(item);
             else
-                addFolder(item); 
+                addFolder(item);
         });
 
 
-        getMTimes(function(){
-            console.log('Most recent mtime('+type+'): '+mostRecentMTime);
-            console.log('Cached recent mtime('+type+'): '+cacheMTime);
+        getMTimes(function() {
+            console.log('Most recent mtime(' + type + '): ' + mostRecentMTime);
+            console.log('Cached recent mtime(' + type + '): ' + cacheMTime);
 
-            if (mostRecentMTime > cacheMTime)
-            {
-                console.log('Minify '+type);
+            if (mostRecentMTime > cacheMTime) {
+                console.log('Minify ' + type);
                 minify(callback);
             } else {
-                console.log('Load '+type+' from cache');
+                console.log('Load ' + type + ' from cache');
                 loadFromCache(callback);
             }
         });

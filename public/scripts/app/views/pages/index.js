@@ -2,7 +2,7 @@
 App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/index/index',
-    category: 'home',
+	category: 'home',
 	events: {
 		"click #demo_signup": "demoSignUp",
 		"click #demo_without_mouse_signup": "demoSignUp"
@@ -37,12 +37,14 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 		this.listenTo(App.currentUser, 'signedInStatusChanged', function(){
 			App.router.redirect('/wallets/');
 		});
-		
-		this.on('render', function(){
+
+		this.on('render', function() {
 			$('#demo_signup').clickonmouseover();
 			$('.image-link').magnificPopup({
 				type: 'image',
-				gallery: { enabled: true },
+				gallery: {
+					enabled: true
+				},
 				callbacks: {
 					open: function() {
 						App.log.event('homepage', 'Zoom Screenshot');
@@ -50,20 +52,18 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 				},
 				image: {
 					titleSrc: function(item) {
-						return $('#'+item.el.attr('id')+'-title').text() + '<small>'+$('#'+item.el.attr('id')+'-description').text()+'</small>';
+						return $('#' + item.el.attr('id') + '-title').text() + '<small>' + $('#' + item.el.attr('id') + '-description').text() + '</small>';
 					}
 				}
-			});		
+			});
 
-			if ($(window).width() > 800 && $('#footer').offset().top > $('#screenshots_header').offset().top + 180)
-			{
+			if ($(window).width() > 800 && $('#footer').offset().top > $('#screenshots_header').offset().top + 180) {
 				var margin = $('#footer').offset().top - ($('#screenshots_header').offset().top + 180);
 				margin = Math.round(margin);
-				$('#screenshots_header').css('margin-top', margin+'px');
+				$('#screenshots_header').css('margin-top', margin + 'px');
 			}
 
-			if ('ontouchstart' in window || 'onmsgesturechange' in window)
-			{
+			if ('ontouchstart' in window || 'onmsgesturechange' in window) {
 				//// touch device
 				$('.register_without_mouse').fadeIn('slow');
 			} else {

@@ -20,11 +20,11 @@ App.Views.Dialogs.Signin = App.Views.Abstract.Dialog.extend({
 
 		App.currentUser.set('login', username);
 		App.currentUser.set('password', password);
-		this.listenTo(App.currentUser, 'signedin', function(){
+		this.listenTo(App.currentUser, 'signedin', function() {
 			this.$('.btn-primary').button('reset');
 			this.hide();
 		});
-		this.listenTo(App.currentUser, 'invalid', function(){
+		this.listenTo(App.currentUser, 'invalid', function() {
 			this.$('.btn-primary').button('reset');
 			this.$('.errors-container').slideDown();
 			this.$('#input_username').focus();
@@ -51,8 +51,7 @@ App.Views.Dialogs.Signin = App.Views.Abstract.Dialog.extend({
 	},
 	onResponse: function(user) {
 		var that = this;
-		if (user.isSignedIn())
-		{
+		if (user.isSignedIn()) {
 			this.$('#signin_modal_form_submit').button('reset');
 			this.hide();
 		} else {

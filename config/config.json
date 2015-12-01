@@ -20,7 +20,7 @@
     }
   },
   "heroku": {
-  	"use_env_variable": "DATABASE_URL",
+    "use_env_variable": "DATABASE_URL",
     "smtp": {
       "use_env_variables": true,
       "host": "SPARKPOST_SMTP_HOST",

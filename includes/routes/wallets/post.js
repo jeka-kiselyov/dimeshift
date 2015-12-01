@@ -7,20 +7,21 @@ exports.route = '/api/wallets';
 exports.method = 'post';
 
 
-exports.handler = function(req, res, next){
+exports.handler = function(req, res, next) {
 
-    var body = req.body || {};
+	var body = req.body || {};
 	var name = body.name || '';
 	var currency = body.currency || 'USD';
 
-	api.requireSignedIn(req, function(user){
-		user.insertWallet({name: name, currency: currency})
-		.then(function(wallet){
-			res.send(wallet);
-			next();
-		});
+	api.requireSignedIn(req, function(user) {
+		user.insertWallet({
+				name: name,
+				currency: currency
+			})
+			.then(function(wallet) {
+				res.send(wallet);
+				next();
+			});
 	});
-	
+
 };
-
-

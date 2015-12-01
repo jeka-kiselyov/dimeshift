@@ -3,7 +3,14 @@ window.App = {
 
 	Models: {},
 	Collections: {},
-	Views: {Abstract: {}, Dialogs: {}, Pages: {}, Widgets: {}, Parts: {}, Charts: {}},
+	Views: {
+		Abstract: {},
+		Dialogs: {},
+		Pages: {},
+		Widgets: {},
+		Parts: {},
+		Charts: {}
+	},
 	Tours: {},
 	currentTour: null,
 
@@ -18,10 +25,11 @@ window.App = {
 
 	currentUser: null,
 
-	init: function()
-	{
+	init: function() {
 		var that = this;
-		$.ajaxSetup({ cache: false });
+		$.ajaxSetup({
+			cache: false
+		});
 
 		var doneCallback = function() {
 			that.localStorage.invalidate(that.settings.version);
@@ -30,19 +38,18 @@ window.App = {
 			that.loadingStatus(false);
 		};
 
-		if (document.cookie.indexOf("is_logged_in_user") >= 0)
-		{
-			$.get(this.settings.apiEntryPoint+'users', function(user){
-				if (user)
-					that.setUser(user);
-				else
+		if (document.cookie.indexOf("is_logged_in_user") >= 0) {
+			$.get(this.settings.apiEntryPoint + 'users', function(user) {
+					if (user)
+						that.setUser(user);
+					else
+						that.setUser();
+				}, 'json')
+				.fail(function() {
 					that.setUser();
-			},'json')
-			.fail(function() {
-				that.setUser();
-			}).always(function() {
-				doneCallback();
-			});
+				}).always(function() {
+					doneCallback();
+				});
 		} else {
 			that.setUser();
 			doneCallback();
@@ -52,23 +59,22 @@ window.App = {
 		if (typeof(App.Views.Dialogs[dialogName]) === 'undefined') /// this page is already current
 			return false;
 
-		if (App.dialog && App.dialog.isVisible)
-		{
+		if (App.dialog && App.dialog.isVisible) {
 			App.dialog.once('hidden', function() {
 				console.log('Ready to show another dialog');
-				App.dialog = new App.Views.Dialogs[dialogName](params);	
+				App.dialog = new App.Views.Dialogs[dialogName](params);
 			}, this);
 			App.dialog.hide();
 		} else {
-			App.dialog = new App.Views.Dialogs[dialogName](params);		
-			App.log.event('dialog', 'Show Dialog '+dialogName);	
+			App.dialog = new App.Views.Dialogs[dialogName](params);
+			App.log.event('dialog', 'Show Dialog ' + dialogName);
 		}
 
 		return true;
 	},
 	showPage: function(pageName, params) {
 
-		console.log('Showing page: '+pageName);
+		console.log('Showing page: ' + pageName);
 
 		if (App.currentTour)
 			App.currentTour.finish();
@@ -76,8 +82,7 @@ window.App = {
 		if (typeof(params) === 'undefined')
 			params = {};
 
-		if (typeof(App.Views.Pages[pageName]) === 'undefined')
-		{
+		if (typeof(App.Views.Pages[pageName]) === 'undefined') {
 			console.error("There is no view class defined");
 			return false;
 		}
@@ -91,8 +96,7 @@ window.App = {
 		var fromStack = this.viewStack.getView(pageName, params);
 
 
-		if (fromStack !== false)
-		{
+		if (fromStack !== false) {
 			/// Console log wake up page from stack
 			console.log('Showing page from stack');
 			this.page = fromStack;
@@ -103,7 +107,9 @@ window.App = {
 			/// or create new one
 			this.loadingStatus(true);
 			this.page = new App.Views.Pages[pageName](params);
-			this.page.on('loaded', function(){ this.loadingStatus(false); }, this);
+			this.page.on('loaded', function() {
+				this.loadingStatus(false);
+			}, this);
 			if (this.page.isReady)
 				this.loadingStatus(false);
 			// this.listenTo(this.page, 'loaded', function(){ this.loadingStatus(false); });
@@ -115,13 +121,11 @@ window.App = {
 
 		return true;
 	},
-	setProgress: function(value)
-	{
+	setProgress: function(value) {
 		if (!this.progress)
 			this.progress = new Mprogress();
 
-		if (typeof(value) === 'undefined')
-		{
+		if (typeof(value) === 'undefined') {
 			if (this.progress.status == null)
 				return this.progress.start();
 			else
@@ -131,10 +135,8 @@ window.App = {
 			return this.progress.end();
 		this.progress.set(value);
 	},
-	loadingStatus: function(status)
-	{
-		if (status)
-		{
+	loadingStatus: function(status) {
+		if (status) {
 			console.log('app.js | Loading status = true');
 			this.isLoading = true;
 			$('#preloader').stop().show();
@@ -144,26 +146,22 @@ window.App = {
 			$('#preloader').stop().fadeOut('slow');
 		}
 	},
-	setUser: function(data)
-	{
+	setUser: function(data) {
 		this.currentUser = new App.Models.User();
-		this.currentUser.on('signedInStatusChanged',this.userChanged, this);
+		this.currentUser.on('signedInStatusChanged', this.userChanged, this);
 		if (typeof(data) !== 'undefined')
 			this.currentUser.signInWithData(data);
 	},
-	userChanged: function()
-	{
+	userChanged: function() {
 		console.log('User info changed');
 		// You can also refresh the page here if you want to.
 
 		this.renderLayoutBlocks();
 	},
-	renderLayoutBlocks: function()
-	{
+	renderLayoutBlocks: function() {
 		var that = this;
 
-		if (!this.header)
-		{
+		if (!this.header) {
 			this.header = new App.Views.Header();
 		}
 
@@ -171,37 +169,38 @@ window.App = {
 			that.header.render();
 		};
 
-		if ($.isReady)
-		{
+		if ($.isReady) {
 			renderFunc();
 		} else {
-			$(function(){ renderFunc(); });
+			$(function() {
+				renderFunc();
+			});
 		}
 	},
 	createCookie: function(name, value, days) {
-	    var expires;
+		var expires;
 
-	    if (days) {
-	        var date = new Date();
-	        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-	        expires = "; expires=" + date.toGMTString();
-	    } else {
-	        expires = "";
-	    }
-	    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			expires = "; expires=" + date.toGMTString();
+		} else {
+			expires = "";
+		}
+		document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
 	},
 	readCookie: function(name) {
-	    var nameEQ = encodeURIComponent(name) + "=";
-	    var ca = document.cookie.split(';');
-	    for (var i = 0; i < ca.length; i++) {
-	        var c = ca[i];
-	        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-	        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
-	    }
-	    return null;
+		var nameEQ = encodeURIComponent(name) + "=";
+		var ca = document.cookie.split(';');
+		for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+		}
+		return null;
 	},
 	eraseCookie: function(name) {
-	    App.createCookie(name, "", -1);
+		App.createCookie(name, "", -1);
 	}
 
 };

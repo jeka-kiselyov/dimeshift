@@ -12,11 +12,13 @@ App.Views.Dialogs.HideWallet = App.Views.Abstract.Dialog.extend({
 		else
 			throw 'Can not initialize dialog without param.item';
 
-		this.show({item: this.item.toJSON()});
+		this.show({
+			item: this.item.toJSON()
+		});
 	},
 	doProcess: function() {
-		this.$('.btn-danger').button('loading');	
-		this.item.hide();		
+		this.$('.btn-danger').button('loading');
+		this.item.hide();
 		this.hide();
 	},
 	onSubmit: function() {

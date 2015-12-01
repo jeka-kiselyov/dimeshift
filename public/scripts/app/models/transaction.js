@@ -1,7 +1,7 @@
 // transaction.js
 App.Models.Transaction = Backbone.Model.extend({
 
-	defaults: function() {
+    defaults: function() {
         return {
             user_id: null,
             wallet_id: null,
@@ -17,7 +17,7 @@ App.Models.Transaction = Backbone.Model.extend({
         if (!this.get('wallet_id'))
             return App.settings.apiEntryPoint + 'transactions/' + (typeof(this.id) === 'undefined' ? '' : this.id);
         else
-            return App.settings.apiEntryPoint + 'wallets/'+this.get('wallet_id')+'/transactions/' + (typeof(this.id) === 'undefined' ? '' : this.id);
+            return App.settings.apiEntryPoint + 'wallets/' + this.get('wallet_id') + '/transactions/' + (typeof(this.id) === 'undefined' ? '' : this.id);
     }
 
 });

@@ -14,17 +14,16 @@ App.Views.Dialogs.AddWallet = App.Views.Abstract.Dialog.extend({
 	},
 	onSubmit: function() {
 		var that = this;
-		
+
 		this.$('.btn-primary').button('loading');
 		var name = this.$('#input_name').val();
 		var currency = this.$('#input_currency').val();
 		var error = '';
-		
-		if (!currency)
-			error = 'Please select wallet currency';	
 
-		if (error)
-		{
+		if (!currency)
+			error = 'Please select wallet currency';
+
+		if (error) {
 			this.$('.errors-container').html(error);
 			this.$('.errors-container').slideDown();
 
@@ -41,14 +40,13 @@ App.Views.Dialogs.AddWallet = App.Views.Abstract.Dialog.extend({
 			item.set('total', 0);
 			item.set('status', 'active');
 
-			if (typeof(App.page) !== 'undefined' && App.page && typeof(App.page.items) !== 'undefined' && App.page.items.model == App.Models.Wallet)
-			{
+			if (typeof(App.page) !== 'undefined' && App.page && typeof(App.page.items) !== 'undefined' && App.page.items.model == App.Models.Wallet) {
 				App.page.items.add(item);
 			}
-			
+
 			item.save();
 
-			this.hide();			
+			this.hide();
 		}
 
 		return false;

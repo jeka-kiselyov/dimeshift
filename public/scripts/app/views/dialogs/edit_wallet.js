@@ -15,8 +15,10 @@ App.Views.Dialogs.EditWallet = App.Views.Abstract.Dialog.extend({
 		this.on('ready', function() {
 			that.$('#input_name').focus().select();
 		});
-		
-		this.show({item: this.item.toJSON()});
+
+		this.show({
+			item: this.item.toJSON()
+		});
 	},
 	onSubmit: function() {
 		var that = this;
@@ -25,12 +27,11 @@ App.Views.Dialogs.EditWallet = App.Views.Abstract.Dialog.extend({
 		var name = this.$('#input_name').val();
 		var currency = this.$('#input_currency').val();
 		var error = '';
-		
-		if (!currency)
-			error = 'Please select wallet currency';	
 
-		if (error)
-		{
+		if (!currency)
+			error = 'Please select wallet currency';
+
+		if (error) {
 			this.$('.errors-container').html(error);
 			this.$('.errors-container').slideDown();
 
@@ -47,7 +48,7 @@ App.Views.Dialogs.EditWallet = App.Views.Abstract.Dialog.extend({
 
 			this.hide();
 		}
-		
+
 
 		return false;
 	}

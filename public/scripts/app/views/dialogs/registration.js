@@ -23,23 +23,24 @@ App.Views.Dialogs.Registration = App.Views.Abstract.Dialog.extend({
 		var email = this.$('#input_email').val();
 
 		App.currentUser.clear();
-		
-		this.listenTo(App.currentUser, 'signedInStatusChanged', function(){
+
+		this.listenTo(App.currentUser, 'signedInStatusChanged', function() {
 			App.userChanged();
 			this.hide();
 		});
 
-		this.listenTo(App.currentUser, 'registered', function(){
+		this.listenTo(App.currentUser, 'registered', function() {
 			this.$('.modal-body-default').slideUp();
 			this.$('.modal-body-success').slideDown();
 		});
-		
-		this.listenTo(App.currentUser, 'invalid', function(){
-			var html = ""; for (var k in App.currentUser.validationError) html+=App.currentUser.validationError[k].msg+"<br>";
+
+		this.listenTo(App.currentUser, 'invalid', function() {
+			var html = "";
+			for (var k in App.currentUser.validationError) html += App.currentUser.validationError[k].msg + "<br>";
 			this.$('.errors-container').html(html);
 			this.$('.errors-container').slideDown();
 
-			this.$('#input_login').focus();	/// @todo: focus to input with error
+			this.$('#input_login').focus(); /// @todo: focus to input with error
 			this.$('.btn-primary').button('reset');
 			var that = this;
 			setTimeout(function() {

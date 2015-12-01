@@ -21,17 +21,17 @@ App.i18n = {
 	},
 	translateDOM: function() {
 		var that = this;
-		$("[data-i18n]").each(function(){
+		$("[data-i18n]").each(function() {
 			var string = $(this).data('i18n');
 			string = that.translate(string);
 			$(this).text(string);
 		});
-		$("[data-i18nvalue]").each(function(){
+		$("[data-i18nvalue]").each(function() {
 			var string = $(this).data('i18nvalue');
 			string = that.translate(string);
 			$(this).val(string);
 		});
-		$("[data-i18nplaceholder]").each(function(){
+		$("[data-i18nplaceholder]").each(function() {
 			var string = $(this).data('i18nplaceholder');
 			string = that.translate(string);
 			$(this).attr('placeholder', string);
@@ -40,7 +40,8 @@ App.i18n = {
 	loadStrings: function(callback) {
 
 		var that = this;
-		var process = function(data) { console.log(data);
+		var process = function(data) {
+			console.log(data);
 			that.strings = data;
 			that.loaded = true;
 			that.translateDOM();
@@ -50,12 +51,12 @@ App.i18n = {
 		};
 
 		this.loaded = false;
-		
+
 		if (this.languageCode == 'default')
 			process({});
 		else
 			$.ajax({
-				url: App.settings.apiEntryPoint + 'i18n/bycode/'+this.languageCode.split('-').join(''),
+				url: App.settings.apiEntryPoint + 'i18n/bycode/' + this.languageCode.split('-').join(''),
 				data: {},
 				success: process,
 				dataType: 'json',

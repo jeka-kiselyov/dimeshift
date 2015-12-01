@@ -1,29 +1,45 @@
 // settings.js
 App.settings = {
 
-	sitePath: window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: ''),
-	apiEntryPoint: site_path+'/api/',
-	templatePath: site_path+'/jstemplates/',
+	sitePath: window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : ''),
+	apiEntryPoint: site_path + '/api/',
+	templatePath: site_path + '/jstemplates/',
 	version: (typeof(app_version) !== 'undefined') ? app_version : '',
 	title: function(title) {
-		return title+' | '+'DimeShift';
+		return title + ' | ' + 'DimeShift';
 	},
 
 	availiableLocales: {
-		'default': {code: 'en', name: 'English', timeFormat: '12', dateFormat:'mdy'},
-		'ua': {name: 'Українська', timeFormat: '24', dateFormat:'dmy'},
-		'ru': {name: 'Русский', timeFormat: '24', dateFormat:'dmy'},
-		'pt-br': {name: 'Português Brasileiro', timeFormat: '24', dateFormat:'dmy'}
+		'default': {
+			code: 'en',
+			name: 'English',
+			timeFormat: '12',
+			dateFormat: 'mdy'
+		},
+		'ua': {
+			name: 'Українська',
+			timeFormat: '24',
+			dateFormat: 'dmy'
+		},
+		'ru': {
+			name: 'Русский',
+			timeFormat: '24',
+			dateFormat: 'dmy'
+		},
+		'pt-br': {
+			name: 'Português Brasileiro',
+			timeFormat: '24',
+			dateFormat: 'dmy'
+		}
 	},
 	detectLanguage: function() {
-		
+
 		var language = 'default';
 		if (App.localStorage.get('selected_interface_locale'))
 			language = App.localStorage.get('selected_interface_locale');
 		else {
 			language = window.navigator.userLanguage || window.navigator.language;
-			if (language && typeof(this.availiableLocales[language]) == 'undefined' && language.indexOf('-') != -1)
-			{
+			if (language && typeof(this.availiableLocales[language]) == 'undefined' && language.indexOf('-') != -1) {
 				language = language.split('-')[0];
 			}
 		}
@@ -39,7 +55,7 @@ App.settings = {
 	},
 	language: 'en',
 	timeFormat: '24', // 12 or 24
-	dateFormat: 'dmy',  // mdy or dmy
+	dateFormat: 'dmy', // mdy or dmy
 
 	allowRealTimeTranslation: true,
 
@@ -54,7 +70,7 @@ App.settings = {
 
 	inviteMode: true,
 
-	
+
 	site_path: site_path,
 	invite_mode: this.inviteMode,
 	client_side: true,
@@ -68,7 +84,7 @@ App.settings = {
 		"AOA": "Angolan Kwanza",
 		"ARS": "Argentine Peso",
 		"AUD": "Australian Dollar",
-		"AWG": "Aruban Florin", 
+		"AWG": "Aruban Florin",
 		"AZN": "Azerbaijani Manat",
 		"BAM": "Bosnia-Herzegovina Convertible Mark",
 		"BBD": "Barbadian Dollar",

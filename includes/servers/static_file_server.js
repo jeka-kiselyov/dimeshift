@@ -13,11 +13,11 @@ function serveStatic(opts) {
 
     function serveFileFromStats(file, err, stats, isGzip, req, res, next) {
         if (err) {
-            res.writeHead( 404, "Not Found" );
+            res.writeHead(404, "Not Found");
             next();
             return;
         } else if (!stats.isFile()) {
-            res.writeHead( 404, "Not Found" );
+            res.writeHead(404, "Not Found");
             next()
             return;
         }
@@ -28,8 +28,10 @@ function serveStatic(opts) {
 
         var fstream = fs.createReadStream(file + (isGzip ? '.gz' : ''));
         var maxAge = opts.maxAge === undefined ? 3600 : opts.maxAge;
-        fstream.once('open', function (fd) {
-            res.cache({maxAge: maxAge});
+        fstream.once('open', function(fd) {
+            res.cache({
+                maxAge: maxAge
+            });
             res.set('Content-Length', stats.size);
 
             var mimeType = mime.lookup(file);
@@ -51,18 +53,18 @@ function serveStatic(opts) {
             }
             res.writeHead(200);
             fstream.pipe(res);
-            fstream.once('end', function () {
+            fstream.once('end', function() {
                 next(false);
             });
         });
     }
 
     function serveNormal(file, req, res, next) {
-        fs.stat(file, function (err, stats) {
+        fs.stat(file, function(err, stats) {
             if (!err && stats.isDirectory() && opts.default) {
                 // Serve an index.html page or similar
                 file = path.join(file, opts.default);
-                fs.stat(file, function (dirErr, dirStats) {
+                fs.stat(file, function(dirErr, dirStats) {
                     serveFileFromStats(file,
                         dirErr,
                         dirStats,
@@ -99,25 +101,25 @@ function serveStatic(opts) {
             file += opts.suffix;
 
         if (req.method !== 'GET' && req.method !== 'HEAD') {
-            res.writeHead( 404, "Not Found" );
+            res.writeHead(404, "Not Found");
             next();
             return;
         }
 
         if (!re.test(file.replace(/\\/g, '/'))) {
-            res.writeHead( 404, "Not Found" );
+            res.writeHead(404, "Not Found");
             next();
             return;
         }
 
         if (opts.match && !opts.match.test(file)) {
-            res.writeHead( 404, "Not Found" );
+            res.writeHead(404, "Not Found");
             next();
             return;
         }
 
         if (opts.gzip && req.acceptsEncoding('gzip')) {
-            fs.stat(file + '.gz', function (err, stats) {
+            fs.stat(file + '.gz', function(err, stats) {
                 if (!err) {
                     res.setHeader('Content-Encoding', 'gzip');
                     serveFileFromStats(file,

@@ -1,7 +1,7 @@
 // wallet.js
 App.Models.Wallet = Backbone.Model.extend({
 
-	defaults: {
+    defaults: {
         name: null,
         type: null,
         status: 'active',
@@ -9,31 +9,26 @@ App.Models.Wallet = Backbone.Model.extend({
         currency: 'USD'
     },
     getTotal: function() {
-		return parseFloat(this.get('total'),10);
+        return parseFloat(this.get('total'), 10);
     },
     url: function() {
-		return App.settings.apiEntryPoint + 'wallets/' + (typeof(this.id) === 'undefined' ? '' : this.id);
+        return App.settings.apiEntryPoint + 'wallets/' + (typeof(this.id) === 'undefined' ? '' : this.id);
     },
     hide: function() {
-        if (this.get('status') == 'active')
-        {
+        if (this.get('status') == 'active') {
             this.set('status', 'hidden');
             this.save();
-        }
-        else if (this.get('status') == 'hidden')
-        {
+        } else if (this.get('status') == 'hidden') {
             this.destroy();
         }
     },
     getTransactions: function() {
-        if (typeof(this.transactions) === 'undefined')
-        {
+        if (typeof(this.transactions) === 'undefined') {
             this.transactions = new App.Collections.Transactions();
             this.transactions.setWalletId(this.id);
 
             var that = this;
-            this.transactions.fetch().done(function(){
-            });
+            this.transactions.fetch().done(function() {});
         }
         this.transactions.setWalletId(this.id);
         return this.transactions;
@@ -51,7 +46,7 @@ App.Models.Wallet = Backbone.Model.extend({
         profit.save();
 
         this.getTransactions().add(profit);
-        this.set('total', this.getTotal()+amountValue);
+        this.set('total', this.getTotal() + amountValue);
         this.trigger('addTransaction', profit);
         //this.trigger('change');
     },
@@ -83,7 +78,7 @@ App.Models.Wallet = Backbone.Model.extend({
         expense.save();
 
         this.getTransactions().add(expense);
-        this.set('total', this.getTotal()+amountValue);
+        this.set('total', this.getTotal() + amountValue);
         this.trigger('addTransaction', expense);
         this.trigger('addExpense');
         //this.trigger('change');

@@ -2,7 +2,7 @@
 App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/wallets/index',
-    category: 'wallets',
+	category: 'wallets',
 	status: 'active',
 	origin: 'both',
 	events: {
@@ -24,8 +24,7 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 	},
 	filter: function(ev) {
 		var status = $(ev.currentTarget).data('status');
-		if ((status == 'active' || status == 'hidden') && status != this.status)
-		{
+		if ((status == 'active' || status == 'hidden') && status != this.status) {
 			this.status = status;
 			this.render();
 		}
@@ -33,8 +32,7 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 	},
 	filterOrigin: function(ev) {
 		var origin = $(ev.currentTarget).data('origin');
-		if ((origin == 'both' || origin == 'mine' || origin == 'shared') && origin != this.origin)
-		{
+		if ((origin == 'both' || origin == 'mine' || origin == 'shared') && origin != this.origin) {
 			this.origin = origin;
 			this.render();
 		}
@@ -51,7 +49,9 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		if (!item)
 			return true;
 
-		App.showPage('Wallet', {item: item});
+		App.showPage('Wallet', {
+			item: item
+		});
 
 		return false;
 	},
@@ -65,15 +65,16 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 	},
 	removeItem: function(ev) {
 		var id = $(ev.currentTarget).parents('.item').data('id');
-		App.showDialog('HideWallet', {item: this.items.get(id)});
+		App.showDialog('HideWallet', {
+			item: this.items.get(id)
+		});
 
 		return false;
 	},
 	restoreItem: function(ev) {
 		var id = $(ev.currentTarget).parents('.item').data('id');
 		var item = this.items.get(id);
-		if (item && item.get('status') == 'hidden')
-		{
+		if (item && item.get('status') == 'hidden') {
 			item.set('status', 'active');
 			item.save();
 		}
@@ -82,34 +83,47 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 	},
 	showAccesses: function(ev) {
 		var id = $(ev.currentTarget).parents('.item').data('id');
-		App.showDialog('WalletAccesses', {item: this.items.get(id)});
+		App.showDialog('WalletAccesses', {
+			item: this.items.get(id)
+		});
 
-		return false;		
+		return false;
 	},
 	editItem: function(ev) {
 		var id = $(ev.currentTarget).parents('.item').data('id');
-		App.showDialog('EditWallet', {item: this.items.get(id)});
+		App.showDialog('EditWallet', {
+			item: this.items.get(id)
+		});
 
 		return false;
 	},
 	render: function() {
 		if (this.origin == 'both')
-			var filtered = this.items.search({status: this.status});
+			var filtered = this.items.search({
+				status: this.status
+			});
 		else
-			var filtered = this.items.search({status: this.status, origin: this.origin}); 
+			var filtered = this.items.search({
+				status: this.status,
+				origin: this.origin
+			});
 
-		this.once('render',function(){
+		this.once('render', function() {
 			// Instance the tour
 			if (typeof(App.Tours.Wallets) !== 'undefined')
 				App.Tours.Wallets.init(this);
 		});
 
-		this.renderHTML({items: filtered.toJSON(), status: this.status, origin: this.origin});
+		this.renderHTML({
+			items: filtered.toJSON(),
+			status: this.status,
+			origin: this.origin
+		});
 	},
 	wakeUp: function() {
 		this.holderReady = false;
 		var that = this;
-		this.requireSingedIn(function(){
+		this.requireSingedIn(function() {
 			that.render();
 			that.listenTo(that.items, 'sync add change reset remove', that.render);
 		});
@@ -119,13 +133,13 @@ App.Views.Pages.Wallets = App.Views.Abstract.Page.extend({
 		this.renderLoading();
 
 		var that = this;
-		this.requireSingedIn(function(){
+		this.requireSingedIn(function() {
 			that.items = App.currentUser.getWallets();
 			/// initialize models, collections etc. Request fetching from storage
 			that.listenTo(that.items, 'sync', that.render);
-			that.items.fetch().done(function(){
+			that.items.fetch().done(function() {
 				that.listenTo(that.items, 'add change reset remove', that.render);
-			}).error(function(){
+			}).error(function() {
 				that.render();
 			});
 		});

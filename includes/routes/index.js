@@ -30,23 +30,26 @@ var walk = function(dir, done) {
 
 walk(__dirname, function(err, results) {
   if (err) throw err;
-  results.forEach(function(file){
-  	if (file.indexOf('index.js') == -1)
-  	{
-  		var name = file.substr(file.lastIndexOf('/'), file.indexOf('.'));
-  		var inc = require(file);
-  		routes.push({ handler: inc.handler, route: inc.route, method: inc.method });
-  	}
+  results.forEach(function(file) {
+    if (file.indexOf('index.js') == -1) {
+      var name = file.substr(file.lastIndexOf('/'), file.indexOf('.'));
+      var inc = require(file);
+      routes.push({
+        handler: inc.handler,
+        route: inc.route,
+        method: inc.method
+      });
+    }
   });
 
   done = true;
-  if(typeof callback == 'function')
-      callback(routes);
+  if (typeof callback == 'function')
+    callback(routes);
 });
 
-module.exports = function(cb){
-    if(done)
-      cb(routes);
-    else
-      callback = cb;
+module.exports = function(cb) {
+  if (done)
+    cb(routes);
+  else
+    callback = cb;
 }

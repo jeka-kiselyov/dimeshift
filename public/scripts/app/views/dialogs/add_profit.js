@@ -12,7 +12,7 @@ App.Views.Dialogs.AddProfit = App.Views.Abstract.Dialog.extend({
 		this.on('ready', function() {
 			that.$('#input_amount').focus();
 		});
-		
+
 		this.show();
 	},
 	onSubmit: function() {
@@ -22,11 +22,10 @@ App.Views.Dialogs.AddProfit = App.Views.Abstract.Dialog.extend({
 
 		var amount = this.$('#input_amount').val();
 		var description = this.$('#input_description').val();
-		
+
 		amount = +amount;
-		if (amount && amount > 0)
-		{
-			this.wallet.addProfit(amount, description);			
+		if (amount && amount > 0) {
+			this.wallet.addProfit(amount, description);
 		}
 
 		this.hide();

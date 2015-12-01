@@ -5,25 +5,36 @@ var api = rfr('includes/api.js');
 exports.route = '/api/wallets';
 exports.method = 'get';
 
-exports.handler = function(req, res, next){
-	api.requireSignedIn(req, function(user){
+exports.handler = function(req, res, next) {
+	api.requireSignedIn(req, function(user) {
 
 		db.sequelize.Promise.join(
 			user.getWallets(),
 			user.getSharedWallets(),
-			function(own, shared)
-			{
+			function(own, shared) {
 				res.send(
 					shared.map(
 						function(wallet) {
-							return {id: wallet.id, name: wallet.name, status: wallet.status, 
-								currency: wallet.currency, total: wallet.total, origin: 'shared'};
+							return {
+								id: wallet.id,
+								name: wallet.name,
+								status: wallet.status,
+								currency: wallet.currency,
+								total: wallet.total,
+								origin: 'shared'
+							};
 						}
 					).concat(
 						own.map(
 							function(wallet) {
-								return {id: wallet.id, name: wallet.name, status: wallet.status, 
-									currency: wallet.currency, total: wallet.total, origin: 'mine'};
+								return {
+									id: wallet.id,
+									name: wallet.name,
+									status: wallet.status,
+									currency: wallet.currency,
+									total: wallet.total,
+									origin: 'mine'
+								};
 							}
 						)
 					)

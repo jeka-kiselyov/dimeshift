@@ -19,12 +19,13 @@ App.Views.Dialogs.Restore = App.Views.Abstract.Dialog.extend({
 
 		var email = this.$('#input_email').val();
 
-		this.listenTo(App.currentUser, 'restore:error', function(){
-			var html = ""; for (var k in App.currentUser.validationError) html+=App.currentUser.validationError[k].msg+"<br>";
+		this.listenTo(App.currentUser, 'restore:error', function() {
+			var html = "";
+			for (var k in App.currentUser.validationError) html += App.currentUser.validationError[k].msg + "<br>";
 			this.$('.errors-container').html(html);
 			this.$('.errors-container').slideDown();
 
-			this.$('#input_email').focus();	/// @todo: focus to input with error
+			this.$('#input_email').focus(); /// @todo: focus to input with error
 			this.$('.btn-primary').button('reset');
 			var that = this;
 			setTimeout(function() {
@@ -32,7 +33,7 @@ App.Views.Dialogs.Restore = App.Views.Abstract.Dialog.extend({
 			}, 2000);
 		});
 
-		this.listenTo(App.currentUser, 'restore:success', function(){
+		this.listenTo(App.currentUser, 'restore:success', function() {
 			this.$('.modal-body-default').slideUp();
 			this.$('.modal-body-success').slideDown();
 		});

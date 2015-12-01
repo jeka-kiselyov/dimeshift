@@ -21,13 +21,13 @@ module.exports = function(grunt) {
           },
           // omit this property if you aren't serving HTML files and 
           // don't want to open a browser tab on start
-          callback: function (nodemon) {
-            nodemon.on('log', function (event) {
+          callback: function(nodemon) {
+            nodemon.on('log', function(event) {
               console.log(event.colour);
             });
 
             // opens browser on initial server start
-            nodemon.on('config:update', function () {
+            nodemon.on('config:update', function() {
               // Delay before server listens on port
               setTimeout(function() {
                 require('open')('http://localhost:8080');
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
             });
 
             // refreshes browser when server reboots
-            nodemon.on('restart', function () {
+            nodemon.on('restart', function() {
               // Delay before server listens on port
               setTimeout(function() {
                 require('fs').writeFileSync('.rebooted', 'rebooted');
@@ -51,15 +51,15 @@ module.exports = function(grunt) {
         options: {
           livereload: true
         }
-      } 
+      }
     },
     mochacli: {
-        options: {
-            require: [],
-            reporter: 'spec',
-            bail: true
-        },
-        all: ['includes/test/*.js']
+      options: {
+        require: [],
+        reporter: 'spec',
+        bail: true
+      },
+      all: ['includes/test/*.js']
     }
   });
 

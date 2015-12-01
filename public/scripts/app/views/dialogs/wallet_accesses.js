@@ -18,7 +18,10 @@ App.Views.Dialogs.WalletAccesses = App.Views.Abstract.Dialog.extend({
 		if (!access)
 			return true;
 
-		App.showDialog('RemoveAccess', {item: this.item, access: access});
+		App.showDialog('RemoveAccess', {
+			item: this.item,
+			access: access
+		});
 
 		return false;
 	},
@@ -28,29 +31,32 @@ App.Views.Dialogs.WalletAccesses = App.Views.Abstract.Dialog.extend({
 		else
 			throw 'Can not initialize dialog without param.item';
 
-        this.accesses = new App.Collections.WalletsAccesses();
-        this.accesses.setWalletId(this.item.id);
-        this.listenTo(this.accesses, 'sync', this.loaded);
+		this.accesses = new App.Collections.WalletsAccesses();
+		this.accesses.setWalletId(this.item.id);
+		this.listenTo(this.accesses, 'sync', this.loaded);
 
-        this.accesses.fetch();
+		this.accesses.fetch();
 
 		var that = this;
 		this.on('ready', function() {
 			that.$('#input_email').focus();
 		});
-        this.show(this.data());
+		this.show(this.data());
 	},
 	data: function() {
 		var ret_accesses = [];
 
 		if (this.accesses && this.accesses.length)
-		for (var i = 0; i < this.accesses.length; i++)
-		{
-			var acc = this.accesses.at(i).toJSON();
-			acc['gravatar']= this.accesses.at(i).getGravatarURL();
-			ret_accesses.push(acc);
+			for (var i = 0; i < this.accesses.length; i++) {
+				var acc = this.accesses.at(i).toJSON();
+				acc['gravatar'] = this.accesses.at(i).getGravatarURL();
+				ret_accesses.push(acc);
+			}
+		return {
+			item: this.item.toJSON(),
+			accesses: ret_accesses,
+			status: this.status
 		}
-		return {item: this.item.toJSON(), accesses: ret_accesses, status: this.status }
 	},
 	loaded: function() {
 		this.status = 'ready';
@@ -66,10 +72,15 @@ App.Views.Dialogs.WalletAccesses = App.Views.Abstract.Dialog.extend({
 		if (!email)
 			return false;
 
-		var already = this.accesses.where({to_email: email});
-		if (already && already.length)
-		{
-			$("#emails_with_access_"+already[0].id).animate({ opacity: 0.5 }, 500 ).animate({ opacity: 1 }, 500 );
+		var already = this.accesses.where({
+			to_email: email
+		});
+		if (already && already.length) {
+			$("#emails_with_access_" + already[0].id).animate({
+				opacity: 0.5
+			}, 500).animate({
+				opacity: 1
+			}, 500);
 
 			return false;
 		}

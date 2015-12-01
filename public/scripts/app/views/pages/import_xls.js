@@ -6,7 +6,7 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		'/vendors/js-xlsx/dist/xlsx.min.js',
 		'/vendors/moment/min/moment.min.js'
 	],
-    category: 'wallets',
+	category: 'wallets',
 	events: {
 		'change #file_input': 'fileInputChanged',
 		'change .import_row_type': 'checkRowsToImport',
@@ -64,9 +64,17 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		this.import();
 	},
 	render: function() {
-		this.renderHTML({sample: this.sample, sampleHeight: this.sampleHeight, sampleWidth: this.sampleWidth,
-			dateFormats: this.dateFormats, timeFormats: this.timeFormats, importPreview: this.importPreview, 
-			step: this.step, selectedFields: this.selectedFields, wallet_id: this.model.id});
+		this.renderHTML({
+			sample: this.sample,
+			sampleHeight: this.sampleHeight,
+			sampleWidth: this.sampleWidth,
+			dateFormats: this.dateFormats,
+			timeFormats: this.timeFormats,
+			importPreview: this.importPreview,
+			step: this.step,
+			selectedFields: this.selectedFields,
+			wallet_id: this.model.id
+		});
 	},
 	wakeUp: function() {
 		this.holderReady = false;
@@ -84,7 +92,7 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		this.alreadyGotDataRowN = 0;
 		this.rowToImportCount = this.worksheet['!range'].e.r;
 		var that = this;
-		setTimeout(function(){
+		setTimeout(function() {
 			that.getNextRowData();
 		}, 100);
 	},
@@ -100,15 +108,15 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		/// date
 		var date_format = this.selectedDateFormat;
 		var time_format = this.selectedTimeFormat;
-		if (this.selectedFields.date){
+		if (this.selectedFields.date) {
 			var txt_date = that.getValueForCell(this.selectedFields.date, this.alreadyGotDataRowN);
 			if (this.selectedFields.time && this.selectedFields.time != this.selectedFields.date)
-				txt_date+=' '+that.getValueForCell(this.selectedFields.time, this.alreadyGotDataRowN);
-			date_format+=' '+time_format;
+				txt_date += ' ' + that.getValueForCell(this.selectedFields.time, this.alreadyGotDataRowN);
+			date_format += ' ' + time_format;
 
 			var parsed = moment(txt_date, date_format);
 
-			if (parsed.isValid()){
+			if (parsed.isValid()) {
 				date = parsed.unix();
 				if (!this.minImportedRowDate || date < this.minImportedRowDate)
 					this.minImportedRowDate = date;
@@ -118,10 +126,10 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		}
 
 		/// description
-		if (this.selectedFields.description){
+		if (this.selectedFields.description) {
 			var value = that.getValueForCell(this.selectedFields.description, this.alreadyGotDataRowN);
 			value = value.replace(/<\/?[^>]+(>|$)/g, "");
-			value = value.substring(0,250);
+			value = value.substring(0, 250);
 			if (value)
 				description = value;
 		}
@@ -141,19 +149,22 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		}
 
 		if (amount !== null && date !== null)
-			this.rowsToImport.push({amount: amount, datetime: date, description: description});
+			this.rowsToImport.push({
+				amount: amount,
+				datetime: date,
+				description: description
+			});
 
 		var progress = Math.floor((this.alreadyGotDataRowN / this.rowToImportCount) * 100 / 2);
-		this.$('#import_progress_bar').css('width', progress+'%');
+		this.$('#import_progress_bar').css('width', progress + '%');
 
-		if (this.alreadyGotDataRowN < this.rowToImportCount)
-		{
-			setTimeout(function(){
+		if (this.alreadyGotDataRowN < this.rowToImportCount) {
+			setTimeout(function() {
 				that.getNextRowData();
 			}, 100);
 		} else {
 			this.rowToImportCount = this.rowsToImport.length;
-			setTimeout(function(){
+			setTimeout(function() {
 				that.getTransactionsToCheckForDuplicates();
 			}, 100);
 		}
@@ -162,8 +173,8 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 	getTransactionsToCheckForDuplicates: function() {
 		var that = this;
 		this.trasactionsToCheckForDuplicates = [];
-		var minDate = new Date(this.minImportedRowDate*1000);
-		var maxDate = new Date(this.maxImportedRowDate*1000);
+		var minDate = new Date(this.minImportedRowDate * 1000);
+		var maxDate = new Date(this.maxImportedRowDate * 1000);
 		var minMonth = minDate.getMonth() + 1;
 		var minYear = minDate.getFullYear();
 		var maxMonth = maxDate.getMonth() + 1;
@@ -174,38 +185,36 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		do {
 			var transactions = new App.Collections.Transactions();
 			transactions.setPeriod(curMonth, curYear);
-            transactions.setWalletId(this.model.id);
+			transactions.setWalletId(this.model.id);
 
-            this.trasactionsToCheckForDuplicates.push(transactions);
-            if (curMonth == 12)
-            {
-            	curMonth = 1;
-            	curYear++;
-            } else {
-            	curMonth ++;
-            }
+			this.trasactionsToCheckForDuplicates.push(transactions);
+			if (curMonth == 12) {
+				curMonth = 1;
+				curYear++;
+			} else {
+				curMonth++;
+			}
 		} while ((curMonth <= maxMonth && curYear == maxYear) || curYear < maxYear);
 
 		var promises = [];
 		for (var k in this.trasactionsToCheckForDuplicates)
 			promises.push(this.trasactionsToCheckForDuplicates[k].fetch());
 
-		$.when.apply($, promises).done(function(){
+		$.when.apply($, promises).done(function() {
 			that.importNextRow();
 		});
 	},
 	checkIfNoDuplicates: function(row) {
 		for (var k in this.trasactionsToCheckForDuplicates)
-			for (var i = 0; i < this.trasactionsToCheckForDuplicates[k].length; i++)
-			{
+			for (var i = 0; i < this.trasactionsToCheckForDuplicates[k].length; i++) {
 				var transaction = this.trasactionsToCheckForDuplicates[k].models[i];
-				if (transaction.get('amount') == row.amount && 
-					transaction.get('datetime') == row.datetime && 
+				if (transaction.get('amount') == row.amount &&
+					transaction.get('datetime') == row.datetime &&
 					transaction.get('description') == row.description)
 					return false;
 			};
 
-			return true;
+		return true;
 	},
 	importNextRow: function() {
 		var that = this;
@@ -216,11 +225,10 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		var onNext = function() {
 
 			var progress = 50 + Math.floor((that.alreadyImportedRowN / that.rowToImportCount) * 100 / 2);
-			that.$('#import_progress_bar').css('width', progress+'%');
+			that.$('#import_progress_bar').css('width', progress + '%');
 
-			if (that.alreadyImportedRowN < that.rowToImportCount)
-			{
-				setTimeout(function(){
+			if (that.alreadyImportedRowN < that.rowToImportCount) {
+				setTimeout(function() {
 					that.importNextRow();
 				}, 100);
 			} else {
@@ -229,15 +237,14 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 			}
 		}
 
-		if (row && this.checkIfNoDuplicates(row))
-		{
+		if (row && this.checkIfNoDuplicates(row)) {
 			var transaction = new App.Models.Transaction();
 			transaction.set('amount', row.amount);
 			transaction.set('description', row.description);
 			transaction.set('datetime', row.datetime);
-	        transaction.set('wallet_id', this.model.id);
+			transaction.set('wallet_id', this.model.id);
 
-			transaction.save().then(function(){
+			transaction.save().then(function() {
 				onNext();
 			});
 		} else {
@@ -264,65 +271,53 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		$('.import_row_date_format').hide();
 		$('.import_row_time_format').hide();
 
-		$('.import_row_type').each(function(){
+		$('.import_row_type').each(function() {
 			var type = $(this).val();
 
 			if (type == 'date')
-				$('#import_row_'+x+'_date_format').show();
+				$('#import_row_' + x + '_date_format').show();
 
 			if (type == 'time')
-				$('#import_row_'+x+'_time_format').show();
+				$('#import_row_' + x + '_time_format').show();
 
-			for (y = 1; y < height; y++)
-			{
+			for (y = 1; y < height; y++) {
 				var value = that.getValueForCell(x, y);
-				if (type == 'amount')
-				{
+				if (type == 'amount') {
 					if (isNaN(parseFloat(value))) badToImport.push(y);
 					else {
 						if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
 						importPreview[y]['amount'] = value;
 						has_amount = true;
 
-						that.selectedFields.amount = x;	
+						that.selectedFields.amount = x;
 					}
-				}
-				else if (type == 'abs_amount')
-				{
+				} else if (type == 'abs_amount') {
 					if (isNaN(parseFloat(value)) || value < 0) badToImport.push(y);
 					else {
 						if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
 						importPreview[y]['amount'] = -parseFloat(value);
-						has_amount = true;			
+						has_amount = true;
 
-						that.selectedFields.abs_amount = x;		
+						that.selectedFields.abs_amount = x;
 					}
-				}
-				else if (type == 'description')
-				{
+				} else if (type == 'description') {
 					if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
 					importPreview[y]['description'] = value;
 					that.selectedFields.description = x;
-				}
-				else if (type == 'date')
-				{
+				} else if (type == 'date') {
 					date_column_x = x;
 					that.selectedFields.date = x;
-					that.selectedDateFormat = that.$('#import_row_'+x+'_date_format').val();
-				}
-				else if (type == 'time')
-				{
+					that.selectedDateFormat = that.$('#import_row_' + x + '_date_format').val();
+				} else if (type == 'time') {
 					time_column_x = x;
 					that.selectedFields.time = x;
-					that.selectedTimeFormat = that.$('#import_row_'+x+'_time_format').val();
-				}
-				else if (type == 'datetime')
-				{
+					that.selectedTimeFormat = that.$('#import_row_' + x + '_time_format').val();
+				} else if (type == 'datetime') {
 					date_column_x = x;
 					time_column_x = x;
 					that.selectedFields.datetime = x;
-					that.selectedDateFormat = that.$('#import_row_'+x+'_date_format').val();
-					that.selectedTimeFormat = that.$('#import_row_'+x+'_time_format').val();
+					that.selectedDateFormat = that.$('#import_row_' + x + '_date_format').val();
+					that.selectedTimeFormat = that.$('#import_row_' + x + '_time_format').val();
 				}
 			}
 			x++;
@@ -331,54 +326,49 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		var date_format = this.selectedDateFormat;
 		var time_format = this.selectedTimeFormat;
 		if (date_column_x)
-		for (y = 1; y < height; y++)
-		{
-			var date = that.getValueForCell(date_column_x, y);
-			if (time_column_x && time_column_x != date_column_x){
-				date+=' '+that.getValueForCell(time_column_x, y);
-				date_format+=' '+time_format;
-			}
+			for (y = 1; y < height; y++) {
+				var date = that.getValueForCell(date_column_x, y);
+				if (time_column_x && time_column_x != date_column_x) {
+					date += ' ' + that.getValueForCell(time_column_x, y);
+					date_format += ' ' + time_format;
+				}
 
-			var parsed = moment(date, date_format);
+				var parsed = moment(date, date_format);
 
-			if (!parsed.isValid())
-				badToImport.push(y);
-			else {
-				if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
-				importPreview[y]['date'] = parsed.unix();
-				has_date = true;
+				if (!parsed.isValid())
+					badToImport.push(y);
+				else {
+					if (typeof(importPreview[y]) == 'undefined') importPreview[y] = {};
+					importPreview[y]['date'] = parsed.unix();
+					has_date = true;
+				}
 			}
-		}
 
 		this.importPreview = null;
-		for (var k in importPreview)
-		{
+		for (var k in importPreview) {
 			if (typeof(importPreview[k]['date']) != 'undefined' && typeof(importPreview[k]['amount']) != 'undefined')
-			if (!this.importPreview || this.importPreview.length < 10)
-			{
-				if (!this.importPreview) 
-					this.importPreview = [];
-				this.importPreview.push(importPreview[k]);
-			}
+				if (!this.importPreview || this.importPreview.length < 10) {
+					if (!this.importPreview)
+						this.importPreview = [];
+					this.importPreview.push(importPreview[k]);
+				}
 		}
 
 		$('.sample_import_row').addClass('info');
-		badToImport.forEach(function(y){
-			$('#sample_import_row_'+y).removeClass('info');
+		badToImport.forEach(function(y) {
+			$('#sample_import_row_' + y).removeClass('info');
 		});
 
-		if (has_date && has_amount)
-		{
+		if (has_date && has_amount) {
 			this.$('#proccess_step1_warning').hide();
 			this.$('#proccess_step1_button').prop('disabled', false);
 		} else {
-			this.$('#proccess_step1_warning').show();	
-			this.$('#proccess_step1_button').prop('disabled', 'disabled');		
+			this.$('#proccess_step1_warning').show();
+			this.$('#proccess_step1_button').prop('disabled', 'disabled');
 		}
 	},
-	getValueForCell: function(x, y)
-	{
-		var cell = this.worksheet[String.fromCharCode(64+x)+y];
+	getValueForCell: function(x, y) {
+		var cell = this.worksheet[String.fromCharCode(64 + x) + y];
 		if (typeof(cell) == 'undefined')
 			return '';
 		else
@@ -395,18 +385,22 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		var skiped_count = height - 6;
 
 		var sample = [];
-		for (var y = 1; y < height; y++){
-			if (height > 6 && y > skip_line_from && y < skip_line_to)
-			{
+		for (var y = 1; y < height; y++) {
+			if (height > 6 && y > skip_line_from && y < skip_line_to) {
 				y = skip_line_to;
-				sample.push({skiped: skiped_count});
+				sample.push({
+					skiped: skiped_count
+				});
 			} else {
 				var line = [];
-				for (var x = 1; x <= width; x++){
+				for (var x = 1; x <= width; x++) {
 					var value = this.getValueForCell(x, y);
 					line.push(value);
 				}
-				sample.push({items: line, y: y});
+				sample.push({
+					items: line,
+					y: y
+				});
 			}
 		}
 
@@ -426,12 +420,13 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 		var that = this;
 
 		that.$('.alert', '#step_1').hide();
-		reader.onload = function(e)
-		{
+		reader.onload = function(e) {
 			var data = e.target.result;
 			var workbook = null;
 			try {
-				workbook = XLSX.read(data, {type: 'binary'});
+				workbook = XLSX.read(data, {
+					type: 'binary'
+				});
 			} catch (e) {
 				that.$('.alert', '#step_1').show();
 			}
@@ -446,10 +441,9 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 	initialize: function(params) {
 		this.renderLoading();
 		var that = this;
-		App.helper.loadAdditionalScripts(this.additionalScripts, function(){
+		App.helper.loadAdditionalScripts(this.additionalScripts, function() {
 
-			if (typeof(params.wallet_id) !== 'undefined')
-			{
+			if (typeof(params.wallet_id) !== 'undefined') {
 				that.model = new App.Models.Wallet();
 				that.model.id = params.wallet_id;
 
@@ -457,11 +451,11 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 					success: function() {
 						that.render();
 					},
-					error: function(){
+					error: function() {
 						App.showPage('NotFound');
 					}
-				});	
-			} else 
+				});
+			} else
 				throw 'wallet_id parameter required';
 
 		});

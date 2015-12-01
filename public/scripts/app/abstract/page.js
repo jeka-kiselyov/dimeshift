@@ -6,40 +6,36 @@ App.Views.Abstract.Page = Backbone.View.extend({
 	widgets: [],
 	parts: [],
 	partsInitialized: false,
-	requireSingedIn: function(callback)
-	{
+	requireSingedIn: function(callback) {
 		this.requiresSignedIn = true;
 
 		this.listenToOnce(App.currentUser, 'signedout', function() {
-				console.log('abstract/page.js | Clearing stack and redirect user back to the root');
-				App.viewStack.clear();
-				App.router.redirect('/');			
+			console.log('abstract/page.js | Clearing stack and redirect user back to the root');
+			App.viewStack.clear();
+			App.router.redirect('/');
 		});
 
-		if (typeof(App.currentUser) !== 'undefined' && App.currentUser.isSignedIn())
-		{
+		if (typeof(App.currentUser) !== 'undefined' && App.currentUser.isSignedIn()) {
 			if (typeof(callback) === 'function')
 				callback(App.currentUser);
 			return App.currentUser;
-		}
-		else
-		{
-			this.listenToOnce(App.currentUser, 'signedin', function(){
-					callback(App.currentUser);				
+		} else {
+			this.listenToOnce(App.currentUser, 'signedin', function() {
+				callback(App.currentUser);
 			});
 			App.showDialog('Signin');
-			App.dialog.on('hidden', function(){
-				if (!App.currentUser.isSignedIn())
-				{
+			App.dialog.on('hidden', function() {
+				if (!App.currentUser.isSignedIn()) {
 					App.viewStack.clear();
-					App.router.navigate('/', {trigger: true});					
+					App.router.navigate('/', {
+						trigger: true
+					});
 				}
 			});
 		}
 	},
 	setURL: function(url) {
-		if (typeof(url) === 'undefined')
-		{
+		if (typeof(url) === 'undefined') {
 			var url = '';
 			if (typeof(this.url) === 'function')
 				url = this.url();
@@ -47,8 +43,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 				url = this.url;
 		}
 
-		if (url)
-		{
+		if (url) {
 			App.router.setUrl(url);
 			App.log.setURL(url);
 		} else {
@@ -58,21 +53,19 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		App.log.pageView();
 	},
 	setTitle: function(title) {
-		if (typeof(title) === 'undefined')
-		{
+		if (typeof(title) === 'undefined') {
 			var title = '';
 			if (typeof(this.title) === 'function')
 				title = this.title();
 			else if (typeof(this.title) === 'string')
 				title = this.title;
 		}
-		
+
 		if (typeof(App.settings.title) == 'function')
 			title = App.settings.title(title);
 
-		if (title)
-		{
-			console.log("Document title changed to '"+title+"'");
+		if (title) {
+			console.log("Document title changed to '" + title + "'");
 			$(document).attr('title', title);
 			App.log.setTitle(title);
 		}
@@ -83,9 +76,8 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.render();
 	},
 	sleep: function() {
-		
-		for (var k in this.parts)
-		{
+
+		for (var k in this.parts) {
 			this.parts[k].undelegateEvents();
 			this.parts[k].stopListening();
 		}
@@ -96,19 +88,18 @@ App.Views.Abstract.Page = Backbone.View.extend({
 	proccessWidgets: function() {
 		this.widgets = [];
 		var that = this;
-		this.$('.client-side-widget').each(function(){
+		this.$('.client-side-widget').each(function() {
 			var data = $(this).data();
 			if (typeof(data.widgetName) === 'undefined' || !data.widgetName)
 				return false;
 
-			if (typeof(App.Views.Widgets[data.widgetName]) === 'undefined')
-			{
-				console.error('Widget class for '+data.widgetName+' is not defined');
+			if (typeof(App.Views.Widgets[data.widgetName]) === 'undefined') {
+				console.error('Widget class for ' + data.widgetName + ' is not defined');
 				return false;
 			}
 
-			var widgetView = new App.Views.Widgets[data.widgetName]({  
-			  el: $(this)
+			var widgetView = new App.Views.Widgets[data.widgetName]({
+				el: $(this)
 			});
 
 			that.widgets.push(widgetView);
@@ -126,8 +117,8 @@ App.Views.Abstract.Page = Backbone.View.extend({
 
 		var that = this;
 		App.templateManager.fetch(this.templateName, data, function(html) {
-			that.$el.html('<div class="page">'+html+'</div>');
-			$('.page', "#page_holder_"+App.currentHolder).removeClass('page_loading');
+			that.$el.html('<div class="page">' + html + '</div>');
+			$('.page', "#page_holder_" + App.currentHolder).removeClass('page_loading');
 			that.proccessWidgets();
 			that.trigger('render');
 			that.trigger('loaded');
@@ -137,7 +128,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.setTitle();
 		this.setURL();
 		this.isReady = true;
-		
+
 		return this;
 	},
 	switchBuffers: function() {
@@ -150,11 +141,11 @@ App.Views.Abstract.Page = Backbone.View.extend({
 
 		var holderToFadeOut = (holderToRenderTo == 1) ? 2 : 1;
 
-		$("#page_holder_"+holderToFadeOut).hide();
-		$("#page_holder_"+holderToFadeOut).html('');
-		$("#page_holder_"+holderToRenderTo).show();
+		$("#page_holder_" + holderToFadeOut).hide();
+		$("#page_holder_" + holderToFadeOut).html('');
+		$("#page_holder_" + holderToRenderTo).show();
 
-		this.setElement($("#page_holder_"+holderToRenderTo));
+		this.setElement($("#page_holder_" + holderToRenderTo));
 
 		App.currentHolder = holderToRenderTo;
 
@@ -168,7 +159,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		this.switchBuffers();
 
 		this.$el.html('<div class="page page_loading"></div>');
-		
+
 		this.setTitle();
 		this.setURL();
 

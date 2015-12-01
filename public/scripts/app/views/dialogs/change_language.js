@@ -12,7 +12,10 @@ App.Views.Dialogs.ChangeLanguage = App.Views.Abstract.Dialog.extend({
 		this.on('ready', function() {
 
 		});
-		this.show({locales: App.settings.availiableLocales, current_locale: App.settings.language});
+		this.show({
+			locales: App.settings.availiableLocales,
+			current_locale: App.settings.language
+		});
 	},
 	doProcess: function(ev) {
 		if (this.currentlyUpdating)
@@ -25,7 +28,7 @@ App.Views.Dialogs.ChangeLanguage = App.Views.Abstract.Dialog.extend({
 			this.currentlyUpdating = true;
 			var that = this;
 			that.$('.process_button_container').fadeTo(0.1, 0.1);
-			App.i18n.setLanguage(code, function(){
+			App.i18n.setLanguage(code, function() {
 				that.currentlyUpdating = false;
 				that.$('.process_button_container').fadeTo(1, 1);
 				App.settings.language = code;
