@@ -55,7 +55,7 @@ App.i18n = {
 			process({});
 		else
 			$.ajax({
-				url: App.settings.apiEntryPoint + 'i18n/bycode/'+this.languageCode,
+				url: App.settings.apiEntryPoint + 'i18n/bycode/'+(''+this.languageCode).split('-').join(''),
 				data: {},
 				success: process,
 				dataType: 'json',

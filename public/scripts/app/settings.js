@@ -12,7 +12,8 @@ App.settings = {
 	availiableLocales: {
 		'default': {code: 'en', name: 'English', timeFormat: '12', dateFormat:'mdy'},
 		'ua': {name: 'Українська', timeFormat: '24', dateFormat:'dmy'},
-		'ru': {name: 'Русский', timeFormat: '24', dateFormat:'dmy'}
+		'ru': {name: 'Русский', timeFormat: '24', dateFormat:'dmy'},
+		'pt-br': {name: 'Português Brasileiro', timeFormat: '24', dateFormat:'dmy'}
 	},
 	detectLanguage: function() {
 		
@@ -21,7 +22,7 @@ App.settings = {
 			language = App.localStorage.get('selected_interface_locale');
 		else {
 			language = window.navigator.userLanguage || window.navigator.language;
-			if (language && language.indexOf('-') != -1)
+			if (language && typeof(this.availiableLocales[language]) == 'undefined' && language.indexOf('-') != -1)
 			{
 				language = language.split('-')[0];
 			}
