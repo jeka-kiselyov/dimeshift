@@ -46,7 +46,7 @@ App.Collections.Transactions = Backbone.Collection.extend({
             this.setPeriod();
         var month = this.periodMonth - 1;
         var year = this.periodYear;
-        if (month == 0) {
+        if (month === 0) {
             year--;
             month = 12;
         }
@@ -71,10 +71,12 @@ App.Collections.Transactions = Backbone.Collection.extend({
         if (!this.periodMonth || !this.periodYear)
             this.setPeriod();
 
+        var to = 0;
+
         if (this.periodMonth < 12) /// don't forget that the month is 0 based for new Date, but 1 based in periodMonth
-            var to = (new Date(this.periodYear, this.periodMonth, 1, 0, 0, 0, 0)).getTime() / 1000 - 1;
+            to = (new Date(this.periodYear, this.periodMonth, 1, 0, 0, 0, 0)).getTime() / 1000 - 1;
         else
-            var to = (new Date(this.periodYear + 1, 0, 1, 0, 0, 0, 0)).getTime() / 1000 - 1;
+            to = (new Date(this.periodYear + 1, 0, 1, 0, 0, 0, 0)).getTime() / 1000 - 1;
 
         var from = (new Date(this.periodYear, this.periodMonth - 1, 1, 0, 0, 0, 0)).getTime() / 1000;
 
@@ -84,7 +86,7 @@ App.Collections.Transactions = Backbone.Collection.extend({
         this.wallet_id = wallet_id;
     },
     hasNextPeriod: function() {
-        if (this.periodMonth == false || this.periodYear == false)
+        if (this.periodMonth === false || this.periodYear === false)
             return false;
         var d = new Date(); /// don't forget that the month is 0 based for new Date, but 1 based in periodMonth
         if (this.periodYear < d.getFullYear() || (this.periodYear == d.getFullYear() && this.periodMonth < d.getMonth() + 1))
@@ -92,7 +94,7 @@ App.Collections.Transactions = Backbone.Collection.extend({
         return false;
     },
     hasPrevPeriod: function() {
-        if (this.periodMonth == false || this.periodYear == false)
+        if (this.periodMonth === false || this.periodYear === false)
             return true;
         var d = new Date();
         if (this.periodYear <= 1970)
@@ -145,8 +147,10 @@ App.Collections.Transactions = Backbone.Collection.extend({
         return true;
     },
     setPeriod: function(month, year) {
+
+        var d = new Date();
+
         if (typeof(month) == 'undefined') {
-            var d = new Date();
             this.periodMonth = d.getMonth() + 1;
         } else {
             if (month >= 1 && month <= 12)
@@ -156,7 +160,6 @@ App.Collections.Transactions = Backbone.Collection.extend({
         }
 
         if (typeof(year) == 'undefined') {
-            var d = new Date();
             this.periodYear = d.getFullYear();
         } else {
             if (year >= 1970)

@@ -126,7 +126,7 @@ window.App = {
 			this.progress = new Mprogress();
 
 		if (typeof(value) === 'undefined') {
-			if (this.progress.status == null)
+			if (this.progress.status === null)
 				return this.progress.start();
 			else
 				return this.progress.inc();

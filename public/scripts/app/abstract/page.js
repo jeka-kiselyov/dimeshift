@@ -36,7 +36,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 	},
 	setURL: function(url) {
 		if (typeof(url) === 'undefined') {
-			var url = '';
+			url = '';
 			if (typeof(this.url) === 'function')
 				url = this.url();
 			else if (typeof(this.url) === 'string')
@@ -54,7 +54,7 @@ App.Views.Abstract.Page = Backbone.View.extend({
 	},
 	setTitle: function(title) {
 		if (typeof(title) === 'undefined') {
-			var title = '';
+			title = '';
 			if (typeof(this.title) === 'function')
 				title = this.title();
 			else if (typeof(this.title) === 'string')

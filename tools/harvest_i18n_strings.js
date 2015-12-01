@@ -31,7 +31,7 @@ var harvester = function(dirname, callback) {
   var foundItemsCount = 0;
 
   var parseFile = function(filename, transalateTag) {
-    var transalateTag = transalateTag || 't';
+    transalateTag = transalateTag || 't';
     var regex = new RegExp("\{" + transalateTag + "\}([^\{]+)\{\/" + transalateTag + "\}", 'g');
     var data = "" + fs.readFileSync(filename, 'utf8');
     var matches = data.match(regex);
@@ -40,7 +40,7 @@ var harvester = function(dirname, callback) {
     var closingTag = '{/' + transalateTag + '}';
     var closingTagLength = closingTag.length;
 
-    if (matches != null)
+    if (matches !== null)
       matches.forEach(function(match) {
         var string = '';
         if (match.length > 7)
@@ -53,14 +53,14 @@ var harvester = function(dirname, callback) {
           foundItemsCount++;
         }
       });
-  }
+  };
 
   var parseHTMLFile = function(filename) {
     var regex = /data-i18n="([^"]+)"/g;
     var data = "" + fs.readFileSync(filename, 'utf8');
     var matches = data.match(regex);
 
-    if (matches != null)
+    if (matches !== null)
       matches.forEach(function(match) {
         var string = '';
         if (match.length > 7)
@@ -73,7 +73,7 @@ var harvester = function(dirname, callback) {
           foundItemsCount++;
         }
       });
-  }
+  };
 
   walk(dirname, function(err, results) {
 
@@ -102,7 +102,7 @@ var harvester = function(dirname, callback) {
     callback(Object.keys(foundItems));
   });
 
-}
+};
 
 var dirname = path.join(__dirname, '..', 'public');
 var i18n_dirname = path.join(__dirname, '..', 'data/i18n');
@@ -136,7 +136,7 @@ harvester(dirname, function(strings) {
     fs.writeFileSync(path.join(i18n_dirname, i18n_file), JSON.stringify(data, null, 2));
 
     console.log('Updated. Added ' + newStringsCount + ' new strings.');
-  }
+  };
 
   console.log("There're " + i18n_files.length + ' i18n files');
   // console.log(i18n_files);
