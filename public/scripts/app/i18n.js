@@ -40,7 +40,7 @@ App.i18n = {
 	loadStrings: function(callback) {
 
 		var that = this;
-		var process = function(data) {
+		var process = function(data) { console.log(data);
 			that.strings = data;
 			that.loaded = true;
 			that.translateDOM();
@@ -55,7 +55,7 @@ App.i18n = {
 			process({});
 		else
 			$.ajax({
-				url: App.settings.apiEntryPoint + 'i18n/bycode/'+(''+this.languageCode).split('-').join(''),
+				url: App.settings.apiEntryPoint + 'i18n/bycode/'+this.languageCode.split('-').join(''),
 				data: {},
 				success: process,
 				dataType: 'json',
