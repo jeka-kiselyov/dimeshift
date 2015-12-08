@@ -25,7 +25,13 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 			App.router.redirect('/wallets/');
 		else {
 			this.holderReady = false;
-			$(window).on('resize', this.resize);
+
+			var that = this;
+			alert(3);
+			this.on('render', function() {
+				that.resize();
+				$(window).on('resize', that.resize);
+			});
 			this.render();
 		}
 	},
@@ -34,20 +40,16 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 	},
 	resize: function() {
 		if (typeof(App.page.__resizeThrottled) === 'undefined') {
-			App.page.__initialScreenshotsOffset = $('#screenshots_header').offset().top;
 			App.page.__resizeThrottled = _.throttle(function() {
 				var footerOffset = $(window).height() - $('#footer').height() - 20;
-				if ($(window).width() > 768 && footerOffset > App.page.__initialScreenshotsOffset + 180) {
-					var margin = footerOffset - (App.page.__initialScreenshotsOffset + 180);
+				var rulerOffset = $('#screenshots_header_ruler').offset().top;
+				if ($(window).width() > 768 && footerOffset > rulerOffset + 180) {
+					var margin = footerOffset - (rulerOffset + 180);
 					margin = Math.round(margin);
 					$('#screenshots_header').css('margin-top', margin + 'px');
 				} else {
 					$('#screenshots_header').css('margin-top', '0px');
 				}
-
-				// console.log("__initialScreenshotsOffset: " + App.page.__initialScreenshotsOffset);
-				// console.log("$('#footer').offset().top: " + footerOffset);
-				// console.log("Margin: " + margin);
 			}, 100);
 		}
 
@@ -84,6 +86,7 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 			});
 
 			that.resize();
+			$(window).on('resize', that.resize);
 
 			if ('ontouchstart' in window || 'onmsgesturechange' in window) {
 				//// touch device
@@ -92,10 +95,8 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 				//// pc
 				$('.register_with_mouse').fadeIn('slow');
 			}
-
 		});
 
-		$(window).on('resize', that.resize);
 		this.render();
 	}
 

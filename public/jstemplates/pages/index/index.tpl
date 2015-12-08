@@ -8,6 +8,7 @@
 <p class="register_without_mouse" style="display: none;">{tp}Just click{/tp}
           <input type="submit" class="btn btn-default" id="demo_without_mouse_signup" data-i18nvalue="here" value="{t}here{/t}"> {tp}and start using wallet right now!{/tp}</p>
 </div>
+<span id="screenshots_header_ruler"></span>
 
 <h4 id="screenshots_header">{tp}Screenshots{/tp}</h4>
 <div class="row">
