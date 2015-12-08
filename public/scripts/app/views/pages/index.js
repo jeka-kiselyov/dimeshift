@@ -25,16 +25,42 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 			App.router.redirect('/wallets/');
 		else {
 			this.holderReady = false;
+			$(window).on('resize', this.resize);
 			this.render();
 		}
 	},
+	sleep: function() {
+		$(window).off('resize');
+	},
+	resize: function() {
+		if (typeof(App.page.__resizeThrottled) === 'undefined') {
+			App.page.__initialScreenshotsOffset = $('#screenshots_header').offset().top;
+			App.page.__resizeThrottled = _.throttle(function() {
+				var footerOffset = $(window).height() - $('#footer').height() - 20;
+				if ($(window).width() > 768 && footerOffset > App.page.__initialScreenshotsOffset + 180) {
+					var margin = footerOffset - (App.page.__initialScreenshotsOffset + 180);
+					margin = Math.round(margin);
+					$('#screenshots_header').css('margin-top', margin + 'px');
+				} else {
+					$('#screenshots_header').css('margin-top', '0px');
+				}
+
+				// console.log("__initialScreenshotsOffset: " + App.page.__initialScreenshotsOffset);
+				// console.log("$('#footer').offset().top: " + footerOffset);
+				// console.log("Margin: " + margin);
+			}, 100);
+		}
+
+		App.page.__resizeThrottled();
+	},
 	initialize: function() {
+		var that = this;
 		if (typeof(App.currentUser) !== 'undefined' && App.currentUser && App.currentUser.isSignedIn())
 			return App.router.redirect('/wallets/');
 		this.renderLoading();
 		/// initialize models, collections etc. Request fetching from storage
 
-		this.listenTo(App.currentUser, 'signedInStatusChanged', function(){
+		this.listenTo(App.currentUser, 'signedInStatusChanged', function() {
 			App.router.redirect('/wallets/');
 		});
 
@@ -57,11 +83,7 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 				}
 			});
 
-			if ($(window).width() > 800 && $('#footer').offset().top > $('#screenshots_header').offset().top + 180) {
-				var margin = $('#footer').offset().top - ($('#screenshots_header').offset().top + 180);
-				margin = Math.round(margin);
-				$('#screenshots_header').css('margin-top', margin + 'px');
-			}
+			that.resize();
 
 			if ('ontouchstart' in window || 'onmsgesturechange' in window) {
 				//// touch device
@@ -73,6 +95,7 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 
 		});
 
+		$(window).on('resize', that.resize);
 		this.render();
 	}
 
