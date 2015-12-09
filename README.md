@@ -36,7 +36,7 @@ Open [localhost:8080](http://localhost:8080) in your browser.
 Documentation:
 ----
 
-[API](docs/api/readme.md)
+[API](https://github.com/jeka-kiselyov/dimeshift/blob/master/docs/api/readme.md)
 
 
 Screenshots:
