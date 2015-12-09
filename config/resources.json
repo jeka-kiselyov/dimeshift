@@ -48,6 +48,8 @@
 		"./public/vendors/chartist/dist/chartist.min.css",
 		"./public/vendors/bootstrap/dist/css/bootstrap.min.css",
 		"./public/vendors/bootstrap-tour/build/css/bootstrap-tour.min.css",
-		"./public/css/main.css"
+		"./public/css/main.css",
+		"./public/css/parts/",
+		"./public/css/parts/dialogs/"
 	]
 }
