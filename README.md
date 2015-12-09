@@ -33,6 +33,12 @@ npm start
 ```
 Open [localhost:8080](http://localhost:8080) in your browser.
 
+Documentation:
+----
+
+[API](docs/api/readme.md)
+
+
 Screenshots:
 ----
 ![Dimeshift transactions](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/transactions.jpg)
