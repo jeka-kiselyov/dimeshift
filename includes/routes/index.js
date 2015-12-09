@@ -37,7 +37,8 @@ walk(__dirname, function(err, results) {
       routes.push({
         handler: inc.handler,
         route: inc.route,
-        method: inc.method
+        method: inc.method,
+        docs: inc.docs
       });
     }
   });
