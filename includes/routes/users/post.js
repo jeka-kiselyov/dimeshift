@@ -5,6 +5,35 @@ var api = rfr('includes/api.js');
 
 exports.route = '/api/users';
 exports.method = 'post';
+exports.docs = {
+	description: "Register new user",
+	params: {
+		"email": {
+			required: true,
+			description: 'Email',
+			type: 'string'
+		},
+		"login": {
+			required: true,
+			description: 'Login or Username',
+			type: 'string'
+		},
+		"type": {
+			required: false,
+			description: 'User type',
+			type: 'string'
+		},
+		"password": {
+			required: true,
+			description: 'Password',
+			type: 'string'
+		}
+	},
+	returns: {
+		description: "User record with auth_code property. Use this auth_code for signing next API calls. Also sets logged_in_user cookie to auth_code in response headers.",
+		sample: '{"id": 23, "email": "example@gmail.com","login": "userlogin","is_demo": 0,"auth_code": "017957d841c8f6927c612ea1d6602c3f"}'
+	}
+};
 
 exports.handler = function(req, res, next) {
 

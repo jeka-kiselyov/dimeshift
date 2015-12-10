@@ -5,6 +5,14 @@ var api = rfr('includes/api.js');
 
 exports.route = '/api/wallets/:wallet_id';
 exports.method = 'get';
+exports.docs = {
+	description: "Get wallet info",
+	params: {},
+	returns: {
+		description: "Wallet object",
+		sample: '{"id":4,"name":"Cash. EUR","type":"default","status":"active","currency":"EUR","total":300,"user_id":1}'
+	}
+};
 
 exports.handler = function(req, res, next) {
 

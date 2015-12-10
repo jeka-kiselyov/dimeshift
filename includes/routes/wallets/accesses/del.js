@@ -5,7 +5,14 @@ var api = rfr('includes/api.js');
 
 exports.route = '/api/wallets/:wallet_id/accesses/:wallet_access_id';
 exports.method = 'del';
-
+exports.docs = {
+	description: "Remove access to wallet. Works only if called by original wallet owner.",
+	params: {},
+	returns: {
+		description: "True on success",
+		sample: 'true'
+	}
+};
 
 exports.handler = function(req, res, next) {
 

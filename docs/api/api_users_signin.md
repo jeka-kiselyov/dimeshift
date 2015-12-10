@@ -12,7 +12,7 @@ Sign in user using username and password
 #### Response
 ##### On success
 
-User record with auth_code property. Use this auth_code for signing next API calls.
+User record with auth_code property. Use this auth_code for signing next API calls. Also sets logged_in_user cookie to auth_code in response headers.
 
 **Sample response**
 

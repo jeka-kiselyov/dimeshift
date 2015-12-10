@@ -5,6 +5,14 @@ var api = rfr('includes/api.js');
 
 exports.route = '/api/wallets/:wallet_id/transactions/:transaction_id';
 exports.method = 'del';
+exports.docs = {
+	description: "Remove transaction from database. Also recalculate wallet total.",
+	params: {},
+	returns: {
+		description: "True on success",
+		sample: 'true'
+	}
+};
 
 exports.handler = function(req, res, next) {
 

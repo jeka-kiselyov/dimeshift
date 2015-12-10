@@ -37,7 +37,7 @@ routes(function(routes) {
 
 		var docs = route.docs || {
 			description: '',
-			params: {},
+			params: false,
 			returns: {
 				description: '',
 				sample: ''
@@ -56,27 +56,29 @@ routes(function(routes) {
 		paramsMDHeaders['Type'] = "Type".length;
 		paramsMDHeaders['Description'] = "Description".length;
 		paramsMDHeaders['Required'] = "Required".length;
-		for (var k in docs.params) {
-			hasParamsMD = true;
-			var name = '' + k;
-			var description = '' + docs.params[k].description;
-			var type = ('' + docs.params[k].type) || 'string';
-			var required = '';
-			if (docs.params[k].required)
-				required = 'yes';
 
-			paramsMDRows[k] = {
-				'Name': name,
-				'Description': description,
-				'Type': type,
-				'Required': required
-			};
+		if (docs.params !== false)
+			for (var k in docs.params) {
+				hasParamsMD = true;
+				var name = '' + k;
+				var description = '' + docs.params[k].description;
+				var type = ('' + docs.params[k].type) || 'string';
+				var required = '';
+				if (docs.params[k].required)
+					required = 'yes';
 
-			if (name.length > paramsMDHeaders['Name']) paramsMDHeaders['Name'] = name.length;
-			if (description.length > paramsMDHeaders['Description']) paramsMDHeaders['Description'] = description.length;
-			if (type.length > paramsMDHeaders['Type']) paramsMDHeaders['Type'] = type.length;
-			if (required.length > paramsMDHeaders['Required']) paramsMDHeaders['Required'] = required.length;
-		}
+				paramsMDRows[k] = {
+					'Name': name,
+					'Description': description,
+					'Type': type,
+					'Required': required
+				};
+
+				if (name.length > paramsMDHeaders['Name']) paramsMDHeaders['Name'] = name.length;
+				if (description.length > paramsMDHeaders['Description']) paramsMDHeaders['Description'] = description.length;
+				if (type.length > paramsMDHeaders['Type']) paramsMDHeaders['Type'] = type.length;
+				if (required.length > paramsMDHeaders['Required']) paramsMDHeaders['Required'] = required.length;
+			}
 
 		var paramsMD = "| " + Array(paramsMDHeaders['Name'] + 1).join(' ') + " |";
 		paramsMD += " Type" + Array(paramsMDHeaders['Type'] - "Type".length + 1).join(' ') + " |";
@@ -103,6 +105,8 @@ routes(function(routes) {
 
 		if (hasParamsMD)
 			filesToWrite[fileName][method] += paramsMD + "\n";
+		else if (docs.params !== false)
+			filesToWrite[fileName][method] += "No parameters\n\n"
 
 		var sampleJSON = null;
 		try {
