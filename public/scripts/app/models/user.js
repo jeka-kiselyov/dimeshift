@@ -137,10 +137,16 @@ App.Models.User = Backbone.Model.extend({
 				if (typeof(response.responseJSON) !== 'undefined' && typeof(response.responseJSON.message) !== 'undefined') {
 					if (!(that.validationError instanceof Array))
 						that.validationError = [];
-					for (var k in response.responseJSON.message)
+					if (typeof(response.responseJSON.message) === 'string') {
 						that.validationError.push({
-							msg: response.responseJSON.message[k]
+							msg: response.responseJSON.message
 						});
+					} else {
+						for (var k in response.responseJSON.message)
+							that.validationError.push({
+								msg: response.responseJSON.message[k]
+							});
+					}
 				}
 				that.trigger('invalid');
 			}
@@ -172,10 +178,16 @@ App.Models.User = Backbone.Model.extend({
 				if (typeof(response.responseJSON) !== 'undefined' && typeof(response.responseJSON.message) !== 'undefined') {
 					if (!(that.validationError instanceof Array))
 						that.validationError = [];
-					for (var k in response.responseJSON.message)
+					if (typeof(response.responseJSON.message) === 'string') {
 						that.validationError.push({
-							msg: response.responseJSON.message[k]
+							msg: response.responseJSON.message
 						});
+					} else {
+						for (var k in response.responseJSON.message)
+							that.validationError.push({
+								msg: response.responseJSON.message[k]
+							});
+					}
 				}
 				that.trigger('invalid');
 			}

@@ -15,6 +15,25 @@ module.exports = function(sequelize, DataTypes) {
 			validate: {
 				isEmail: {
 					msg: "Invalid email"
+				},
+				isUnique: function(value, next) {
+					var that = this;
+					sequelize.db.User.findOne({
+							where: {
+								email: value,
+								id: {
+									$ne: this.id
+								}
+							},
+							attributes: ['id']
+						})
+						.then(function(foundUser) {
+							if (foundUser)
+								throw new Error('Email is already in use');
+							next();
+						}).catch(function(err) {
+							throw new Error('Email is already in use');
+						});
 				}
 			}
 		},
@@ -31,7 +50,30 @@ module.exports = function(sequelize, DataTypes) {
 			}
 		},
 		password: DataTypes.STRING(50),
-		login: DataTypes.STRING(255),
+		login: {
+			type: DataTypes.STRING(255),
+			validate: {
+				isUnique: function(value, next) {
+					var that = this;
+					sequelize.db.User.findOne({
+							where: {
+								login: value,
+								id: {
+									$ne: this.id
+								}
+							},
+							attributes: ['id']
+						})
+						.then(function(foundUser) {
+							if (foundUser)
+								throw new Error('This username is already in use');
+							next();
+						}).catch(function(err) {
+							throw new Error('This username is already in use');
+						});
+				}
+			}
+		},
 		is_demo: {
 			type: DataTypes.INTEGER,
 			defaultValue: 0,
