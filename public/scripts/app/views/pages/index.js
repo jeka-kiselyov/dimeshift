@@ -27,7 +27,6 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 			this.holderReady = false;
 
 			var that = this;
-			alert(3);
 			this.on('render', function() {
 				that.resize();
 				$(window).on('resize', that.resize);

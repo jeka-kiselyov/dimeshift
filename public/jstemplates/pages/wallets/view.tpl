@@ -57,7 +57,7 @@
 				<h3 class="panel-title">{tp}Expenses per day trends{/tp}</h3>
 			</div>
 			<div class="panel-body">
-				<div id="balance_canvas" class="ct-chart ct-perfect-fourth" ></div>
+				<div id="balance_canvas" class="ct-chart" ></div>
 			</div>
 		</div>
 	</div>

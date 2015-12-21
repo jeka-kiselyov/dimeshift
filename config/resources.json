@@ -14,7 +14,6 @@
 		"./public/vendors/bootstrap-clickonmouseover/bootstrap.clickonmouseover.js",
 		"./public/vendors/magnific-popup/dist/jquery.magnific-popup.min.js",
 		"./public/vendors/mprogress/build/js/mprogress.min.js",
-		"./public/vendors/chartist/dist/chartist.js",
 		"./public/vendors/jsmart/jsmart.js",
 		"./public/scripts/functions.js",
 		"./public/scripts/app.js",
@@ -45,7 +44,6 @@
 	"css": [
 		"./public/vendors/mprogress/build/css/mprogress.css",
 		"./public/vendors/magnific-popup/dist/magnific-popup.css",
-		"./public/vendors/chartist/dist/chartist.min.css",
 		"./public/vendors/bootstrap/dist/css/bootstrap.min.css",
 		"./public/vendors/bootstrap-tour/build/css/bootstrap-tour.min.css",
 		"./public/css/main.css",
