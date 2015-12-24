@@ -158,6 +158,12 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			var curYear = curTime.getYear();
 
 			curTime = curTime.getTime();
+			var eachDayFunc = function(t) {
+				var tDate = new Date(t.get('datetime') * 1000);
+				if (tDate.getDate() === day && tDate.getMonth() === month)
+					dayTotal += Math.abs(t.get('amount'));
+			};
+
 			for (var i = 60; i >= 0; i--) {
 				var d = new Date(curTime - 24 * 60 * 60 * 1000 * i);
 				var day = d.getDate();
@@ -165,11 +171,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 				var year = d.getYear();
 
 				var dayTotal = 0;
-				_.each(a, function(t) {
-					var tDate = new Date(t.get('datetime') * 1000);
-					if (tDate.getDate() === day && tDate.getMonth() === month)
-						dayTotal += Math.abs(t.get('amount'));
-				});
+				_.each(a, eachDayFunc);
 				days[day + '-' + month] = {
 					day: day,
 					month: month,
@@ -184,7 +186,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			var firstYear = 0;
 			_.each(days, function(day) {
 				if (day.total > 0) {
-					if (firstDay == 0 && firstMonth == 0) {
+					if (firstDay === 0 && firstMonth === 0) {
 						firstDay = day.day;
 						firstMonth = day.month;
 						firstYear = day.year;
@@ -202,7 +204,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			if (firstDay)
 				_.each(days, function(d) {
 					if (firstYear < d.year || (firstMonth < d.month && firstYear <= d.year) || (firstDay < d.day && firstMonth == d.month)) {
-						if (d.total == 0 && typeof(d.filledMissed) === 'undefined') {
+						if (d.total === 0 && typeof(d.filledMissed) === 'undefined') {
 							var foundTotal = 0;
 							var foundEmpty = [];
 							var iDay = d.day + 1;
@@ -210,10 +212,10 @@ App.Views.Charts.Balance = Backbone.View.extend({
 							var iYear = d.year;
 							foundEmpty.push(d.day + '-' + d.month);
 
-							while ((foundTotal == 0) && ((curMonth == iMonth && curDay >= iDay) || (curYear == iYear && curMonth > iMonth) || curYear > iYear))
+							while ((foundTotal === 0) && ((curMonth == iMonth && curDay >= iDay) || (curYear == iYear && curMonth > iMonth) || curYear > iYear))
 								if (typeof(days[iDay + '-' + iMonth]) !== 'undefined') {
 
-									if (days[iDay + '-' + iMonth].total == 0) {
+									if (days[iDay + '-' + iMonth].total === 0) {
 										/// another empty day
 										foundEmpty.push(iDay + '-' + iMonth);
 									} else {
@@ -335,7 +337,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 			that._data = [];
 			that._data.push(['Date', 'Amount']);
 			for (var k in values)
-				that._data.push([values[k].label, values[k].value]);
+				that._data.push([values[k].label, +values[k].value.toFixed(2)]);
 
 			that.dataFetched = false;
 
