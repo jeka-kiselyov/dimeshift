@@ -16,6 +16,7 @@ describe('API server', function() {
 	var wallet_1_name = 'name ' + Math.random();
 	var wallet_1_currency = 'USD';
 	var wallet_1_id = null;
+	var wallet_1_initial_amount = 200.99;
 
 	it('registers user', function(done) {
 		testHelper.sendPost('/api/users', {
@@ -137,11 +138,11 @@ describe('API server', function() {
 	it('lets us add some income transaction to wallet', function(done) {
 		testHelper.sendPost('/api/wallets/' + wallet_1_id + '/transactions/', {
 			wallet_id: wallet_1_id,
-			amount: 200.99,
+			amount: wallet_1_initial_amount,
 			description: 'Initial'
 		}).then(function(data) {
 			expect(data.body).to.be.a('object');
-			expect(data.body.amount).to.equal(200.99);
+			expect(data.body.amount).to.equal(wallet_1_initial_amount);
 			expect(data.body.wallet_id).to.equal(wallet_1_id);
 			expect(data.body.user_id).to.equal(registeredUserId);
 			expect(data.body.description).to.equal('Initial');
@@ -153,7 +154,7 @@ describe('API server', function() {
 	it('updates wallet total with transactions', function(done) {
 		testHelper.sendGet('/api/wallets/' + wallet_1_id).then(function(data) {
 			expect(data.body).to.be.a('object');
-			expect(data.body.total).to.equal(200.99);
+			expect(data.body.total).to.equal(wallet_1_initial_amount);
 			done();
 		});
 	});
@@ -162,20 +163,20 @@ describe('API server', function() {
 	var testTransactions = [];
 	testTransactions.push({
 		amount: -0.99,
-		shouldSetTotalTo: 200
+		shouldSetTotalTo: wallet_1_initial_amount - 0.99
 	});
 	testTransactions.push({
 		amount: -400,
-		shouldSetTotalTo: -200
+		shouldSetTotalTo: wallet_1_initial_amount - 0.99 - 400
 	});
 	testTransactions.push({
 		amount: 1200,
-		shouldSetTotalTo: 1000
+		shouldSetTotalTo: wallet_1_initial_amount - 0.99 - 400 + 1200
 	});
 	testTransactions.push({
 		subtype: 'setup',
 		amount: 89.99,
-		shouldSetTotalTo: 89.99
+		shouldSetTotalTo: 89.99 //// setup transaction set wallet total to its amount
 	});
 
 	testTransactions.forEach(function(testTransaction) {
