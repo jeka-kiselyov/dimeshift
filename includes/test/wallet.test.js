@@ -3,6 +3,7 @@ var rfr = require('rfr');
 var expect = require('chai').expect;
 var assert = require('chai').assert;
 var testHelper = rfr('includes/test.js');
+var db = rfr('includes/models');
 
 describe('API server', function() {
 
@@ -59,6 +60,12 @@ describe('API server', function() {
 
 	it('allows him to sign out', function(done) {
 		testHelper.sendPost('/api/users/signout', null).then(function(data) {
+			done();
+		});
+	});
+
+	it('does not allow to remove account for signed out user', function(done) {
+		testHelper.sendGetAndExpectStatus('/api/users/' + registeredUserId + '/removeaccount', "!200").then(function() {
 			done();
 		});
 	});
@@ -236,56 +243,59 @@ describe('API server', function() {
 		});
 	});
 
+	var remove_account_code = null;
+
+	it('allow to initialize remove account procedure for signed in user', function(done) {
+		testHelper.sendPostAndExpectStatus('/api/users/' + registeredUserId + '/removeaccount', {}, '200').then(function(data) {
+			expect(data.body).to.equal(true);
+
+			db.User.findOne({
+				where: {
+					id: registeredUserId
+				}
+			}).then(function(user) {
+
+				expect(registeredUserId).to.equal(user.id);
+				remove_account_code = user.remove_account_code;
+
+				done();
+			});
+		});
+	});
+
+	it('does not allow to finish account remove procedure with wrong remove_account_code', function(done) {
+		testHelper.sendPostAndExpectStatus('/api/users/' + registeredUserId + '/removeaccount', {
+			code: 'wrong'
+		}, '200').then(function(data) {
+			expect(data.body).to.equal(false);
+			done();
+		});
+	});
+
+	it('does not allow to finish account remove procedure with good remove_account_code, but wrong user_id parameter', function(done) {
+		testHelper.sendPostAndExpectStatus('/api/users/' + registeredUserId - 2 + '/removeaccount', {
+			code: remove_account_code
+		}, '!200').then(function(data) {
+			done();
+		});
+	});
+
+	it('allow to finish remove account procedure', function(done) {
+		testHelper.sendPostAndExpectStatus('/api/users/' + registeredUserId + '/removeaccount', {
+			code: remove_account_code
+		}, '200').then(function(data) {
+			expect(data.body).to.equal(true);
+
+			/// double check that user is removed
+			db.User.findOne({
+				where: {
+					id: registeredUserId
+				}
+			}).then(function(user) {
+				expect(user).to.equal(null);
+				done();
+			});
+		});
+	});
+
 });
-// var sendTestPost = function(endpoint, data, callback) {
-// 	hippie()
-// 		.json()
-// 		.base('http://localhost:8080')
-// 		.timeout(5000)
-// 		.post(endpoint)
-// 		.send(data)
-// 		.expectStatus(200)
-// 		.use(persistCookies)
-// 		.end(function(err, res, body) {
-// 			if (err) throw err;
-
-// 			var headers = res.headers;
-
-// 			// var cookieHeader = res.headers['set-cookie'];
-// 			// res.cookies = {};
-// 			// cookieHeader && cookieHeader.forEach(function(cookie) {
-// 			// 	var parts = cookie.split('=');
-// 			// 	res.cookies[parts.shift().trim()] = decodeURI(parts.join('=').split('; ')[0]);
-// 			// });
-
-// 			expect(body).to.be.an('object');
-
-// 			if (typeof(callback) === 'function')
-// 				callback(body, headers);
-// 		});
-// };
-
-// var sendTestGet = function(endpoint, data, callback) {
-// 	hippie()
-// 		.json()
-// 		.base('http://localhost:8080')
-// 		.timeout(5000)
-// 		.get(endpoint)
-// 		.expectStatus(200)
-// 		.use(persistCookies)
-// 		.end(function(err, res, body) {
-// 			if (err) throw err;
-
-// 			var headers = res.headers;
-
-// 			expect(body).to.be.an('object');
-
-// 			if (typeof(callback) === 'function')
-// 				callback(body, headers);
-// 		});
-// };
-
-// var persistCookies = function(opts, next) {
-// 	opts.jar = true;
-// 	next(opts);
-// };

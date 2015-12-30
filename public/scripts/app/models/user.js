@@ -337,6 +337,49 @@ App.Models.User = Backbone.Model.extend({
 		});
 
 		return true;
+	},
+	removeAccount: function() {
+		var that = this;
+		var url = App.settings.apiEntryPoint + 'users/' + this.id + '/removeaccount';
+
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: "json",
+			success: function(data) {
+				console.log('Asked server to start user account removal');
+				that.trigger('removeaccountstart');
+			},
+			error: function(data) {}
+		});
+
+		return true;
+	},
+	removeAccountConfirm: function(code) {
+		var that = this;
+		var url = App.settings.apiEntryPoint + 'users/' + this.id + '/removeaccount';
+		var data = {
+			code: code
+		};
+		$.ajax({
+			url: url,
+			data: data,
+			type: 'POST',
+			dataType: "json",
+			success: function(data) {
+				console.log('Asked server to finish user account removal');
+				if (data) {
+					that.trigger('removeaccountdone');
+				} else
+					that.trigger('removeaccountwrongcode');
+
+			},
+			error: function(data) {
+				that.trigger('removeaccountwrongcode');
+			}
+		});
+
+		return true;
 	}
 
 });

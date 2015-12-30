@@ -89,6 +89,7 @@ module.exports = function(sequelize, DataTypes) {
 		registration_ip: DataTypes.STRING(20),
 		activity_ip: DataTypes.STRING(20),
 		confirmation_code: DataTypes.STRING(255),
+		remove_account_code: DataTypes.STRING(255),
 		password_restore_code: DataTypes.STRING(255),
 		is_banned: {
 			type: DataTypes.INTEGER,
@@ -267,6 +268,30 @@ module.exports = function(sequelize, DataTypes) {
 					replacements: {
 						user_id: this.id
 					}
+				});
+			},
+			removeAccount: function() {
+				var user = this;
+				return new sequelize.Promise(function(resolve, reject) {
+					user.remove_account_code = sequelize.db.User.hashPassword("del" + user.id + Math.random());
+					user.save().then(function(user) {
+						mailer.sendTemplate('remove_account', user.email, {
+							login: user.login,
+							remove_account_code: user.remove_account_code
+						});
+						return resolve(user);
+					});
+				});
+			},
+			removeAccountConfirm: function(code) {
+				var user = this;
+				return new sequelize.Promise(function(resolve, reject) {
+					if (user.remove_account_code && user.remove_account_code == code)
+						return user.destroy().then(function() {
+							return resolve(true);
+						});
+					else
+						return resolve(false);
 				});
 			},
 			fillProfile: function(params) {

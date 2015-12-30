@@ -8,6 +8,8 @@
 
 [/api/users/:user_id](api_users_X.md)
 
+[/api/users/:user_id/removeaccount](api_users_X_removeaccount.md)
+
 [/api/users/restore](api_users_restore.md)
 
 [/api/users/signin](api_users_signin.md)

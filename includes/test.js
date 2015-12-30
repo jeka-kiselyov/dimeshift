@@ -34,11 +34,23 @@ var prepareResolve = function(err, res, body, resolve) {
 };
 
 var prepareResolveStatus = function(err, res, body, resolve, status) {
-	var resStatus = res.statusCode;
+	var resStatus = 0;
+	if (typeof res !== 'undefined' && typeof res.statusCode !== 'undefined')
+		resStatus = res.statusCode;
 	if (typeof(status) === 'string' && status.substr(0, 1) === '!') {
-		expect(resStatus).to.not.equal(parseInt(status.split('!').join(''), 10), "Invalid response status code");
+		var statusToNotExpect = parseInt(status.split('!').join(''), 10);
+		if (statusToNotExpect == resStatus) {
+			console.error("Body:");
+			console.error(body);
+		}
+		expect(resStatus).to.not.equal(statusToNotExpect, "Invalid response status code");
 	} else {
-		expect(resStatus).to.equal(parseInt(status, 10), "Invalid response status code");
+		var statusToExpect = parseInt(status, 10);
+		if (statusToExpect != resStatus) {
+			console.error("Body:");
+			console.error(body);
+		}
+		expect(resStatus).to.equal(statusToExpect, "Invalid response status code");
 	}
 	resolve({
 		body: body
