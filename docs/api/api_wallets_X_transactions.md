@@ -4,10 +4,10 @@
 Get list of wallet's transactions
 
 #### Parameters
-|      | Type      | Description         | Required |
-| ---- | --------- | ------------------- | -------- |
-| from | timestamp | From unix timestamp | yes      |
-| to   | timestamp | To unix timestamp   | yes      |
+|      | Type      | Description                                     | Required |
+| ---- | --------- | ----------------------------------------------- | -------- |
+| from | timestamp | From unix timestamp. Default is now() - 1 month |          |
+| to   | timestamp | To unix timestamp. Default is now()             |          |
 
 #### Response
 ##### On success
