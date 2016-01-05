@@ -85,7 +85,7 @@ module.exports = function(sequelize, DataTypes) {
 								resolve();
 							});
 						} else {
-							sequelize.query("UPDATE `wallets` SET `total` = `total` + :diff WHERE id = :id", {
+							sequelize.query("UPDATE wallets SET total = total + :diff WHERE id = :id", {
 								replacements: {
 									diff: setUpDiff,
 									id: wallet_id
