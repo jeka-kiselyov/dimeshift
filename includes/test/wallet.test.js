@@ -166,27 +166,42 @@ describe('API server', function() {
 		});
 	});
 
-
+	// wallet_1_initial_amount = 200.99
 	var testTransactions = [];
 	testTransactions.push({
 		amount: -0.99,
-		shouldSetTotalTo: wallet_1_initial_amount - 0.99
+		shouldSetTotalTo: wallet_1_initial_amount - 0.99, // 200
+		whenRemovedShouldSetTotalTo: 900
 	});
 	testTransactions.push({
-		amount: -400,
-		shouldSetTotalTo: wallet_1_initial_amount - 0.99 - 400
-	});
-	testTransactions.push({
-		amount: 1200,
-		shouldSetTotalTo: wallet_1_initial_amount - 0.99 - 400 + 1200
+		amount: -100,
+		shouldSetTotalTo: wallet_1_initial_amount - 0.99 - 100, // 100
+		whenRemovedShouldSetTotalTo: 900
 	});
 	testTransactions.push({
 		subtype: 'setup',
-		amount: 89.99,
-		shouldSetTotalTo: 89.99 //// setup transaction set wallet total to its amount
+		amount: 201, /// setup amount is +101.00
+		shouldSetTotalTo: 201, //// setup transaction set wallet total to its amount,
+		whenRemovedShouldSetTotalTo: 900
+	});
+	testTransactions.push({
+		amount: 99,
+		shouldSetTotalTo: 300,
+		whenRemovedShouldSetTotalTo: 900
+	});
+	testTransactions.push({
+		subtype: 'setup',
+		amount: 1000, /// setup amount is +700.00
+		shouldSetTotalTo: 1000,
+		whenRemovedShouldSetTotalTo: 100.99 //// initial - last
+	});
+	testTransactions.push({
+		amount: -100,
+		shouldSetTotalTo: 900,
+		whenRemovedShouldSetTotalTo: 200.99 /// initial
 	});
 
-	testTransactions.forEach(function(testTransaction) {
+	testTransactions.forEach(function(testTransaction, index, array) {
 		it('lets us add another sample transaction', function(done) {
 			var data = {
 				wallet_id: wallet_1_id,
@@ -200,6 +215,8 @@ describe('API server', function() {
 				expect(data.body).to.be.a('object');
 				if (data.body.subtype === 'confirmed')
 					expect(data.body.amount).to.equal(testTransaction.amount);
+
+				array[index]['id'] = data.body.id;
 				done();
 			});
 		});
@@ -208,6 +225,53 @@ describe('API server', function() {
 			testHelper.sendGet('/api/wallets/' + wallet_1_id).then(function(data) {
 				expect(data.body).to.be.a('object');
 				expect(data.body.total).to.equal(testTransaction.shouldSetTotalTo);
+				done();
+			});
+		});
+	});
+
+	it('should allow to check that all transactions added', function(done) {
+		testHelper.sendGet('/api/wallets/' + wallet_1_id + '/transactions/').then(function(data) {
+			expect(data.body).to.be.a('array');
+			var somethingIsNotFound = false;
+			testTransactions.forEach(function(testTransaction) {
+				var found = false;
+				for (var k in data.body)
+					if (data.body[k].id == testTransaction.id)
+						found = true;
+
+				if (!found)
+					somethingIsNotFound = true;
+			});
+			expect(somethingIsNotFound).to.equal(false);
+
+			done();
+		});
+	});
+
+	testTransactions.forEach(function(testTransaction) {
+		it('should let us remove transaction', function(done) {
+			testHelper.sendDelete('/api/wallets/' + wallet_1_id + '/transactions/' + testTransaction.id).then(function(data) {
+				expect(data.body).to.equal(true);
+				done();
+			});
+		});
+		it('should allow to double check that transaction is removed', function(done) {
+			testHelper.sendGet('/api/wallets/' + wallet_1_id + '/transactions').then(function(data) {
+				expect(data.body).to.be.a('array');
+				var found = false;
+				for (var k in data.body)
+					if (data.body[k].id == testTransaction.id)
+						found = true;
+				expect(found).to.equal(false);
+
+				done();
+			});
+		});
+		it('updates wallet total when transaction is removed', function(done) {
+			testHelper.sendGet('/api/wallets/' + wallet_1_id).then(function(data) {
+				expect(data.body).to.be.a('object');
+				expect(data.body.total).to.equal(testTransaction.whenRemovedShouldSetTotalTo);
 				done();
 			});
 		});

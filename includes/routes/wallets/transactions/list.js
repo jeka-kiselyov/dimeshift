@@ -9,13 +9,13 @@ exports.docs = {
 	description: "Get list of wallet's transactions",
 	params: {
 		"from": {
-			required: true,
-			description: 'From unix timestamp',
+			required: false,
+			description: 'From unix timestamp. Default is now() - 1 month',
 			type: 'timestamp'
 		},
 		"to": {
-			required: true,
-			description: 'To unix timestamp',
+			required: false,
+			description: 'To unix timestamp. Default is now()',
 			type: 'timestamp'
 		}
 	},
@@ -30,6 +30,11 @@ exports.handler = function(req, res, next) {
 	var wallet_id = parseInt(req.params.wallet_id || 0, 10);
 	var to = parseInt(req.params.to || 0, 10);
 	var from = parseInt(req.params.from || 0, 10);
+
+	if (to === 0 || from === 0) {
+		to = Math.floor(Date.now() / 1000);
+		from = to - 24 * 60 * 60 * 31;
+	}
 
 	api.requireSignedIn(req, function(user) {
 		user.getWalletIfHasAccess(wallet_id)

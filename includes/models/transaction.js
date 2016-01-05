@@ -58,6 +58,7 @@ module.exports = function(sequelize, DataTypes) {
 				var setUpDiff = -this.amount;
 				var wallet_id = this.wallet_id;
 				var this_datetime = this.datetime;
+				var this_id = this.id;
 
 				var that = this;
 
@@ -69,14 +70,17 @@ module.exports = function(sequelize, DataTypes) {
 							wallet_id: wallet_id,
 							subtype: 'setup',
 							datetime: {
-								$gt: this_datetime
+								$gte: this_datetime
+							},
+							id: {
+								$ne: this_id
 							}
 						},
 						order: 'datetime ASC'
-					}).then(function(transaction) {
-						if (transaction) {
-							transaction.amount += setUpDiff;
-							transaction.save().then(function(transaction) {
+					}).then(function(setupTransaction) {
+						if (setupTransaction) {
+							setupTransaction.amount -= setUpDiff;
+							setupTransaction.save().then(function(setupTransaction) {
 								that.destroy();
 								resolve();
 							});
