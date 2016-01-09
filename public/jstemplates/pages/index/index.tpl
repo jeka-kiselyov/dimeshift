@@ -1,4 +1,4 @@
-<h1>DimeShift &ndash; {tp}the simpliest way to manage your finances{/tp}</h1>
+<h1>DimeShift &ndash; {tp}the easiest way to track your expenses{/tp}</h1>
 
 <p>{tp}To demonstrate how simple it is{/tp} &ndash; {tp}we don't even ask you to register{/tp}.</p>
 

@@ -1,4 +1,4 @@
-# DimeShift - easiest way to manage your finances. Online
+# DimeShift - easiest way to track your expenses. Online. Open-source. Free
 * node.js
 * npm
 * Front-end: jQuery, Bootstrap, Backbone.js with JSmart template engine.
