@@ -45,6 +45,14 @@
 
 	<div id="profile_remove_account_container" class="profile_container" style="display: none;">
 
+		{if $user.isDemo()}
+		<div class="alert alert-info">
+			{tp}Demo account will be removed as soon as you do log out from it.{/tp}
+		</div>
+
+			<a href="/user/logout" class="btn btn-primary">{tp}Log Out{/tp}</a>
+		{else}
+
 		<div id="profile_remove_account_step_1">
 			<div class="alert alert-danger" role="alert">
 				{tp}Please think twice. All account data will be lost.{/tp}
@@ -80,6 +88,8 @@
 				<input type="submit" class="btn btn-primary" id="remove_account_step_2_submit" data-i18nvalue="Remove account" value="{t}Remove account{/t}">
 			</form>
 		</div>
+		{/if}
+
 	</div>
 
 	</div>
@@ -91,11 +101,8 @@
 			<div class="panel-body">
 				<ul class="nav nav-pills nav-stacked">
 					<li class="active"><a href="#" data-target="change_password" class="select_part"><span class="glyphicon glyphicon-lock" ></span> {tp}Change Password{/tp}</a></li>
-					{if user.isDemo()}
-					<li class="disabled"><a href="#"><span class="glyphicon glyphicon-trash" ></span> {tp}Remove account{/tp}</a></li>
-					{else}
+					
 					<li><a href="#" data-target="remove_account" class="select_part"><span class="glyphicon glyphicon-trash" ></span> {tp}Remove account{/tp}</a></li>
-					{/if}
 				</ul>
 			</div>
 		</div>
