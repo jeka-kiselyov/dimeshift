@@ -219,9 +219,9 @@ App.Views.Pages.ImportXLS = App.Views.Abstract.Page.extend({
 	importNextRow: function() {
 		var that = this;
 
+		var row = this.rowsToImport[this.alreadyImportedRowN];
 		this.alreadyImportedRowN++;
 
-		var row = this.rowsToImport[this.alreadyImportedRowN];
 		var onNext = function() {
 
 			var progress = 50 + Math.floor((that.alreadyImportedRowN / that.rowToImportCount) * 100 / 2);
