@@ -52,7 +52,7 @@ App.Models.Wallet = Backbone.Model.extend({
     },
     setTotalTo: function(total) {
         var transaction = new App.Models.Transaction();
-        var totalValue = Math.abs(parseFloat(total, 10));
+        var totalValue = parseFloat(total, 10);
         totalValue = Math.round(totalValue * 100) / 100;
 
         transaction.set('amount', totalValue);
