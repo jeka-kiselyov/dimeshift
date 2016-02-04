@@ -11,7 +11,7 @@
 
         <div class="form-group">
           <label class="sr-only" for="input_total">{t}Total{/t}</label>
-          <input type="number" min="0" step="0.01" name="total" class="form-control" id="input_total" placeholder="{t}Total{/t}">
+          <input type="number" step="0.01" name="total" class="form-control" id="input_total" placeholder="{t}Total{/t}">
         </div>
 
 
