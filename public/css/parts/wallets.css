@@ -44,6 +44,25 @@ a.action:hover {
 	line-height: 1.1;
 }
 
+.screenshot_copyright {
+	display: none;
+}
+
+.ready_for_screenshot .screenshot_copyright {
+	display: block;
+}
+.ready_for_screenshot #container {
+	padding-top: 10px;
+}
+
+.ready_for_screenshot .transaction_time {
+	width: 190px;
+}
+
+.ready_for_screenshot .transaction_time_date {
+	width: 120px;
+}
+
 #add_transaction_amount {
 	margin-top: 3px;
 }

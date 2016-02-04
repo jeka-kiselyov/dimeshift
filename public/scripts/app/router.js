@@ -19,6 +19,7 @@ App.router = new(Backbone.Router.extend({
     "profile(/)": "profile", // #wallets
     "wallets/:id": "wallet", // #wallets/4
     "wallets/:id/import(/)": "importXLS", // #wallets/4
+    "wallets/:id/screenshot(/)": "screenshot", // #wallets/4
     "user/updatepassword/:code/:hash": "updatePassword"
   },
 
@@ -50,6 +51,13 @@ App.router = new(Backbone.Router.extend({
   wallet: function(id) {
     App.showPage('Wallet', {
       id: id
+    });
+  },
+
+  screenshot: function(id) {
+    App.showPage('Wallet', {
+      id: id,
+      screenshot: true
     });
   },
 

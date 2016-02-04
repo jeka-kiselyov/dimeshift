@@ -6,12 +6,12 @@
 <div id="transactions_container">
 	{if $collection|default:false && $collection.hasNextPeriod()}
 		{if $collection.diffToCurrentPeriod() < 2}
-			<div class="list-group-item">
+			<div class="list-group-item hide_on_screenshot">
 				<button type="button" class="btn btn-default btn-sm  btn-info btn-block" id="goto_next">
 				<span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span> {$collection.nextPeriodToReadableFormat()}</button>
 			</div>
 		{else}
-			<div class="list-group-item">
+			<div class="list-group-item hide_on_screenshot">
 				<div class="btn-group btn-group-justified" role="group">
 					<div class="btn-group" role="group">
 						<button type="button" class="btn btn-default btn-sm btn-info" id="goto_current">
@@ -31,7 +31,7 @@
 
 	{if $transactions|count > 0}
 		{foreach from=$transactions item=t}
-		<div class="list-group-item item" data-id="{$t->id}">
+		<div class="list-group-item item " data-id="{$t->id}">
 			<div class="pull-left transaction_time">
 				{assign var="current_transaction_time_date" value=$t->datetime|wallet_date}
 				<div class="transaction_time_date">{if $last_time_date|default:'' != $current_transaction_time_date}{$current_transaction_time_date}{else}&nbsp;{/if}</div>
@@ -51,11 +51,15 @@
 	{/if}
 
 	{if $collection|default:false && $collection.hasPrevPeriod()}
-	<div class="list-group-item">
+	<div class="list-group-item hide_on_screenshot">
 		<button type="button" class="btn btn-default btn-sm btn-info btn-block" id="goto_prev">
 		<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> {$collection.prevPeriodToReadableFormat()}</button>
 	</div>
 	{/if}
+
+	<div class="screenshot_copyright">
+		<p class="pull-right" style="padding: 5px 15px 0 0;">&copy; DimeShift.com</p>
+	</div>
 
 
 

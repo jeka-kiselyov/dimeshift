@@ -1,4 +1,4 @@
-<ul class="breadcrumb">
+<ul class="breadcrumb hide_on_screenshot">
   <li><a href="{$settings->site_path}">{tp}Home{/tp}</a></li>
   <li><a href="{$settings->site_path}/wallets">{tp}Wallets{/tp}</a></li>
   <li class="active">{$item->name|default:'Wallet'|escape:'html'}</li>
@@ -7,7 +7,7 @@
 
 <div class="row">
 
-	<div class="col-xs-12 col-sm-12 col-md-4 pull-right">
+	<div class="col-xs-12 col-sm-12 col-md-4 pull-right hide_on_screenshot">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">{$item->name|escape:'html'}</h3>
@@ -26,7 +26,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-8 pull-left">
 
 		<div class="list-group">
-			<div class="list-group-item ">
+			<div class="list-group-item hide_on_screenshot">
 				<h3 class="panel-title">{tp}Transactions{/tp}
 					<span class="pull-right"><a href="{$settings->site_path}/wallets/{$item->id}/import/" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import" aria-hidden="true"></span> {tp}Import{/tp}</a></span>
 				</h3>
@@ -49,7 +49,7 @@
 
 	</div>
 
-	<div class="col-xs-12 col-sm-12 col-md-4 pull-right">
+	<div class="col-xs-12 col-sm-12 col-md-4 pull-right hide_on_screenshot">
 
 
 		<div class="panel panel-default">

@@ -28,7 +28,8 @@
     "rfr": "^1.2.2",
     "sequelize": "^3.10.0",
     "sqlite3": "^3.1.0",
-    "uglify-js": "^2.4.24"
+    "uglify-js": "^2.4.24",
+    "webshot": "^0.17.0"
   },
   "devDependencies": {
     "chai": "^3.3.0",

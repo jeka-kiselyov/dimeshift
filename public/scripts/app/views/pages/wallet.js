@@ -3,6 +3,7 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/wallets/view',
 	category: 'wallets',
+	isForScreenshot: false,
 	events: {
 		"submit #add_transaction_form": "addExpense",
 		"click #add_profit_button": "addProfit",
@@ -15,8 +16,12 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 			return 'Wallet';
 	},
 	url: function() {
-		if (typeof(this.model) != 'undefined' && this.model.id)
-			return 'wallets/' + this.model.id;
+		if (typeof(this.model) != 'undefined' && this.model.id) {
+			if (this.isForScreenshot)
+				return 'wallets/' + this.model.id + '/screenshot';
+			else
+				return 'wallets/' + this.model.id;
+		}
 	},
 	setTotalTo: function() {
 		App.showDialog('SetTotalTo', {
@@ -78,10 +83,23 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 		}
 
 		this.once('render', function() {
-			for (var k in this.parts)
+			for (var k in this.parts) {
+				if (this.isForScreenshot) {
+					this.listenTo(this.parts[k], 'render', function() {
+						$('.hide_on_screenshot').hide();
+						$('.show_on_screenshot').addClass('ready_for_screenshot');
+
+						if (typeof(window.callPhantom) == 'function')
+							window.callPhantom('takeShot');
+					});
+				}
 				this.parts[k].render();
+			}
 			for (var k in this.charts)
 				this.charts[k].render();
+
+			if (this.isForScreenshot)
+				$('.hide_on_screenshot').hide();
 
 			// Instance the tour
 			if (typeof(App.Tours.Wallet) !== 'undefined')
@@ -142,6 +160,8 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 		console.log('views/pages/wallet.js | initializing');
 		this.renderLoading();
 
+		if (typeof(params.screenshot) !== 'undefined' && params.screenshot)
+			this.isForScreenshot = true;
 
 		var that = this;
 		this.requireSingedIn(function() {

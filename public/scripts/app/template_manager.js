@@ -234,10 +234,10 @@ App.templateManager = {
 				var date = new Date(s * 1000);
 
 				if (App.settings.dateFormat == 'mdy')
-					return date.format('M j, Y', s);
+					return date.format('M&nbsp;j,&nbsp;Y', s);
 				else {
 					var monthName = date.format('F', s).toLowerCase();
-					return date.format('j', s) + ' ' + App.i18n.translate(monthName) + ' ' + date.format('Y', s);
+					return date.format('j', s) + '&nbsp;' + App.i18n.translate(monthName) + '&nbsp;' + date.format('Y', s);
 				}
 			}
 		);

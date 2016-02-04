@@ -4,6 +4,7 @@
 	"profile": "Profile",
 	"wallets/:id": "Wallet",
 	"wallets/:id/import": "ImportXLS",
+	"wallets/:id/screenshot": "screenshot",
 	"user/updatepassword/:code/:hash": "UpdatePassword",
 	"user/newpassword": "Index"
 }
