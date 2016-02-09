@@ -1,5 +1,3 @@
-'use strict';
-
 var fs = require('fs');
 var path = require('path');
 var Sequelize = require('sequelize');
@@ -12,10 +10,13 @@ var options = {
   logging: false
 };
 
-if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable], options);
+if (config.database.use_env_variable) {
+  var sequelize = new Sequelize(process.env[config.database.use_env_variable], options);
 } else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, options);
+  options.host = config.database.host || null;
+  options.dialect = config.database.dialect || null;
+  options.storage = config.database.storage || null;
+  var sequelize = new Sequelize(config.database.database, config.database.username, config.database.password, options);
 }
 
 fs

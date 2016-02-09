@@ -1,11 +1,13 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "walletjs",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "storage": "data/database.sqlite",
+    "database": {
+      "dialect": "mysql",
+      "username": "root",
+      "password": null,
+      "database": "walletjs",
+      "host": "127.0.0.1",
+      "storage": "data/database.sqlite"
+    },
     "smtp": {
       "host": "mailtrap.io",
       "username": "38298e68fa9771771",
@@ -20,7 +22,9 @@
     }
   },
   "heroku": {
-    "use_env_variable": "DATABASE_URL",
+    "database": {
+      "use_env_variable": "DATABASE_URL"
+    },
     "smtp": {
       "use_env_variables": true,
       "host": "SPARKPOST_SMTP_HOST",

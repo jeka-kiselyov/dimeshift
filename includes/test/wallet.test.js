@@ -271,7 +271,7 @@ describe('API server', function() {
 		it('updates wallet total when transaction is removed', function(done) {
 			testHelper.sendGet('/api/wallets/' + wallet_1_id).then(function(data) {
 				expect(data.body).to.be.a('object');
-				expect(data.body.total).to.equal(testTransaction.whenRemovedShouldSetTotalTo);
+				expect(+parseFloat(data.body.total).toFixed(2)).to.equal(testTransaction.whenRemovedShouldSetTotalTo);
 				done();
 			});
 		});
