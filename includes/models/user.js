@@ -348,6 +348,22 @@ module.exports = function(sequelize, DataTypes) {
 					model: sequelize.db.Wallet
 				});
 			},
+			getUserPlans: function() {
+				return sequelize.db.Plan.findAll({
+					attributes: ['id', 'goal_balance', 'goal_currency', 'goal_datetime', 'start_balance', 'start_currency', 'start_datetime', 'status'],
+					where: {
+						'user_id': this.id
+					},
+					include: [{
+						model: sequelize.db.Wallet,
+						as: 'wallets',
+						attributes: ['id', 'name', 'total'],
+						through: {
+							attributes: []
+						}
+					}]
+				});
+			},
 			getWalletIfHasAccess: function(wallet_id) {
 				return sequelize.db.WalletAccess.getWalletIfHasAccess(this, wallet_id);
 			}

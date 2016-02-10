@@ -7,7 +7,7 @@ var config = rfr('includes/config.js');
 var db = {};
 
 var options = {
-  logging: false
+  logging: true
 };
 
 if (config.database.use_env_variable) {
@@ -102,6 +102,29 @@ db['User'].hasMany(db['WalletAccess'], {
   foreignKey: 'to_user_id',
   constraints: false,
   onDelete: 'SET NULL'
+});
+
+
+db['Plan'].belongsTo(db['User'], {
+  foreignKey: 'user_id',
+  constraints: false
+});
+db['User'].hasMany(db['Plan'], {
+  foreignKey: 'user_id',
+  constraints: false,
+  onDelete: 'CASCADE'
+});
+db['Plan'].belongsToMany(db['Wallet'], {
+  as: 'wallets',
+  through: 'plan_wallets',
+  foreignKey: 'plan_id',
+  otherKey: 'wallet_id'
+});
+db['Wallet'].belongsToMany(db['Plan'], {
+  as: 'Plans',
+  through: 'plan_wallets',
+  foreignKey: 'wallet_id',
+  otherKey: 'plan_id'
 });
 
 module.exports = db;

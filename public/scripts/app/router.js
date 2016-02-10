@@ -16,6 +16,7 @@ App.router = new(Backbone.Router.extend({
     "(/)": "index", // #help
     "help": "help", // #help
     "wallets(/)": "wallets", // #wallets
+    "plan(/)": "plan", // #wallets
     "profile(/)": "profile", // #wallets
     "wallets/:id": "wallet", // #wallets/4
     "wallets/:id/import(/)": "importXLS", // #wallets/4
@@ -34,6 +35,10 @@ App.router = new(Backbone.Router.extend({
 
   index: function() {
     App.showPage('Index');
+  },
+
+  plan: function() {
+    App.showPage('Plan');
   },
 
   profile: function() {
