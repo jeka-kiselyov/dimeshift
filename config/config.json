@@ -14,6 +14,11 @@
       "password": "ab75f0affdd61a",
       "port": "465"
     },
+    "openexchangerates": {
+      "use_env_variable": true,
+      "app_id": "OPENEXCHANGERATES_APP_ID",
+      "update_interval": 86400
+    },
     "default_from_email": "noreply@dimeshift.com",
     "site_path": "http://localhost:8080/",
     "minify": {
@@ -31,6 +36,11 @@
       "username": "SPARKPOST_SMTP_USERNAME",
       "password": "SPARKPOST_SMTP_PASSWORD",
       "port": "SPARKPOST_SMTP_PORT"
+    },
+    "openexchangerates": {
+      "use_env_variable": true,
+      "app_id": "OPENEXCHANGERATES_APP_ID",
+      "update_interval": 86400
     },
     "default_from_email": "noreply@dimeshift.com",
     "site_path": "http://dimeshift.com/",

@@ -132,7 +132,7 @@
 
 		        <div class="form-group">
 		          <label class="sr-only" for="input_amount">{t}Amount{/t}</label>
-		          <input type="number" min="0" step="0.01" name="amount" class="form-control" id="input_amount" value="22.88" placeholder="{t}Amount{/t}">
+		          <input type="number" step="0.01" name="input_goal_balance" class="form-control" id="input_goal_balance" value="22.88" placeholder="{t}Amount{/t}">
 		        </div>
 
 		        <div class="form-group">

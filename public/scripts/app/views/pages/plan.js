@@ -12,7 +12,10 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 		"click #button_step1_next": "step1Next",
 		"click #button_step1_back": "step1Back",
 		"click #button_step2_back": "step2Back",
-		"click .step1_wallet_checkbox": "step1WalletChangeChecked"
+		"click .step1_wallet_checkbox": "step1WalletChangeChecked",
+		"dp.change .datetimepicker": "dateChanged",
+		"change #input_goal_balance": "goalBalanceChanged",
+		"keyup #input_goal_balance": "goalBalanceChanged"
 	},
 	title: function() {
 		return 'Plan your expenses';
@@ -22,9 +25,17 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 	},
 	preparedData: {},
 	addNew: function() {
-		this.step = 1;
+		this.step = 2;
 		this.preparedData = {};
+		this.preparedData['goal_datetime'] = (Date.now() / 1000 | 0);
 		this.render();
+	},
+	dateChanged: function(ev) {
+		this.preparedData['goal_datetime'] = ev.date.unix();
+	},
+	goalBalanceChanged: function(ev) {
+		var val = parseFloat($(ev.currentTarget).val(), 10);
+		this.preparedData['goal_balance'] = val;
 	},
 	step1WalletChangeChecked: function(ev) {
 		var target = $(ev.currentTarget);
@@ -76,10 +87,14 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 	render: function() {
 		var that = this;
 		this.once('render', function() {
-			that.$('.datetimepicker').datetimepicker({
-				inline: true,
-				format: 'MM/dd/YYYY'
-			});
+			if (that.step == 2) {
+				that.$('.datetimepicker').datetimepicker({
+					inline: true,
+					minDate: moment(),
+					format: 'MM/dd/YYYY'
+				});
+				// that.$('.datetimepicker')
+			}
 		});
 
 		this.renderHTML({
