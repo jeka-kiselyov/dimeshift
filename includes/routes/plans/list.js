@@ -3,20 +3,18 @@ var db = rfr('includes/models');
 var errors = rfr('includes/errors.js');
 var api = rfr('includes/api.js');
 
-exports.route = '/api/users/:user_id/plans';
+exports.route = '/api/plans';
 exports.method = 'get';
 exports.docs = {
 	description: "Get list of user's plans",
 	params: {},
 	returns: {
-		description: "Array of plans.",
-		sample: '[{"id":53402}, {"id":53412}]'
+		description: "Array of plans",
+		sample: '[{"id":1,"name":"","goal_balance":30,"goal_currency":"USD","goal_datetime":null,"start_balance":"USD","start_currency":"USD","start_datetime":null,"status":"active","wallets":[{"id":1,"name":"Sample Bank Account Wallet","total":2138.02}]}]'
 	}
 };
 
 exports.handler = function(req, res, next) {
-
-	var user_id = parseInt(req.params.user_id || 0, 10);
 
 	api.requireSignedIn(req, function(user) {
 		user.getUserPlans().then(function(plans) {

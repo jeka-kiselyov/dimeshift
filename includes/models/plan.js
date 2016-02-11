@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
 			primaryKey: true,
 			autoIncrement: true
 		},
+		name: DataTypes.STRING(255),
 		goal_balance: {
 			type: DataTypes.FLOAT(),
 			defaultValue: 0
@@ -17,8 +18,8 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.INTEGER
 		},
 		start_balance: {
-			type: DataTypes.STRING(10),
-			defaultValue: 'USD'
+			type: DataTypes.FLOAT(),
+			defaultValue: 0
 		},
 		start_currency: {
 			type: DataTypes.STRING(10),
@@ -45,7 +46,38 @@ module.exports = function(sequelize, DataTypes) {
 		freezeTableName: true,
 		tableName: 'plans',
 		classMethods: {},
-		instanceMethods: {}
+		instanceMethods: {
+			setDefaultValues: function() {
+				var plan = this;
+				return new sequelize.Promise(function(resolve, reject) {
+					if (!plan.start_datetime)
+						plan.start_datetime = Date.now() / 1000 | 0;
+					if (!plan.status)
+						plan.status = 'active';
+					if (!plan.name)
+						plan.name = 'Undefined';
+					if (!plan.start_currency && plan.goal_currency)
+						plan.start_currency = plan.goal_currency;
+					if (!plan.goal_currency && plan.start_currency)
+						plan.goal_currency = plan.start_currency;
+					if (!plan.start_balance && !plan.isNewRecord) {
+						/// get start_balance from wallets
+						plan.getWallets().then(function(wallets) {
+							var start_balance = 0;
+							// @todo: use exchange rates to recalculate
+							for (var k in wallets)
+								start_balance += wallets[k].total;
+							plan.start_balance = start_balance;
+
+							resolve(plan);
+						});
+					} else {
+						resolve(plan);
+					}
+				});
+			}
+
+		}
 	});
 
 	return Plan;

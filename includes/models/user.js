@@ -348,12 +348,16 @@ module.exports = function(sequelize, DataTypes) {
 					model: sequelize.db.Wallet
 				});
 			},
-			getUserPlans: function() {
+			getUserPlans: function(id) {
+				var where = {
+					'user_id': this.id
+				};
+				if (typeof(id) !== 'undefined')
+					where['id'] = id;
+
 				return sequelize.db.Plan.findAll({
-					attributes: ['id', 'goal_balance', 'goal_currency', 'goal_datetime', 'start_balance', 'start_currency', 'start_datetime', 'status'],
-					where: {
-						'user_id': this.id
-					},
+					attributes: ['id', 'user_id', 'name', 'goal_balance', 'goal_currency', 'goal_datetime', 'start_balance', 'start_currency', 'start_datetime', 'status'],
+					where: where,
 					include: [{
 						model: sequelize.db.Wallet,
 						as: 'wallets',
@@ -362,6 +366,58 @@ module.exports = function(sequelize, DataTypes) {
 							attributes: []
 						}
 					}]
+				});
+			},
+			getUserPlan: function(id) {
+				var user = this;
+				return new sequelize.Promise(function(resolve, reject) {
+					user.getUserPlans(id).then(function(plans) {
+						if (plans.length > 0)
+							resolve(plans[0]);
+						else
+							resolve(null);
+					});
+				});
+			},
+			addUserPlan: function(data) {
+				var wallets_ids = data.wallets || [];
+				var user = this;
+
+				/// remove duplicate elements
+				wallets_ids = wallets_ids.reduce(function(p, c) {
+					if (p.indexOf(c) < 0) p.push(c);
+					return p;
+				}, []);
+
+				return new sequelize.Promise(function(resolve, reject) {
+					/// need to check if all wallets are user's wallets
+					sequelize.db.Wallet.findAll({
+						where: {
+							id: {
+								$in: wallets_ids
+							}
+						}
+					}).then(function(wallets) {
+						var goodWalletsCount = 0;
+						for (var k in wallets_ids) {
+							for (var j in wallets)
+								if (wallets[j].id == wallets_ids[k] && wallets[j].user_id == user.id)
+									goodWalletsCount++;
+						}
+
+						if (goodWalletsCount != wallets_ids.length)
+							throw "Invalid wallets ids";
+
+						user.createPlan(data).then(function(plan) {
+							plan.setWallets(wallets_ids).then(function() {
+								return plan.setDefaultValues();
+							}).then(function() {
+								return plan.save();
+							}).then(function(plan) {
+								resolve(plan);
+							});
+						});
+					});
 				});
 			},
 			getWalletIfHasAccess: function(wallet_id) {
