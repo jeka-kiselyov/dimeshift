@@ -51,7 +51,7 @@
 
 		        <div class="form-group">
 					<label class="sr-only" for="input_name">{t}Plan name{/t}</label>
-					<input type="text" name="input_name" class="form-control" id="input_name" {if $preparedData->name|default:''}value="{$preparedData->name|escape:'html'}"{/if} placeholder="{t}Plan name{/t}">
+					<input type="text" name="input_name" class="form-control" id="input_name" {if $preparedData->name|default:'Undefined' != 'Undefined'}value="{$preparedData->name|escape:'html'}"{/if} placeholder="{t}Plan name{/t}">
 				</div>
 			</div>
 			<div class="col-xs-6">
@@ -100,18 +100,32 @@
 			<div class="col-xs-4">
 				<p>{tp}Current balance is{/tp}</p>
 
-				<p class="text-center text-success wallet_total"><strong>${$preparedData->start_balance|rational}.<sup>{$preparedData->start_balance|decimal}</sup></strong></p>
+				<p class="text-center {if $preparedData->start_balance >= 0}text-success{else}text-danger{/if} wallet_total"><strong>
+
+					<span id="cb_minus">-</span><span id="cb_c_dollar">$</span><span id="cb_rational">0</span>.<sup><span id="cb_decimal">00</span></sup> <span id="cb_c_other">USD</span> 
+
+				</strong></p>
+				<div id="cb_o">
+					<p class="text-center">or</p>
+					<p class="text-center {if $preparedData->start_balance >= 0}text-success{else}text-danger{/if} wallet_total"><strong>
+
+						<span id="cb_o_minus">-</span><span id="cb_o_c_dollar">$</span><span id="cb_o_rational">0</span>.<sup><span id="cb_o_decimal">00</span></sup> <span id="cb_o_c_other">USD</span> 
+
+					</strong></p>
+				</div>
 
 
 		        <div class="form-group">
-		          <label for="input_name">{t}Select Currency{/t}</label>
-		          <select name="currency" id="input_currency" class="form-control">
+		          <label for="input_name">{t}Calculate in different currency{/t}</label>
+		          <select name="input_start_currency" id="input_start_currency" class="form-control">
 		            <option value="">{t}Select Currency{/t}</option>
 		            {foreach from=$settings.currencies item=c key=id}
-		              <option value="{$id}" {if $id == 'USD'}selected="selected"{/if}>{$c}</option>
+		              <option value="{$id}" {if $id == $preparedData->start_currency|default:'USD'}selected="selected"{/if}>{$c}</option>
 		            {/foreach}
 		          </select>
 		        </div>
+
+
 			</div>
 			<div class="col-xs-4">
 				<p>{tp}And on{/tp}</p>
@@ -132,25 +146,37 @@
 
 		        <div class="form-group">
 		          <label class="sr-only" for="input_amount">{t}Amount{/t}</label>
-		          <input type="number" step="0.01" name="input_goal_balance" class="form-control" id="input_goal_balance" value="22.88" placeholder="{t}Amount{/t}">
+		          <input type="number" step="0.01" name="input_goal_balance" class="form-control" id="input_goal_balance" value="{$preparedData->goal_balance|default:'0.00'}" placeholder="{t}Amount{/t}">
 		        </div>
 
 		        <div class="form-group">
 		          <label for="input_name">{t}Select Currency{/t}</label>
-		          <select name="currency" id="input_currency" class="form-control">
+		          <select name="input_goal_currency" id="input_goal_currency" class="form-control">
 		            <option value="">{t}Select Currency{/t}</option>
 		            {foreach from=$settings.currencies item=c key=id}
-		              <option value="{$id}" {if $id == 'USD'}selected="selected"{/if}>{$c}</option>
+		              <option value="{$id}" {if $id == $preparedData->goal_currency|default:'USD'}selected="selected"{/if}>{$c}</option>
 		            {/foreach}
 		          </select>
 		        </div>
 
+				<button class="btn btn-default" type="submit" id="set_goal_to_start">Set to <span id="set_goal_to_start_c">USD</span></button>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
-				<p>Means you can spend up to $100.00 in next 32 days. $10 per day. $70 per week.</p>
+				<p>Means you
+					<span id="preview_spend">can spend up to </span>
+					<span id="preview_get">have to get </span>
 
+					<span id="preview_diff_c_dollar">$</span><span id="preview_diff_rational">100</span>.<span id="preview_diff_decimal">00</span> <span id="preview_diff_c_other">USD</span> 
+
+					<span id="preview_one_day">in next day</span>
+					<span id="preview_few_days">
+					in next <span id="preview_days_count">32</span> days. 
+					</span>
+
+					<span id="preview_d_diff_c_dollar">$</span><span id="preview_d_diff_rational">100</span>.<span id="preview_d_diff_decimal">00</span> <span id="preview_d_diff_c_other">USD</span>
+					 per day. 
 			</div>
 		</div>
 

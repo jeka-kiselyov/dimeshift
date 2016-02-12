@@ -41,7 +41,6 @@ App.i18n = {
 
 		var that = this;
 		var process = function(data) {
-			console.log(data);
 			that.strings = data;
 			that.loaded = true;
 			that.translateDOM();

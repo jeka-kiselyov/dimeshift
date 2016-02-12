@@ -7,6 +7,25 @@ App.templateManager = {
 	_loadingCallbacks: {},
 	_initialized: false,
 
+	modifiers: {
+		decimal: function(s) {
+			var n = +((s + '').replace(/^\s+|\s+$/g, ''));
+			var decimal = Math.abs(n) - Math.floor(Math.abs(n));
+			decimal *= 100;
+			decimal = Math.round(decimal);
+			if (decimal === 0)
+				return '00';
+			if (decimal < 10)
+				return '0' + decimal;
+			else
+				return decimal;
+		},
+		rational: function(s) {
+			var n = +((s + '').replace(/^\s+|\s+$/g, ''));
+			var rational = Math.floor(Math.abs(n));
+			return rational;
+		}
+	},
 	initialize: function() {
 		jSmart.prototype.getTemplate = function(name) {
 			if (name.indexOf('shared/widgets/') === 0) {
@@ -27,28 +46,13 @@ App.templateManager = {
 		jSmart.prototype.registerPlugin(
 			'modifier',
 			'decimal',
-			function(s) {
-				var n = +((s + '').replace(/^\s+|\s+$/g, ''));
-				var decimal = Math.abs(n) - Math.floor(Math.abs(n));
-				decimal *= 100;
-				decimal = Math.round(decimal);
-				if (decimal === 0)
-					return '00';
-				if (decimal < 10)
-					return '0' + decimal;
-				else
-					return decimal;
-			}
+			this.modifiers.decimal
 		);
 
 		jSmart.prototype.registerPlugin(
 			'modifier',
 			'rational',
-			function(s) {
-				var n = +((s + '').replace(/^\s+|\s+$/g, ''));
-				var rational = Math.floor(Math.abs(n));
-				return rational;
-			}
+			this.modifiers.rational
 		);
 
 		Date.prototype.format = function(e) {

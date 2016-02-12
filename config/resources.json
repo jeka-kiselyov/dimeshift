@@ -23,6 +23,7 @@
 		"./public/scripts/app/local_storage.js",
 		"./public/scripts/app/template_manager.js",
 		"./public/scripts/app/i18n.js",
+		"./public/scripts/app/exchange.js",
 
 		"./public/scripts/app/abstract/",
 		"./public/scripts/app/models/",
