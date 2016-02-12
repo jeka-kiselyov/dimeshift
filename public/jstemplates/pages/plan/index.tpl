@@ -20,7 +20,7 @@
 				<li class="list-group-item">{$p->name|escape:'html'}&nbsp;
 					<div class="pull-right">
 						<button class="btn btn-default btn-xs" data-id="{$p->id}"><span class="glyphicon glyphicon-list-alt"></span> View Report</button>
-						<button class="btn btn-default btn-xs" data-id="{$p->id}"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+						<button class="btn btn-default btn-xs edit_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
 					</div>
 				</li>
 				{/foreach}
@@ -57,7 +57,7 @@
 			<div class="col-xs-6">
 				<p>{tp}Wallets to use for planning{/tp}</p>
 
-				{if $plans|count == 0}
+				{if $wallets|count == 0}
 				{else}
 				<div class="list-group">
 					{foreach from=$wallets item=w}
@@ -181,7 +181,7 @@
 		</div>
 
 			<button class="btn btn-default" type="submit" id="button_step2_back">Back</button>
-			<button class="btn btn-primary" type="submit">Confirm and save</button>
+			<button class="btn btn-primary" type="submit" id="button_step2_save">Confirm and save</button>
 		</div>
 	</div>
 

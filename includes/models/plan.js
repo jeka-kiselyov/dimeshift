@@ -31,6 +31,7 @@ module.exports = function(sequelize, DataTypes) {
 		status: {
 			type: DataTypes.ENUM('active', 'finished'),
 			defaultValue: 'active',
+			field: "status",
 			validate: {
 				isIn: {
 					args: [
@@ -47,6 +48,41 @@ module.exports = function(sequelize, DataTypes) {
 		tableName: 'plans',
 		classMethods: {},
 		instanceMethods: {
+			updateWalletsIds: function(wallets_ids) {
+				var plan = this;
+				/// remove duplicate elements
+				wallets_ids = wallets_ids.reduce(function(p, c) {
+					if (p.indexOf(c) < 0) p.push(c);
+					return p;
+				}, []);
+
+				return new sequelize.Promise(function(resolve, reject) {
+					/// need to check if all wallets are user's wallets
+					sequelize.db.Wallet.findAll({
+						where: {
+							id: {
+								$in: wallets_ids
+							}
+						}
+					}).then(function(wallets) {
+						var goodWalletsCount = 0;
+						for (var k in wallets_ids) {
+							for (var j in wallets)
+								if (wallets[j].id == wallets_ids[k] && wallets[j].user_id == plan.user_id)
+									goodWalletsCount++;
+						}
+
+						if (goodWalletsCount != wallets_ids.length)
+							throw "Invalid wallets ids";
+
+						plan.setWallets(wallets_ids).then(function() {
+							plan.save().then(function(plan) {
+								resolve(plan);
+							});
+						});
+					});
+				});
+			},
 			setDefaultValues: function() {
 				var plan = this;
 				return new sequelize.Promise(function(resolve, reject) {

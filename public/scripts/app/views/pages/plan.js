@@ -13,12 +13,14 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 		"click #button_step1_back": "step1Back",
 		"click #button_step2_back": "step2Back",
 		"click .step1_wallet_checkbox": "step1WalletChangeChecked",
+		"click .edit_plan_button": "editPlan",
 		"dp.change .datetimepicker": "dateChanged",
 		"change #input_goal_balance": "goalBalanceChanged",
 		"keyup #input_goal_balance": "goalBalanceChanged",
 		"change #input_start_currency": "recalculateStartCurrency",
 		"change #input_goal_currency": "recalculateGoalCurrency",
-		"click #set_goal_to_start": "setGoalCurrencyToStart"
+		"click #set_goal_to_start": "setGoalCurrencyToStart",
+		"click #button_step2_save": "doSave"
 	},
 	title: function() {
 		return 'Plan your expenses';
@@ -27,20 +29,89 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 		return 'plan';
 	},
 	preparedData: {},
-	idNew: false,
+	isNew: false,
 	addNew: function() {
 		this.step = 1;
-		this.preparedData = {};
-		this.preparedData['start_datetime'] = (Date.now() / 1000 | 0);
-		this.preparedData['goal_datetime'] = (Date.now() / 1000 | 0) + 24 * 60 * 60;
-		this.preparedData['start_balance'] = 0;
-		this.preparedData['goal_balance'] = 0;
-		this.preparedData['start_currency'] = null;
-		this.preparedData['goal_currency'] = null;
-		this.preparedData['name'] = 'Undefined';
+		this.preparedData = {
+			start_datetime: (Date.now() / 1000 | 0),
+			goal_datetime: (Date.now() / 1000 | 0) + 24 * 60 * 60,
+			start_balance: 0,
+			goal_balance: 0,
+			start_currency: null,
+			goal_currency: null,
+			name: 'Undefined'
+		};
+		// this.preparedData['start_datetime'] = (Date.now() / 1000 | 0);
+		// this.preparedData['goal_datetime'] = (Date.now() / 1000 | 0) + 24 * 60 * 60;
+		// this.preparedData['start_balance'] = 0;
+		// this.preparedData['goal_balance'] = 0;
+		// this.preparedData['start_currency'] = null;
+		// this.preparedData['goal_currency'] = null;
+		// this.preparedData['name'] = 'Undefined';
 
 		this.isNew = true;
 
+		this.render();
+	},
+	editPlan: function(ev) {
+		var target = $(ev.currentTarget);
+		var plan_id = target.data('id');
+
+		var plan = this.plans.get(plan_id);
+
+		this.preparedData = {
+			start_datetime: plan.get('start_datetime'),
+			goal_datetime: plan.get('goal_datetime'),
+			start_balance: plan.get('start_balance'),
+			goal_balance: plan.get('goal_balance'),
+			start_currency: plan.get('start_currency'),
+			goal_currency: plan.get('goal_currency'),
+			name: plan.get('name'),
+			id: plan.id
+		};
+
+		this.preparedData.wallets = [];
+		var planWallets = plan.get('wallets');
+		for (var k in planWallets)
+			this.preparedData.wallets.push(planWallets[k].id);
+
+		this.isNew = false;
+		this.step = 1;
+		this.render();
+	},
+	doSave: function() {
+		if (this.isNew) {
+			var plan = new App.Models.Plan();
+			plan.set('name', this.preparedData['name']);
+			plan.set('start_datetime', this.preparedData['start_datetime']);
+			plan.set('start_currency', this.preparedData['start_currency']);
+			plan.set('start_balance', this.preparedData['start_balance']);
+			plan.set('goal_datetime', this.preparedData['goal_datetime']);
+			plan.set('goal_currency', this.preparedData['goal_currency']);
+			plan.set('goal_balance', this.preparedData['goal_balance']);
+
+			plan.set('wallets', this.preparedData['wallets']);
+
+			plan.save();
+
+			this.plans.add(plan);
+		} else {
+			var plan = this.plans.get(this.preparedData['id']);
+			plan.set('name', this.preparedData['name']);
+			plan.set('start_datetime', this.preparedData['start_datetime']);
+			plan.set('start_currency', this.preparedData['start_currency']);
+			plan.set('start_balance', this.preparedData['start_balance']);
+			plan.set('goal_datetime', this.preparedData['goal_datetime']);
+			plan.set('goal_currency', this.preparedData['goal_currency']);
+			plan.set('goal_balance', this.preparedData['goal_balance']);
+
+			plan.set('wallets', this.preparedData['wallets']);
+
+			plan.save();
+		}
+
+		/// @todo: jump to preview, not to the first screen
+		this.step = 0;
 		this.render();
 	},
 	dateChanged: function(ev) {
