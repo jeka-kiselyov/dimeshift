@@ -19,7 +19,7 @@
 				{foreach from=$plans item=p}
 				<li class="list-group-item">{$p->name|escape:'html'}&nbsp;
 					<div class="pull-right">
-						<button class="btn btn-default btn-xs" data-id="{$p->id}"><span class="glyphicon glyphicon-list-alt"></span> View Report</button>
+						<a href="{$settings->site_path}/plans/{$p->id}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span> View Report</a>
 						<button class="btn btn-default btn-xs edit_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
 					</div>
 				</li>

@@ -33,6 +33,61 @@ App.Models.Wallet = Backbone.Model.extend({
         this.transactions.setWalletId(this.id);
         return this.transactions;
     },
+    getTransactionsForPeriod: function(from, to, callback) {
+        var deferred = jQuery.Deferred();
+
+        var transactions = new App.Collections.Transactions();
+        var aTransactions = [];
+        transactions.setWalletId(this.id);
+
+        var fromDate = new Date(from * 1000);
+        var fromMonth = fromDate.getMonth() + 1;
+        var fromYear = fromDate.getFullYear();
+
+        var toDate = new Date(to * 1000);
+        var toMonth = toDate.getMonth() + 1;
+        var toYear = toDate.getFullYear();
+
+        var curMonth = fromMonth;
+        var curYear = fromYear;
+
+        var fetched = function() {
+            transactions.forEach(function(t) {
+                if (t.get('datetime') >= from && t.get('datetime') <= to)
+                    aTransactions.push(t);
+            });
+
+            fetchNext();
+        };
+
+        var fetch = function() {
+            transactions.setPeriod(curMonth, curYear);
+            transactions.fetch().done(fetched);
+        };
+
+        var fetchNext = function() {
+            if (curMonth >= toMonth && curYear >= toYear) {
+                if (typeof(callback) === 'function')
+                    callback(aTransactions);
+                deferred.resolve(aTransactions);
+                return false;
+            }
+
+            curMonth++;
+            if (curMonth > 12) {
+                curMonth = 1;
+                curYear++;
+            }
+
+            fetch();
+
+            return true;
+        };
+
+        fetch();
+
+        return deferred;
+    },
     addProfit: function(amount, description) {
 
         var profit = new App.Models.Transaction();

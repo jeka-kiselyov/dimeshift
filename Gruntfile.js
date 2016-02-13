@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         files: ['.rebooted'],
         options: {
           livereload: true,
-          debounceDelay: 2000
+          debounceDelay: 500
         }
       }
     },
