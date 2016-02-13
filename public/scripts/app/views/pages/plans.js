@@ -20,7 +20,8 @@ App.Views.Pages.Plans = App.Views.Abstract.Page.extend({
 		"change #input_start_currency": "recalculateStartCurrency",
 		"change #input_goal_currency": "recalculateGoalCurrency",
 		"click #set_goal_to_start": "setGoalCurrencyToStart",
-		"click #button_step2_save": "doSave"
+		"click #button_step2_save": "doSave",
+		"click .remove_plan_button": "removePlan"
 	},
 	title: function() {
 		return 'Plan your expenses';
@@ -30,6 +31,17 @@ App.Views.Pages.Plans = App.Views.Abstract.Page.extend({
 	},
 	preparedData: {},
 	isNew: false,
+	removePlan: function(ev) {
+		var target = $(ev.currentTarget);
+		var plan_id = target.data('id');
+
+		App.showDialog('RemovePlan', {
+			item: this.plans.get(plan_id)
+		});
+
+		return false;
+
+	},
 	addNew: function() {
 		this.step = 1;
 		this.preparedData = {
@@ -114,13 +126,12 @@ App.Views.Pages.Plans = App.Views.Abstract.Page.extend({
 
 			plan.set('wallets', this.preparedData['wallets']);
 
+			App.localStorage.remove('plan_' + plan.id + '_data');
+			this.listenToOnce(plan, 'sync', function() {
+				App.router.redirect('plans/' + plan.id);
+			});
 			plan.save();
-			App.router.redirect('plans/' + plan.id);
 		}
-
-		/// @todo: jump to preview, not to the first screen
-		this.step = 0;
-		this.render();
 	},
 	dateChanged: function(ev) {
 		this.preparedData['goal_datetime'] = ev.date.unix();

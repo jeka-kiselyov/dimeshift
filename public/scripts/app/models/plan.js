@@ -18,6 +18,21 @@ App.Models.Plan = Backbone.Model.extend({
 			return this.stats;
 		}
 
+		var cached = App.localStorage.get('plan_' + this.id + '_data');
+		if (cached !== null && cached !== undefined) {
+			var cachedDate = new Date(1000 * cached.saved);
+			var curDate = new Date();
+
+			if (cachedDate.getMonth() == curDate.getMonth() && cachedDate.getDate() == curDate.getDate() && cachedDate.getFullYear() == curDate.getFullYear()) {
+				console.log('plan.js | restore stats from cache');
+				this.stats = cached.stats;
+				this.trigger('statsready');
+				return this.stats;
+			} else {
+				console.log('plan.js | cache is too old');
+			}
+		}
+
 		var plan = this;
 		var daysCount = Math.ceil((this.get('goal_datetime') - this.get('start_datetime')) / (24 * 60 * 60));
 		this.stats = [];
@@ -42,9 +57,6 @@ App.Models.Plan = Backbone.Model.extend({
 		}
 
 		this.once('walletsloadded', function() {
-			console.log(this.stats);
-			console.log(this.transactions);
-			console.log(this.loadedWallets);
 
 			for (var wk in plan.loadedWallets)
 				plan.walletsCurrencies[plan.loadedWallets[wk].id] = plan.loadedWallets[wk].get('currency');
@@ -89,6 +101,11 @@ App.Models.Plan = Backbone.Model.extend({
 			}
 
 			plan.areStatsReady = true;
+
+			App.localStorage.set('plan_' + plan.id + '_data', {
+				stats: plan.stats,
+				saved: (new Date().getTime() / 1000)
+			});
 			plan.trigger('statsready');
 		});
 

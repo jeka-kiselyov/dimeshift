@@ -27,8 +27,20 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 		this.holderReady = false;
 		var that = this;
 		this.requireSingedIn(function() {
-			that.render();
-			that.listenTo(that.model, 'statsready', that.render);
+			var plan_id = that.model.id;
+			that.model = new App.Models.Plan();
+			that.model.id = plan_id;
+			
+			that.model.fetch({
+				error: function() {
+					App.showPage('NotFound');
+				}
+			}).done(function() {
+				App.exchange.loadRates(function() {
+					that.listenTo(that.model, 'statsready', that.render);
+					that.model.getStats();
+				});
+			});
 		});
 	},
 	initialize: function(params) {
@@ -53,9 +65,8 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 					App.exchange.loadRates(function() {
 						that.listenTo(that.model, 'statsready', that.render);
 						that.model.getStats();
-						that.render();
 					});
-				})
+				});
 			} else
 				throw 'id or item parameters required';
 

@@ -21,6 +21,7 @@
 					<div class="pull-right">
 						<a href="{$settings->site_path}/plans/{$p->id}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span> View Report</a>
 						<button class="btn btn-default btn-xs edit_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+						<button class="btn btn-default btn-xs remove_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-remove"></span> Remove</button>
 					</div>
 				</li>
 				{/foreach}
