@@ -70,7 +70,7 @@
 							{/if}
 						{/foreach}
 						{/if}
-					<a href="#" class="list-group-item step1_wallet_checkbox {if $checked}active{/if}" data-id="{$w->id}"><span class="glyphicon glyphicon-{if $checked}check{else}unchecked{/if}"></span> {$w->name|escape:'html'}&nbsp;</a>
+					<a href="#" class="list-group-item {if $preparedData->id|default:0 == 0}step1_wallet_checkbox{else}disabled{/if} {if $checked}active{/if}" data-id="{$w->id}"><span class="glyphicon glyphicon-{if $checked}check{else}unchecked{/if}"></span> {$w->name|escape:'html'}&nbsp;</a>
 					{/foreach}
 				</div>
 				{/if}

@@ -132,6 +132,8 @@ App.Views.Pages.Plans = App.Views.Abstract.Page.extend({
 			});
 			plan.save();
 		}
+
+		this.step = 0;
 	},
 	dateChanged: function(ev) {
 		this.preparedData['goal_datetime'] = ev.date.unix();
@@ -295,40 +297,40 @@ App.Views.Pages.Plans = App.Views.Abstract.Page.extend({
 		var that = this;
 		this.preparedData['name'] = this.$('#input_name').val();
 
-		var wallets = [];
-		this.$('.step1_wallet_checkbox').each(function() {
-			var wallet_id = $(this).data('id');
-			var isChecked = $(this).hasClass('active');
-			if (isChecked)
-				wallets.push(wallet_id);
-		});
-		this.preparedData['wallets'] = wallets;
-
-		if (this.preparedData['start_currency'] == null || this.preparedData['goal_currency'] == null) {
-			/// guess start_currency
-			this.preparedData['start_currency'] = 'USD'; //default
-			this.preparedData['goal_currency'] = 'USD'; //default
-			var possibleCurrencies = {};
-			_.each(this.preparedData['wallets'], function(wallet_id) {
-				var currency = that.wallets.get(wallet_id).get('currency');
-				possibleCurrencies[currency] = (possibleCurrencies[currency] || 0) + 1;
-			});
-			var maxPossibleCurrency = null;
-			var maxvalue = 0;
-			_.each(possibleCurrencies, function(value, key) {
-				if (maxPossibleCurrency == null || value > maxvalue) {
-					maxvalue = value;
-					maxPossibleCurrency = key;
-				}
-			});
-
-			if (maxPossibleCurrency) {
-				this.preparedData['start_currency'] = maxPossibleCurrency;
-				this.preparedData['goal_currency'] = maxPossibleCurrency;
-			}
-		}
-
 		if (this.isNew) {
+			var wallets = [];
+			this.$('.step1_wallet_checkbox').each(function() {
+				var wallet_id = $(this).data('id');
+				var isChecked = $(this).hasClass('active');
+				if (isChecked)
+					wallets.push(wallet_id);
+			});
+			this.preparedData['wallets'] = wallets;
+
+			if (this.preparedData['start_currency'] == null || this.preparedData['goal_currency'] == null) {
+				/// guess start_currency
+				this.preparedData['start_currency'] = 'USD'; //default
+				this.preparedData['goal_currency'] = 'USD'; //default
+				var possibleCurrencies = {};
+				_.each(this.preparedData['wallets'], function(wallet_id) {
+					var currency = that.wallets.get(wallet_id).get('currency');
+					possibleCurrencies[currency] = (possibleCurrencies[currency] || 0) + 1;
+				});
+				var maxPossibleCurrency = null;
+				var maxvalue = 0;
+				_.each(possibleCurrencies, function(value, key) {
+					if (maxPossibleCurrency == null || value > maxvalue) {
+						maxvalue = value;
+						maxPossibleCurrency = key;
+					}
+				});
+
+				if (maxPossibleCurrency) {
+					this.preparedData['start_currency'] = maxPossibleCurrency;
+					this.preparedData['goal_currency'] = maxPossibleCurrency;
+				}
+			}
+
 			that.preparedData['start_balance'] = 0;
 			_.each(this.preparedData['wallets'], function(wallet_id) {
 				var currency = that.wallets.get(wallet_id).get('currency');
@@ -377,6 +379,7 @@ App.Views.Pages.Plans = App.Views.Abstract.Page.extend({
 		this.holderReady = false;
 		var that = this;
 		this.requireSingedIn(function() {
+			that.step = 0;
 			that.render();
 		});
 	},
