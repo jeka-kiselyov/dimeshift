@@ -11,8 +11,6 @@ var openExchangeRatesUpdateInterval = config.openexchangerates.update_interval |
 if (config.openexchangerates.use_env_variable)
 	openExchangeRatesAppId = process.env[openExchangeRatesAppId];
 
-console.log(openExchangeRatesAppId);
-
 var cache_filename = path.join(__dirname, '..', 'data/cache/exchangerates.json');
 var cached = null;
 
@@ -33,20 +31,27 @@ var reloadRates = function(callback) {
 
 var reloadIfNeeded = function(callback) {
 	fs.stat(cache_filename, function(err, stats) {
-		if (!stats || (stats.mtime.getTime() / 1000) < (Date.now() / 1000 | 0) - openExchangeRatesUpdateInterval)
+		if (!stats || (stats.mtime.getTime() / 1000) < (Date.now() / 1000 | 0) - openExchangeRatesUpdateInterval) {
 			reloadRates(callback);
+		}
 	});
 };
 
+var cached = {
+	rates: {},
+	base: 'USD'
+};
+
 if (!openExchangeRatesAppId) {
-	console.error('Please specify openexchangerates app_id in config/config.json. Without it, dimeshift will not be able to do currency conversions');
+	cached.error = 'Please specify openexchangerates app_id in config/config.json. Without it, dimeshift will not be able to do currency conversions';
+	console.error(cached.error);
 } else {
 	oxr.set({
 		app_id: openExchangeRatesAppId
 	});
 
 	try {
-		var cached = JSON.parse("" + fs.readFileSync(cache_filename, 'utf8'));
+		cached = JSON.parse("" + fs.readFileSync(cache_filename, 'utf8'));
 	} catch (e) {
 		console.log("No cached exchange rates\n");
 	}
@@ -65,6 +70,7 @@ if (!openExchangeRatesAppId) {
 }
 
 var getRates = function() {
+	console.log(cached);
 	reloadIfNeeded();
 	return cached;
 };
