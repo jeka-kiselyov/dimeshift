@@ -23,6 +23,7 @@
     "mprogress": "https://github.com/lightningtgc/MProgress.js/archive/master.zip",
     "bootstrap-tour": "~0.10.2",
     "js-xlsx": "~0.8.0",
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37"
   }
 }

@@ -14,7 +14,7 @@ var getVisitorIp = function(req) {
 	}
 
 	return ipAddr;
-}
+};
 
 exports.requireSignedIn = function(req, callback) {
 	var cookies = req.cookies;
@@ -22,7 +22,7 @@ exports.requireSignedIn = function(req, callback) {
 
 	var ip = getVisitorIp(req);
 
-	if (auth_code == '')
+	if (auth_code === '')
 		throw new errors.HaveNoRightsError();
 
 	db.User.getByAuthCode({
@@ -34,7 +34,7 @@ exports.requireSignedIn = function(req, callback) {
 	}, function(err) {
 		throw new errors.HaveNoRightsError();
 	});
-}
+};
 
 exports.getVisitorIp = getVisitorIp;
 
@@ -46,4 +46,12 @@ exports.geti18njson = function(code) {
 
 	i18n_cache[code] = fs.readFileSync(path.join(i18n_path, code + '.json'), 'utf8');
 	return i18n_cache[code];
-}
+};
+
+var getParam = function(req, name, def) {
+	if (typeof(req.body) === 'undefined' || typeof(req.body[name]) === 'undefined')
+		return def;
+	else
+		return req.body[name];
+};
+exports.getParam = getParam;

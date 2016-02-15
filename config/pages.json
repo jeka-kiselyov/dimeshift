@@ -2,6 +2,8 @@
 	"/\/?.*/": "Index",
 	"wallets": "Wallets",
 	"profile": "Profile",
+	"plans": "Plans",
+	"plans/:id": "Plan",
 	"wallets/:id": "Wallet",
 	"wallets/:id/import": "ImportXLS",
 	"user/updatepassword/:code/:hash": "UpdatePassword",

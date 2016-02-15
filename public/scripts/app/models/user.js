@@ -42,6 +42,11 @@ App.Models.User = Backbone.Model.extend({
 		is_demo: null,
 		login: null,
 	},
+	signedIn: false,
+	signInError: null,
+	url: function() {
+		return App.settings.apiEntryPoint + 'users' + (typeof(this.id) === 'undefined' ? '' : '/' + this.id);
+	},
 	getWallets: function() {
 		if (typeof(this.wallets) === 'undefined') {
 			this.wallets = new App.Collections.Wallets();
@@ -49,20 +54,16 @@ App.Models.User = Backbone.Model.extend({
 		}
 		return this.wallets;
 	},
-
-
-
-	url: function() {
-		return App.settings.apiEntryPoint + 'users' + (typeof(this.id) === 'undefined' ? '' : '/' + this.id);
+	getPlans: function() {
+		if (typeof(this.plans) === 'undefined') {
+			this.plans = new App.Collections.Plans();
+			this.plans.setUserId(this.id);
+		}
+		return this.plans;
 	},
-
-	signedIn: false,
-	signInError: null,
-
 	isSignedIn: function() {
 		return this.signedIn;
 	},
-
 	isAdmin: function() {
 		return false;
 	},

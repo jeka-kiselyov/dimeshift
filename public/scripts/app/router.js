@@ -14,11 +14,12 @@ App.router = new(Backbone.Router.extend({
 
   routes: {
     "(/)": "index", // #help
-    "help": "help", // #help
-    "wallets(/)": "wallets", // #wallets
-    "profile(/)": "profile", // #wallets
-    "wallets/:id": "wallet", // #wallets/4
-    "wallets/:id/import(/)": "importXLS", // #wallets/4
+    "profile(/)": "profile",
+    "plans(/)": "plans",
+    "plans/:id": "plan",
+    "wallets(/)": "wallets",
+    "wallets/:id": "wallet",
+    "wallets/:id/import(/)": "importXLS",
     "user/updatepassword/:code/:hash": "updatePassword"
   },
 
@@ -34,6 +35,16 @@ App.router = new(Backbone.Router.extend({
 
   index: function() {
     App.showPage('Index');
+  },
+
+  plans: function() {
+    App.showPage('Plans');
+  },
+
+  plan: function(id) {
+    App.showPage('Plan', {
+      id: id
+    });
   },
 
   profile: function() {

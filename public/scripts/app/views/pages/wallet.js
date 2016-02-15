@@ -99,6 +99,10 @@ App.Views.Pages.Wallet = App.Views.Abstract.Page.extend({
 			model: this.model,
 			collection: this.model.getTransactions()
 		}));
+		this.parts.push(new App.Views.Parts.WalletPlans({
+			id: 'plans_container',
+			model: this.model
+		}));
 		this.partsInitialized = true;
 
 		this.charts = [];
