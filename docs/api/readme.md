@@ -1,6 +1,12 @@
 ## API documentation
 
+[/api/exchange/rates](api_exchange_rates.md)
+
 [/api/i18n/bycode/:code](api_i18n_bycode_X.md)
+
+[/api/plans/:plan_id](api_plans_X.md)
+
+[/api/plans](api_plans.md)
 
 [/api/users](api_users.md)
 
@@ -25,6 +31,8 @@
 [/api/wallets/:wallet_id](api_wallets_X.md)
 
 [/api/wallets](api_wallets.md)
+
+[/api/wallets/:wallet_id/plans](api_wallets_X_plans.md)
 
 [/api/wallets/:wallet_id/transactions/:transaction_id](api_wallets_X_transactions_X.md)
 
