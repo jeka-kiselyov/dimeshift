@@ -33,6 +33,19 @@ App.Models.Wallet = Backbone.Model.extend({
         this.transactions.setWalletId(this.id);
         return this.transactions;
     },
+    getPlans: function() {
+        if (typeof(this.plans) === 'undefined') {
+            this.plans = new App.Collections.Plans();
+            this.plans.setWalletId(this.id);
+
+            var that = this;
+            this.plans.fetch().done(function() {
+                that.trigger('plansloaded');
+            });
+        }
+        this.plans.setWalletId(this.id);
+        return this.plans;
+    },
     getTransactionsForPeriod: function(from, to, callback) {
         var deferred = jQuery.Deferred();
 

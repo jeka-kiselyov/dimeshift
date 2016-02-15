@@ -19,16 +19,16 @@
 				{foreach from=$plans item=p}
 				<li class="list-group-item">{$p->name|escape:'html'}&nbsp;
 					<div class="pull-right">
-						<a href="{$settings->site_path}/plans/{$p->id}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span> View Report</a>
-						<button class="btn btn-default btn-xs edit_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
-						<button class="btn btn-default btn-xs remove_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-remove"></span> Remove</button>
+						<a href="{$settings->site_path}/plans/{$p->id}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span> {tp}View Report{/tp}</a>
+						<button class="btn btn-default btn-xs edit_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-pencil"></span> {tp}Edit{/tp}</button>
+						<button class="btn btn-default btn-xs remove_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-remove"></span> {tp}Remove{/tp}</button>
 					</div>
 				</li>
 				{/foreach}
 			{/if}
 			</ul>
 
-			<button class="btn btn-primary" type="submit" id="button_create_new">Create new</button>
+			<button class="btn btn-primary" type="submit" id="button_create_new">{tp}Create new{/tp}</button>
 
 		</div>
 	</div>
@@ -77,8 +77,8 @@
 			</div>
 		</div>
 
-		<button class="btn btn-default" type="submit" id="button_step1_back">Back</button>
-		<button class="btn btn-primary" type="submit" id="button_step1_next" {if !$preparedData->wallets|default:''}disabled="disabled"{/if}>Next</button>
+		<button class="btn btn-default" type="submit" id="button_step1_back">{tp}Back{/tp}</button>
+		<button class="btn btn-primary" type="submit" id="button_step1_next" {if !$preparedData->wallets|default:''}disabled="disabled"{/if}>{tp}Next{/tp}</button>
 
 		</div>
 	</div>
@@ -117,7 +117,7 @@
 
 
 		        <div class="form-group">
-		          <label for="input_name">{t}Calculate in different currency{/t}</label>
+		          <label for="input_name">{tp}Calculate in different currency{/tp}</label>
 		          <select name="input_start_currency" id="input_start_currency" class="form-control">
 		            <option value="">{t}Select Currency{/t}</option>
 		            {foreach from=$settings.currencies item=c key=id}
@@ -146,7 +146,7 @@
 				<p>{tp}Plan is to keep{/tp}</p>
 
 		        <div class="form-group">
-		          <label class="sr-only" for="input_amount">{t}Amount{/t}</label>
+		          <label class="sr-only" for="input_amount">{tp}Amount{/tp}</label>
 		          <input type="number" step="0.01" name="input_goal_balance" class="form-control" id="input_goal_balance" value="{$preparedData->goal_balance|default:'0.00'}" placeholder="{t}Amount{/t}">
 		        </div>
 
@@ -160,29 +160,29 @@
 		          </select>
 		        </div>
 
-				<button class="btn btn-default" type="submit" id="set_goal_to_start">Set to <span id="set_goal_to_start_c">USD</span></button>
+				<button class="btn btn-default" type="submit" id="set_goal_to_start">{tp}Set to{/tp} <span id="set_goal_to_start_c">USD</span></button>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
-				<p>Means you
-					<span id="preview_spend">can spend up to </span>
-					<span id="preview_get">have to get </span>
+				<p>{tp}So you{/tp}
+					<span id="preview_spend">{tp}can spend up to{/tp} </span>
+					<span id="preview_get">{tp}have to get{/tp} </span>
 
 					<span id="preview_diff_c_dollar">$</span><span id="preview_diff_rational">100</span>.<span id="preview_diff_decimal">00</span> <span id="preview_diff_c_other">USD</span> 
 
-					<span id="preview_one_day">in next day</span>
+					<span id="preview_one_day">{tp}on the next day{/tp}</span>
 					<span id="preview_few_days">
-					in next <span id="preview_days_count">32</span> days. 
+					{tp}in next{/tp} <span id="preview_days_count">32</span> {tp}days{/tp}. 
 					</span>
 
 					<span id="preview_d_diff_c_dollar">$</span><span id="preview_d_diff_rational">100</span>.<span id="preview_d_diff_decimal">00</span> <span id="preview_d_diff_c_other">USD</span>
-					 per day. 
+					 {tp}per day{/tp}. 
 			</div>
 		</div>
 
-			<button class="btn btn-default" type="submit" id="button_step2_back">Back</button>
-			<button class="btn btn-primary" type="submit" id="button_step2_save">Confirm and save</button>
+			<button class="btn btn-default" type="submit" id="button_step2_back">{tp}Back{/tp}</button>
+			<button class="btn btn-primary" type="submit" id="button_step2_save">{tp}Confirm and save{/tp}</button>
 		</div>
 	</div>
 

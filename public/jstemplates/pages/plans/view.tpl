@@ -24,7 +24,7 @@
 				</div>
 				<div class="col-xs-12">
 
-					<p class="text-center">In {$stats|count} days. From {$plan->start_datetime|wallet_date} to {$plan->goal_datetime|wallet_date}</p>
+					<p class="text-center">{if $stats|count > 1}{$stats|count} {tp}days{/tp}.{/if} {tp}From{/tp} {$plan->start_datetime|wallet_date} {tp}to{/tp} {$plan->goal_datetime|wallet_date}</p>
 
 				</div>
 			</div>
@@ -45,11 +45,11 @@
 
 <table class="table table-condensed">
 	<tr>
-		<th>Date</th>
-		<th>Total On Start</th>
-		<th><span class="text-danger">Spent</span></th>
-		<th><span class="text-success">Profit</span></th>
-		<th>Plan</th>
+		<th>{tp}Date{/tp}</th>
+		<th>{tp}Total On Start{/tp}</th>
+		<th><span class="text-danger">{tp}Spent{/tp}</span></th>
+		<th><span class="text-success">{tp}Profit{/tp}</span></th>
+		<th>{tp}Plan{/tp}</th>
 	</tr>
 	{if $stats|count == 0}
 	{else}

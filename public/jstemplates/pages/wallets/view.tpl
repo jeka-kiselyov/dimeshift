@@ -21,6 +21,7 @@
 			</div>
 		</div>
 
+
 	</div>
 
 	<div class="col-xs-12 col-sm-12 col-md-8 pull-left">
@@ -51,6 +52,9 @@
 
 	<div class="col-xs-12 col-sm-12 col-md-4 pull-right">
 
+		<div id="plans_container">
+
+		</div>
 
 		<div class="panel panel-default">
 			<div class="panel-heading">

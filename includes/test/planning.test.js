@@ -131,6 +131,22 @@ describe('API server for planning', function() {
 		});
 	});
 
+	it('returns plans list with 1 plan now', function(done) {
+		testHelper.sendGet('/api/plans').then(function(data) {
+			expect(data.body).to.be.a('array');
+			expect(data.body).to.have.length(1);
+			done();
+		});
+	});
+
+	it('returns plans list for wallet', function(done) {
+		testHelper.sendGet('/api/wallets/' + wallet_1_id + '/plans').then(function(data) {
+			expect(data.body).to.be.a('array');
+			expect(data.body).to.have.length(1);
+			expect(data.body[0].id).to.equal(plan_1_id);
+			done();
+		});
+	});
 
 	it('allow to edit plan', function(done) {
 		plan_1_name = plan_1_name + 'updated';
@@ -223,6 +239,22 @@ describe('API server for planning', function() {
 
 			plan_1 = data.body;
 
+			done();
+		});
+	});
+
+	it('lets us remove plan', function(done) {
+		testHelper.sendDelete('/api/plans/' + plan_1_id, {}).then(function(data) {
+			expect(data.body).to.equal(true);
+
+			done();
+		});
+	});
+
+	it('returns empty plans list now', function(done) {
+		testHelper.sendGet('/api/plans').then(function(data) {
+			expect(data.body).to.be.a('array');
+			expect(data.body).to.have.length(0);
 			done();
 		});
 	});

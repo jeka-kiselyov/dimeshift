@@ -12,10 +12,30 @@ App.Models.Plan = Backbone.Model.extend({
 	url: function() {
 		return App.settings.apiEntryPoint + 'plans/' + (typeof(this.id) === 'undefined' ? '' : this.id);
 	},
+	getPlanForToday: function() {
+		var today = new Date();
+		return this.getPlanForTheDay(today.getDate(), today.getMonth() + 1, today.getFullYear());
+	},
+	getPlanForTheDay: function(day, month, year) {
+		if (!this.areStatsReady)
+			throw 'call getPlanForTheDay only when stats are ready';
+
+		// @todo: cache index
+		for (var di = 0; di < this.stats.length; di++) {
+			if (this.stats[di].date.day == day && this.stats[di].date.month == month && this.stats[di].date.year == year) {
+				return this.stats[di].allowedToSpend;
+			}
+		}
+
+		return null;
+	},
 	getStats: function() {
+		var deferred = jQuery.Deferred();
+
 		if (this.areStatsReady) {
 			this.trigger('statsready');
-			return this.stats;
+			deferred.resolve(this.stats);
+			return deferred;
 		}
 
 		var cached = App.localStorage.get('plan_' + this.id + '_data');
@@ -26,8 +46,10 @@ App.Models.Plan = Backbone.Model.extend({
 			if (cachedDate.getMonth() == curDate.getMonth() && cachedDate.getDate() == curDate.getDate() && cachedDate.getFullYear() == curDate.getFullYear()) {
 				console.log('plan.js | restore stats from cache');
 				this.stats = cached.stats;
+				this.areStatsReady = true;
 				this.trigger('statsready');
-				return this.stats;
+				deferred.resolve(this.stats);
+				return deferred;
 			} else {
 				console.log('plan.js | cache is too old');
 			}
@@ -106,10 +128,13 @@ App.Models.Plan = Backbone.Model.extend({
 				stats: plan.stats,
 				saved: (new Date().getTime() / 1000)
 			});
+
 			plan.trigger('statsready');
+			deferred.resolve(plan.stats);
 		});
 
 		this.loadWallets();
+		return deferred;
 	},
 	loadWallets: function() {
 		var plan = this;
