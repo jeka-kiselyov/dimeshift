@@ -46,7 +46,6 @@
     }
   },
   "heroku": {
-    "port": 8080,
     "database": {
       "use_env_variable": "DATABASE_URL"
     },
