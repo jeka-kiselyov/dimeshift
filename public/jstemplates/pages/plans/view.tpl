@@ -68,7 +68,7 @@
 					{$possibleLowestSpending|rational}.<sup>{$possibleLowestSpending|decimal}</sup>	&ndash;				
 				{/if}
 				{$s->allowedToSpend|rational}.<sup>{$s->allowedToSpend|decimal}</sup>
-				{if $possibleLowestSpending|default:null === null}
+				{if $s->date->unix_from < $currentTimestamp}
 					{assign var="possibleLowestSpending" value=$s->allowedToSpend}
 				{/if}
 			</span></td>
