@@ -1,5 +1,6 @@
 {
   "development": {
+    "port": 8080,
     "database": {
       "dialect": "mysql",
       "username": "root",
@@ -26,7 +27,26 @@
       "css": false
     }
   },
+  "test": {
+    "port": 8081,
+    "database": {
+      "dialect": "sqlite",
+      "storage": "data/database.sqlite"
+    },
+    "smtp": null,
+    "openexchangerates": {
+      "app_id": "234234234234234234234",
+      "update_interval": 86400
+    },
+    "default_from_email": "noreply@dimeshift.com",
+    "site_path": "http://localhost:8080/",
+    "minify": {
+      "javascript": false,
+      "css": false
+    }
+  },
   "heroku": {
+    "port": 8080,
     "database": {
       "use_env_variable": "DATABASE_URL"
     },

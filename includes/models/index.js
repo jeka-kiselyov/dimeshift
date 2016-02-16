@@ -7,7 +7,7 @@ var config = rfr('includes/config.js');
 var db = {};
 
 var options = {
-  logging: true
+  logging: false
 };
 
 if (config.database.use_env_variable) {

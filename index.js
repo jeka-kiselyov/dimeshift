@@ -5,6 +5,7 @@ var db = rfr('includes/models');
 var routes = rfr('includes/routes');
 var servers = rfr('includes/servers');
 var pages = rfr('config/pages.json');
+var config = rfr('includes/config.js');
 
 var server = restify.createServer({
 	name: 'DimeShift',
@@ -55,7 +56,7 @@ for (var k in pages) {
 // Sync db and start server
 db.sequelize.sync()
 	.then(function(err) {
-		var port = process.env.PORT || 8080;
+		var port = config.port || process.env.PORT || 8080;
 		server.listen(port);
 		console.log("Server started: http://localhost:" + port + "/");
 	});

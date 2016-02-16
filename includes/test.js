@@ -1,8 +1,10 @@
 var hippie = require('hippie');
 var expect = require('chai').expect;
 var Sequelize = require('sequelize');
+var rfr = require('rfr');
+var config = rfr('includes/config.js');
 
-var base = 'http://localhost:8080';
+var base = 'http://localhost:' + config.port;
 var timeout = 500;
 
 var prepareResolve = function(err, res, body, resolve) {

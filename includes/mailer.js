@@ -1,47 +1,49 @@
 var nodemailer = require('nodemailer');
 var rfr = require('rfr');
-var env = process.env.NODE_ENV || 'development';
-var config = rfr('config/config.json');
 var fs = require('fs');
 
-if (typeof(config[env]) == 'undefined')
-	config = config['development'];
-else
-	config = config[env];
+var config = rfr('includes/config.js');
 
-if (config.smtp.use_env_variables) {
-	var transporter = nodemailer.createTransport({
-		host: process.env[config.smtp.host],
-		port: process.env[config.smtp.port],
-		auth: {
-			user: process.env[config.smtp.username],
-			pass: process.env[config.smtp.password]
-		}
-	});
-} else {
-	var transporter = nodemailer.createTransport({
-		host: config.smtp.host,
-		port: config.smtp.port,
-		auth: {
-			user: config.smtp.username,
-			pass: config.smtp.password
-		}
-	});
+var transporter = null;
+if (config && config.smtp) {
+	if (config.smtp.use_env_variables) {
+		transporter = nodemailer.createTransport({
+			host: process.env[config.smtp.host],
+			port: process.env[config.smtp.port],
+			auth: {
+				user: process.env[config.smtp.username],
+				pass: process.env[config.smtp.password]
+			}
+		});
+	} else {
+		transporter = nodemailer.createTransport({
+			host: config.smtp.host,
+			port: config.smtp.port,
+			auth: {
+				user: config.smtp.username,
+				pass: config.smtp.password
+			}
+		});
+	}
+
+	if (config.default_from_email)
+		transporter.default_from_email = config.default_from_email;
 }
 
-transporter.default_from_email = config.default_from_email;
-transporter.default_replaces = {};
-transporter.default_replaces.site_path = config.site_path;
+var default_replaces = {};
+if (config.site_path)
+	default_replaces.site_path = config.site_path;
 
 var __mailtemplates_cache = {};
 
 var sendMail = function(to, subject, html) {
-	transporter.sendMail({
-		from: transporter.default_from_email,
-		to: to,
-		subject: subject,
-		html: html
-	});
+	if (transporter !== null)
+		transporter.sendMail({
+			from: transporter.default_from_email,
+			to: to,
+			subject: subject,
+			html: html
+		});
 }
 
 var sendTemplate = function(templateName, to, replaces) {
@@ -54,9 +56,9 @@ var sendTemplate = function(templateName, to, replaces) {
 			body = body.split('%' + k + '%').join(replaces[k]);
 		}
 
-		for (var k in transporter.default_replaces) {
-			subject = subject.split('%' + k + '%').join(transporter.default_replaces[k]);
-			body = body.split('%' + k + '%').join(transporter.default_replaces[k]);
+		for (var k in default_replaces) {
+			subject = subject.split('%' + k + '%').join(default_replaces[k]);
+			body = body.split('%' + k + '%').join(default_replaces[k]);
 		}
 
 		sendMail(to, subject, body);

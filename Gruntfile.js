@@ -54,11 +54,30 @@ module.exports = function(grunt) {
         }
       }
     },
+    env: {
+      options: {},
+      test: {
+        NODE_ENV: 'test'
+      }
+    },
+    run: {
+      test_server: {
+        options: {
+          wait: false
+        },
+        args: [
+          'index.js'
+        ]
+      }
+    },
     mochacli: {
       options: {
         require: [],
         reporter: 'spec',
-        bail: true
+        bail: true,
+        env: {
+          NODE_ENV: 'test'
+        }
       },
       all: ['includes/test/*.js']
     }
@@ -69,8 +88,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-node-inspector');
   grunt.loadNpmTasks('grunt-mocha-cli');
+  grunt.loadNpmTasks('grunt-env');
+  grunt.loadNpmTasks('grunt-run');
 
   grunt.registerTask('default', ['concurrent']);
-  grunt.registerTask('test', ['mochacli']);
+  grunt.registerTask('dev', ['concurrent']);
+  grunt.registerTask('test', ['env:test', 'run:test_server', 'mochacli']);
 
 };

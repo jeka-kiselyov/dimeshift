@@ -1,6 +1,6 @@
 {
   "name": "dimeshift",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Webapp to track and manage personal finances",
   "main": "index.js",
   "scripts": {
@@ -40,6 +40,8 @@
     "grunt-mocha-cli": "^1.14.0",
     "grunt-node-inspector": "^0.4.1",
     "grunt-nodemon": "^0.4.0",
+    "grunt-env": "^0.4.4",
+    "grunt-run": "^0.5.2",
     "hippie": "^0.4.0",
     "mocha": "^2.3.3",
     "open": "0.0.5"
