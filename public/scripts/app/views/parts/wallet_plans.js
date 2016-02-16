@@ -11,11 +11,14 @@ App.Views.Parts.WalletPlans = Backbone.View.extend({
 
 		this.areStatsReady = false;
 		var that = this;
-		this.listenToOnce(this.model, 'plansloaded', function() {
-			that.invokeStatsLoading();
+
+		App.exchange.loadRates(function() {
+			that.listenToOnce(this.model, 'plansloaded', function() {
+				that.invokeStatsLoading();
+			});
+			that.listenTo(that.model, 'plansloaded', that.render);
+			that.model.getPlans();
 		});
-		this.listenTo(this.model, 'plansloaded', this.render);
-		this.model.getPlans();
 	},
 	wakeUp: function() {
 		console.error('views/parts/wallet_plans.js | Waking up');
