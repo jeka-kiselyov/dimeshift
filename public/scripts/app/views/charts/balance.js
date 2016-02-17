@@ -12,6 +12,7 @@ App.Views.Charts.Balance = Backbone.View.extend({
 	drawChart: function() {
 		var that = this;
 		$('#' + that.id).fadeOut(20, function() {
+			$('#balance_canvas_container').show();
 			var options = {
 				title: 'Expenses',
 				curveType: 'function',
@@ -45,8 +46,13 @@ App.Views.Charts.Balance = Backbone.View.extend({
 					slantedText: true
 				}
 			};
-			var chart = new google.visualization.LineChart(document.getElementById(that.id));
-			chart.draw(google.visualization.arrayToDataTable(that._data), options);
+
+			if (that._data.length > 1) {
+				var chart = new google.visualization.LineChart(document.getElementById(that.id));
+				chart.draw(google.visualization.arrayToDataTable(that._data), options);
+			} else {
+				$('#balance_canvas_container').hide();
+			}
 			$('#' + that.id).fadeIn(400);
 		});
 	},

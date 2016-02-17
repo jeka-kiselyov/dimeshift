@@ -56,7 +56,7 @@
 
 		</div>
 
-		<div class="panel panel-default">
+		<div class="panel panel-default" id="balance_canvas_container">
 			<div class="panel-heading">
 				<h3 class="panel-title">{tp}Expenses per day trends{/tp}</h3>
 			</div>
