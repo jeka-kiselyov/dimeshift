@@ -93,7 +93,6 @@ if (cached && typeof(cached.rates) !== 'undefined' && typeof(cached.base) !== 'u
 }
 
 var getRates = function() {
-	console.log(cached);
 	reloadIfNeeded();
 	return cached;
 };

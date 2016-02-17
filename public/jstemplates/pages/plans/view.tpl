@@ -46,7 +46,7 @@
 <table class="table table-condensed">
 	<tr>
 		<th>{tp}Date{/tp}</th>
-		<th>{tp}Total On Start{/tp}</th>
+		<th><span style="visibility: hidden;">-</span>{tp}Total On Start{/tp}</th>
 		<th><span class="text-danger">{tp}Spent{/tp}</span></th>
 		<th><span class="text-success">{tp}Profit{/tp}</span></th>
 		<th>{tp}Plan{/tp}</th>
@@ -56,7 +56,13 @@
 		{foreach from=$stats item=s}
 		<tr class="{if $s->date->unix_from > $currentTimestamp}active{else}{if $s->date->unix_from < $currentTimestamp && $s->date->unix_to > $currentTimestamp}info{else}{if ($s->allowedToSpend > 0 && $s->dayTotal < $s->allowedToSpend) || ($s->allowedToSpend < 0 && $s->dayTotal > $s->allowedToSpend)}success{else}danger{/if}{/if}{/if}">
 			<td>{$s->date->unix|wallet_date}</td>
-			<td>{$s->currentTotalOnStart|rational}.<sup>{$s->currentTotalOnStart|decimal}</sup></td>
+			<td>
+				{if $s->date->unix_from < $currentTimestamp && $s->date->unix_to > $currentTimestamp}
+				<strong><span {if $s->currentTotalOnStart >= 0}style="visibility: hidden;"{/if}>-</span>{$s->currentTotalOnStart|rational}.<sup>{$s->currentTotalOnStart|decimal}</sup></strong>
+				{else}
+				<span {if $s->currentTotalOnStart >= 0}style="visibility: hidden;"{/if}>-</span>{$s->currentTotalOnStart|rational}.<sup>{$s->currentTotalOnStart|decimal}</sup>
+				{/if}
+			</td>
 			{if $s->date->unix_from > $currentTimestamp}
 			<td colspan="2">&nbsp;</td>
 			{else}
