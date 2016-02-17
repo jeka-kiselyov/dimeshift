@@ -164,22 +164,50 @@ module.exports = function(sequelize, DataTypes) {
 				});
 			},
 			getWalletPlans: function() {
-				return sequelize.db.Plan.findAll({
-					attributes: ['id', 'user_id', 'name', 'goal_balance', 'goal_currency', 'goal_datetime', 'start_balance', 'start_currency', 'start_datetime', 'status'],
-					where: {
-						'user_id': this.user_id
-					},
-					include: [{
-						model: sequelize.db.Wallet,
-						as: 'wallets',
-						attributes: ['id', 'name', 'total'],
+				var wallet = this;
+				return new sequelize.Promise(function(resolve, reject) {
+
+					sequelize.db.Plan.findAll({
+						attributes: ['id'],
 						where: {
-							id: this.id
+							'user_id': wallet.user_id
 						},
-						through: {
-							attributes: []
-						}
-					}]
+						include: [{
+							model: sequelize.db.Wallet,
+							as: 'wallets',
+							attributes: ['id', 'name', 'total'],
+							where: {
+								id: wallet.id
+							},
+							through: {
+								attributes: []
+							}
+						}]
+					}).then(function(plans) {
+						var ids = [];
+						for (var k in plans)
+							ids.push(plans[k].id);
+
+						sequelize.db.Plan.findAll({
+							attributes: ['id', 'user_id', 'name', 'goal_balance', 'goal_currency', 'goal_datetime', 'start_balance', 'start_currency', 'start_datetime', 'status'],
+							where: {
+								id: {
+									$in: ids
+								}
+							},
+							include: [{
+								model: sequelize.db.Wallet,
+								as: 'wallets',
+								attributes: ['id', 'name', 'total'],
+								through: {
+									attributes: []
+								}
+							}]
+						}).then(function(plans) {
+							resolve(plans);
+						});
+					});
+
 				});
 			}
 		}

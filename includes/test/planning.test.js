@@ -243,6 +243,28 @@ describe('API server for planning', function() {
 		});
 	});
 
+
+	it('returns plans list for wallet with 2 wallets ids in plan', function(done) {
+		testHelper.sendGet('/api/wallets/' + wallet_1_id + '/plans').then(function(data) {
+			expect(data.body).to.be.a('array');
+			expect(data.body).to.have.length(1);
+			expect(data.body[0].id).to.equal(plan_1_id);
+
+			var found_wallet_1 = false;
+			var found_wallet_2 = false;
+			for (var k in data.body[0].wallets) {
+				if (data.body[0].wallets[k].id == wallet_1_id)
+					found_wallet_1 = true;
+				if (data.body[0].wallets[k].id == wallet_2_id)
+					found_wallet_2 = true;
+			}
+
+			assert.ok(found_wallet_1);
+			assert.ok(found_wallet_2);
+			done();
+		});
+	});
+
 	it('lets us remove plan', function(done) {
 		testHelper.sendDelete('/api/plans/' + plan_1_id, {}).then(function(data) {
 			expect(data.body).to.equal(true);
