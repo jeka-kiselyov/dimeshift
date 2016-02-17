@@ -13,7 +13,7 @@ App.Views.Parts.WalletPlans = Backbone.View.extend({
 		var that = this;
 
 		App.exchange.loadRates(function() {
-			that.listenToOnce(this.model, 'plansloaded', function() {
+			that.listenToOnce(that.model, 'plansloaded', function() {
 				that.invokeStatsLoading();
 			});
 			that.listenTo(that.model, 'plansloaded', that.render);
@@ -36,15 +36,16 @@ App.Views.Parts.WalletPlans = Backbone.View.extend({
 		this.setElement($('#' + this.id));
 
 		var plans = [];
-		for (var i = 0; i < this.model.plans.length; i++) {
-			var allowedToSpend = null;
-			if (this.areStatsReady)
-				allowedToSpend = this.model.plans.at(i).getPlanForToday();
-			plans.push({
-				plan: this.model.plans.at(i).toJSON(),
-				allowedToSpend: allowedToSpend
-			});
-		}
+		if (this.model.plans)
+			for (var i = 0; i < this.model.plans.length; i++) {
+				var allowedToSpend = null;
+				if (this.areStatsReady)
+					allowedToSpend = this.model.plans.at(i).getPlanForToday();
+				plans.push({
+					plan: this.model.plans.at(i).toJSON(),
+					allowedToSpend: allowedToSpend
+				});
+			}
 
 		var data = {
 			wallet: this.model.toJSON(),
