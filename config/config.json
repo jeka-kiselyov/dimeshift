@@ -17,7 +17,7 @@
     },
     "openexchangerates": {
       "use_env_variable": true,
-      "app_id": "OPENEXCHANGERATES_APP_ID",
+      "app_id": "OPENEXCHANGERATES_APP_IeD",
       "update_interval": 86400
     },
     "default_from_email": "noreply@dimeshift.com",

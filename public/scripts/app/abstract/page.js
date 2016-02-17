@@ -71,7 +71,6 @@ App.Views.Abstract.Page = Backbone.View.extend({
 		}
 	},
 	wakeUp: function() {
-		alert('w');
 		App.setProgress(false);
 		this.holderReady = false;
 		this.render();
