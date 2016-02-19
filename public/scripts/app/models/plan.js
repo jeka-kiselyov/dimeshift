@@ -127,19 +127,20 @@ App.Models.Plan = Backbone.Model.extend({
 				if (plan.stats[di].expensesTotal == 0 && plan.stats[di].profitsTotal == 0) {
 					if (emptyFrom === null)
 						emptyFrom = di;
-
-					groupExpenses += plan.stats[di].expensesTotal;
-					groupProfits += plan.stats[di].profitsTotal;
-
 					groupCount++;
 				} else {
+
+					groupCount++;
+					groupExpenses = plan.stats[di].expensesTotal;
+					groupProfits = plan.stats[di].profitsTotal;
+
 					if (emptyFrom !== null) {
 						groupExpenses = groupExpenses / groupCount;
 						groupProfits = groupProfits / groupCount;
-
 						for (var dgi = emptyFrom; dgi <= di; dgi++) {
 							plan.stats[dgi].expensesTotal = groupExpenses;
 							plan.stats[dgi].profitsTotal = groupProfits;
+							plan.stats[dgi].dayTotal = groupProfits - groupExpenses;
 						}
 
 						groupCount = 0;
