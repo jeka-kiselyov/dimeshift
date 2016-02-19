@@ -26,6 +26,10 @@
 
 					<p class="text-center">{if $stats|count > 1}{$stats|count} {tp}days{/tp}.{/if} {tp}From{/tp} {$plan->start_datetime|wallet_date} {tp}to{/tp} {$plan->goal_datetime|wallet_date}</p>
 
+					<div class="text-center">
+						<a class="btn btn-default" href="#" role="button" id="reload_stats_button" data-loading-text="{t}Loading...{/t}"><span class="glyphicon glyphicon-refresh"></span> {tp}Refresh{/tp}</a>
+					</div>
+
 				</div>
 			</div>
 

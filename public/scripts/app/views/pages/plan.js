@@ -3,7 +3,9 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 
 	templateName: 'pages/plans/view',
 	category: 'plan',
-	events: {},
+	events: {
+		"click #reload_stats_button": 'reloadStats'
+	},
 	title: function() {
 		return 'Plan report';
 	},
@@ -22,6 +24,17 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 			currentTimestamp: (new Date().getTime() / 1000)
 		});
 	},
+	reloadStats: function() {
+		var that = this;
+		this.$('#reload_stats_button').button('loading');
+		this.listenToOnce(this.model, 'statsready', function() {
+			that.$('#reload_stats_button').button('reset');
+
+		});
+		this.model.reloadStats();
+
+		return false;
+	},
 	wakeUp: function() {
 		console.log('views/pages/plan.js | waking up');
 		this.holderReady = false;
@@ -30,7 +43,7 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 			var plan_id = that.model.id;
 			that.model = new App.Models.Plan();
 			that.model.id = plan_id;
-			
+
 			that.model.fetch({
 				error: function() {
 					App.showPage('NotFound');

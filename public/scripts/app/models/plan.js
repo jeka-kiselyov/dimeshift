@@ -29,6 +29,11 @@ App.Models.Plan = Backbone.Model.extend({
 
 		return null;
 	},
+	reloadStats: function() {
+		App.localStorage.remove('plan_' + this.id + '_data');
+		this.areStatsReady = false;
+		return this.getStats();
+	},
 	getStats: function() {
 		var deferred = jQuery.Deferred();
 
@@ -110,6 +115,39 @@ App.Models.Plan = Backbone.Model.extend({
 							}
 						}
 					}
+				}
+			}
+
+			/// average spendings by empty days
+			var emptyFrom = null;
+			var groupExpenses = 0;
+			var groupProfits = 0;
+			var groupCount = 0;
+			for (var di = 0; di < plan.stats.length; di++) {
+				if (plan.stats[di].expensesTotal == 0 && plan.stats[di].profitsTotal == 0) {
+					if (emptyFrom === null)
+						emptyFrom = di;
+
+					groupExpenses += plan.stats[di].expensesTotal;
+					groupProfits += plan.stats[di].profitsTotal;
+
+					groupCount++;
+				} else {
+					if (emptyFrom !== null) {
+						groupExpenses = groupExpenses / groupCount;
+						groupProfits = groupProfits / groupCount;
+
+						for (var dgi = emptyFrom; dgi <= di; dgi++) {
+							plan.stats[dgi].expensesTotal = groupExpenses;
+							plan.stats[dgi].profitsTotal = groupProfits;
+						}
+
+						groupCount = 0;
+						groupExpenses = 0;
+						groupProfits = 0;
+					}
+
+					emptyFrom = null;
 				}
 			}
 
