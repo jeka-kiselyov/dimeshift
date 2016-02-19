@@ -93,6 +93,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['concurrent']);
   grunt.registerTask('dev', ['concurrent']);
-  grunt.registerTask('test', ['env:test', 'run:test_server', 'mochacli']);
+  grunt.registerTask('test', ['env:test', 'run:test_server', 'mochacli', 'stop:test_server']);
 
 };
