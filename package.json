@@ -1,6 +1,6 @@
 {
   "name": "dimeshift",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Webapp to track and manage personal finances",
   "main": "index.js",
   "scripts": {
