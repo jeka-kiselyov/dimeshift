@@ -189,7 +189,7 @@ module.exports = function(sequelize, DataTypes) {
 							ids.push(plans[k].id);
 
 						sequelize.db.Plan.findAll({
-							attributes: ['id', 'user_id', 'name', 'goal_balance', 'goal_currency', 'goal_datetime', 'start_balance', 'start_currency', 'start_datetime', 'status'],
+							attributes: ['id', 'user_id', 'name', 'goal_balance', 'goal_currency', 'goal_datetime', 'start_balance', 'start_currency', 'start_datetime', 'end_balance', 'status'],
 							where: {
 								id: {
 									$in: ids

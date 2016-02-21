@@ -20,8 +20,10 @@ exports.handler = function(req, res, next) {
 
 	api.requireSignedIn(req, function(user) {
 		user.getUserPlan(plan_id).then(function(resPlan) {
-			res.send(resPlan);
-			next();
+			resPlan.checkIfFinished().then(function(plan) {
+				res.send(plan);
+				next();
+			});
 		});
 	});
 };

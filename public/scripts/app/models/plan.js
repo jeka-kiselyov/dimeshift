@@ -61,7 +61,7 @@ App.Models.Plan = Backbone.Model.extend({
 		}
 
 		var plan = this;
-		var daysCount = Math.ceil((this.get('goal_datetime') - this.get('start_datetime')) / (24 * 60 * 60));
+		var daysCount = Math.ceil((this.get('goal_datetime') - this.get('start_datetime')) / (24 * 60 * 60)) + 1;
 		this.stats = [];
 
 		for (var i = 0; i < daysCount; i++) {

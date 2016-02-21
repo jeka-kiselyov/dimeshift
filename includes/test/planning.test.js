@@ -31,6 +31,14 @@ describe('API server for planning', function() {
 	var plan_1_id = null;
 	var plan_1 = null;
 
+	var plan_2_name = 'Test 2 Name';
+	var plan_2_currency = 'USD';
+	var plan_2_goal_balance = 1000;
+	var plan_2_goal_datetime = (Date.now() / 1000 | 0) + 60 * 24 * 60 * 60;
+
+	var plan_2_id = null;
+	var plan_2 = null;
+
 	it('registers user', function(done) {
 		testHelper.sendPost('/api/users', {
 			email: email,
@@ -265,8 +273,105 @@ describe('API server for planning', function() {
 		});
 	});
 
+
+	it('allow to create another plan', function(done) {
+		var newData = {
+			name: plan_2_name,
+			goal_currency: plan_2_currency,
+			goal_balance: plan_2_goal_balance,
+			goal_datetime: plan_2_goal_datetime,
+			wallets: [wallet_2_id]
+		};
+
+		testHelper.sendPost('/api/plans', newData).then(function(data) {
+			expect(data.body.user_id).to.equal(registeredUserId);
+			expect(data.body.name).to.equal(newData.name);
+			expect(data.body.goal_currency).to.equal(newData.goal_currency);
+			expect(data.body.start_currency).to.equal(newData.goal_currency);
+			expect(data.body.goal_balance).to.equal(newData.goal_balance);
+
+			expect(data.body.goal_datetime).to.equal(plan_2_goal_datetime);
+
+			expect(data.body.wallets).to.be.a('array');
+			expect(data.body.wallets).to.have.length(1);
+
+			expect(data.body.wallets[0].id).to.equal(wallet_2_id);
+
+			plan_2_id = data.body.id;
+			plan_2 = data.body;
+
+			done();
+		});
+	});
+
+	it('returns plans list for wallet with 2 plans', function(done) {
+		testHelper.sendGet('/api/wallets/' + wallet_2_id + '/plans').then(function(data) {
+			expect(data.body).to.be.a('array');
+			expect(data.body).to.have.length(2);
+			done();
+		});
+	});
+
+	it('allow to edit plan setting goal_datetime to the past. For testing', function(done) {
+
+		var newData = {
+			goal_datetime: (Date.now() / 1000 | 0)
+		};
+
+		testHelper.sendPut('/api/plans/' + plan_2_id, newData).then(function(data) {
+			expect(data.body.user_id).to.equal(registeredUserId);
+			expect(data.body.goal_datetime).to.equal(newData.goal_datetime);
+
+			plan_2 = data.body;
+
+			done();
+		});
+	});
+
+	it('returns plan with status == finished now', function(done) {
+		testHelper.sendGet('/api/wallets/' + wallet_2_id + '/plans').then(function(data) {
+			expect(data.body).to.be.a('array');
+			expect(data.body).to.have.length(2);
+
+			var foundPlan = null;
+			for (var k in data.body)
+				if (data.body[k].id == plan_2_id)
+					foundPlan = data.body[k];
+
+			expect(foundPlan).to.not.equal(null);
+			expect(foundPlan.status).to.equal('finished');
+			done();
+		});
+	});
+
+	it('returns plan with status == finished now', function(done) {
+		testHelper.sendGet('/api/plans/' + plan_2_id).then(function(data) {
+			expect(data.body.user_id).to.equal(registeredUserId);
+			expect(data.body.status).to.equal('finished');
+
+			done();
+		});
+	});
+
+
 	it('lets us remove plan', function(done) {
 		testHelper.sendDelete('/api/plans/' + plan_1_id, {}).then(function(data) {
+			expect(data.body).to.equal(true);
+
+			done();
+		});
+	});
+
+	it('returns list without removed plan now', function(done) {
+		testHelper.sendGet('/api/plans').then(function(data) {
+			expect(data.body).to.be.a('array');
+			expect(data.body).to.have.length(1);
+			done();
+		});
+	});
+
+	it('lets us remove second plan', function(done) {
+		testHelper.sendDelete('/api/plans/' + plan_2_id, {}).then(function(data) {
 			expect(data.body).to.equal(true);
 
 			done();

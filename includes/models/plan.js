@@ -1,3 +1,6 @@
+var rfr = require('rfr');
+var exchange = rfr('includes/exchange.js');
+
 module.exports = function(sequelize, DataTypes) {
 	var Plan = sequelize.define('Plan', {
 		id: {
@@ -28,6 +31,10 @@ module.exports = function(sequelize, DataTypes) {
 		start_datetime: {
 			type: DataTypes.INTEGER
 		},
+		end_balance: {
+			type: DataTypes.FLOAT(),
+			defaultValue: 0
+		},
 		status: {
 			type: DataTypes.ENUM('active', 'finished'),
 			defaultValue: 'active',
@@ -48,6 +55,25 @@ module.exports = function(sequelize, DataTypes) {
 		tableName: 'plans',
 		classMethods: {},
 		instanceMethods: {
+			checkIfFinished: function() {
+				var plan = this;
+				return new sequelize.Promise(function(resolve, reject) {
+					if (plan.status == 'finished')
+						resolve(plan);
+					var currentDateTime = (Date.now() / 1000 | 0);
+					if (plan.goal_datetime >= currentDateTime) {
+						plan.status = 'finished';
+						plan.getCurrentTotal().then(function(total) {
+							plan.end_balance = total;
+							return plan.save();
+						}).then(function(plan) {
+							resolve(plan);
+						});
+					} else {
+						resolve(plan);
+					}
+				});
+			},
 			updateWalletsIds: function(wallets_ids) {
 				var plan = this;
 				/// remove duplicate elements
@@ -80,6 +106,22 @@ module.exports = function(sequelize, DataTypes) {
 								resolve(plan);
 							});
 						});
+					});
+				});
+			},
+			getCurrentTotal: function() {
+				var plan = this;
+				return new sequelize.Promise(function(resolve, reject) {
+					plan.getWallets().then(function(wallets) {
+						var balance = 0;
+						var walletTotal = 0;
+						// @todo: use exchange rates to recalculate
+						for (var k in wallets) {
+							walletTotal = exchange.fx(wallets[k].total).from(wallets[k].currency).to(plan.goal_currency);
+							balance += walletTotal;
+						}
+
+						resolve(balance);
 					});
 				});
 			},
