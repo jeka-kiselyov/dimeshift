@@ -58,10 +58,12 @@ module.exports = function(sequelize, DataTypes) {
 			checkIfFinished: function() {
 				var plan = this;
 				return new sequelize.Promise(function(resolve, reject) {
-					if (plan.status == 'finished')
+					if (plan.status == 'finished') {
 						resolve(plan);
+						return;
+					}
 					var currentDateTime = (Date.now() / 1000 | 0);
-					if (plan.goal_datetime >= currentDateTime) {
+					if (plan.goal_datetime <= currentDateTime) {
 						plan.status = 'finished';
 						plan.getCurrentTotal().then(function(total) {
 							plan.end_balance = total;
@@ -115,7 +117,7 @@ module.exports = function(sequelize, DataTypes) {
 					plan.getWallets().then(function(wallets) {
 						var balance = 0;
 						var walletTotal = 0;
-						// @todo: use exchange rates to recalculate
+
 						for (var k in wallets) {
 							walletTotal = exchange.convert(wallets[k].total, wallets[k].currency, plan.goal_currency);
 							balance += walletTotal;

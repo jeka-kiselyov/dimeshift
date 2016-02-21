@@ -280,7 +280,7 @@ describe('API server for planning', function() {
 			goal_currency: plan_2_currency,
 			goal_balance: plan_2_goal_balance,
 			goal_datetime: plan_2_goal_datetime,
-			wallets: [wallet_2_id]
+			wallets: [wallet_1_id, wallet_2_id]
 		};
 
 		testHelper.sendPost('/api/plans', newData).then(function(data) {
@@ -293,9 +293,7 @@ describe('API server for planning', function() {
 			expect(data.body.goal_datetime).to.equal(plan_2_goal_datetime);
 
 			expect(data.body.wallets).to.be.a('array');
-			expect(data.body.wallets).to.have.length(1);
-
-			expect(data.body.wallets[0].id).to.equal(wallet_2_id);
+			expect(data.body.wallets).to.have.length(2);
 
 			plan_2_id = data.body.id;
 			plan_2 = data.body;
