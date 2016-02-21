@@ -117,7 +117,7 @@ module.exports = function(sequelize, DataTypes) {
 						var walletTotal = 0;
 						// @todo: use exchange rates to recalculate
 						for (var k in wallets) {
-							walletTotal = exchange.fx(wallets[k].total).from(wallets[k].currency).to(plan.goal_currency);
+							walletTotal = exchange.convert(wallets[k].total, wallets[k].currency, plan.goal_currency);
 							balance += walletTotal;
 						}
 

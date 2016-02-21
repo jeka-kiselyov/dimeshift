@@ -97,6 +97,18 @@ var getRates = function() {
 	return cached;
 };
 
+var convert = function(value, from, to) {
+	var ret = value;
+	try {
+		ret = fx(value).from(from).to(to);
+	} catch (e) {
+		ret = value;
+	}
+
+	return ret;
+};
+
 exports.fx = fx;
+exports.convert = convert;
 exports.getRates = getRates;
 // fx(100).from('HKD').to('GBP'); // ~8.0424
