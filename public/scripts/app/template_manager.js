@@ -9,20 +9,19 @@ App.templateManager = {
 
 	modifiers: {
 		decimal: function(s) {
-			var n = +((s + '').replace(/^\s+|\s+$/g, ''));
-			var decimal = Math.abs(n) - Math.floor(Math.abs(n));
-			decimal *= 100;
-			decimal = Math.round(decimal);
+			var decimal = (Math.abs(+s) % 1).toFixed(2) * 100;
+
 			if (decimal === 0)
 				return '00';
 			if (decimal < 10)
 				return '0' + decimal;
-			else
-				return decimal;
+			if (decimal === 100)
+				return '99';
+
+			return decimal;
 		},
 		rational: function(s) {
-			var n = +((s + '').replace(/^\s+|\s+$/g, ''));
-			var rational = Math.floor(Math.abs(n));
+			var rational = Math.floor(Math.abs(+s));
 			return rational;
 		}
 	},
