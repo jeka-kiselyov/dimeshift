@@ -57,6 +57,7 @@
 	</tr>
 	{if $stats|count == 0}
 	{else}
+		{assign var="possibleLowestSpending" value=null}
 		{foreach from=$stats item=s}
 		<tr class="{if $s->date->unix_from > $currentTimestamp}active{else}{if $s->date->unix_from < $currentTimestamp && $s->date->unix_to > $currentTimestamp}info{else}{if ($s->allowedToSpend > 0 && $s->dayTotal < $s->allowedToSpend) || ($s->allowedToSpend < 0 && $s->dayTotal > $s->allowedToSpend)}success{else}danger{/if}{/if}{/if}">
 			<td>{$s->date->unix|wallet_date}</td>
@@ -78,7 +79,7 @@
 					{$possibleLowestSpending|rational}.<sup>{$possibleLowestSpending|decimal}</sup>	&ndash;				
 				{/if}
 				{$s->allowedToSpend|rational}.<sup>{$s->allowedToSpend|decimal}</sup>
-				{if $s->date->unix_from < $currentTimestamp}
+				{if $s->date->unix_from > $currentTimestamp && $possibleLowestSpending == null}
 					{assign var="possibleLowestSpending" value=$s->allowedToSpend}
 				{/if}
 			</span></td>
