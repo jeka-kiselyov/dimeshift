@@ -9,7 +9,7 @@ App.templateManager = {
 
 	modifiers: {
 		decimal: function(s) {
-			var decimal = (Math.abs(+s) % 1).toFixed(2) * 100;
+			var decimal = Math.round((Math.abs(+s) % 1).toFixed(2) * 100);
 
 			if (decimal === 0)
 				return '00';
