@@ -142,13 +142,12 @@ App.Models.Plan = Backbone.Model.extend({
 							plan.stats[dgi].profitsTotal = groupProfits;
 							plan.stats[dgi].dayTotal = groupProfits - groupExpenses;
 						}
-
-						groupCount = 0;
-						groupExpenses = 0;
-						groupProfits = 0;
 					}
 
 					emptyFrom = null;
+					groupCount = 0;
+					groupExpenses = 0;
+					groupProfits = 0;
 				}
 			}
 
