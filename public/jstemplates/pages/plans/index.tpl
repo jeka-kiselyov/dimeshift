@@ -17,7 +17,11 @@
 			{if $plans|count == 0}
 			{else}
 				{foreach from=$plans item=p}
-				<li class="list-group-item">{$p->name|escape:'html'}&nbsp;
+				<li class="list-group-item">
+					
+						<span class="glyphicon glyphicon-{if $p->status == 'active'}play{else}stop{/if}" aria-hidden="true"></span>
+					
+					{$p->name|escape:'html'}&nbsp;
 					<div class="pull-right">
 						<a href="{$settings->site_path}/plans/{$p->id}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span> {tp}View Report{/tp}</a>
 						<button class="btn btn-default btn-xs edit_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-pencil"></span> {tp}Edit{/tp}</button>
