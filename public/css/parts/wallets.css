@@ -56,3 +56,15 @@ a.action:hover {
 	float: right;
 	margin-right: 10px;
 }
+
+
+@media (max-width: 480px) { 
+        .transaction_time {
+        	font-size: 11px;
+        }
+        .transaction_description {
+        	clear: both;
+        	margin-left: 100px;
+        	margin-bottom: 0;
+        }
+}

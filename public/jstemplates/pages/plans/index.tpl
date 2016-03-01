@@ -17,15 +17,15 @@
 			{if $plans|count == 0}
 			{else}
 				{foreach from=$plans item=p}
-				<li class="list-group-item">
+				<li class="list-group-item clearfix">
 					
 						<span class="glyphicon glyphicon-{if $p->status == 'active'}play{else}stop{/if}" aria-hidden="true"></span>
 					
 					{$p->name|escape:'html'}&nbsp;
-					<div class="pull-right">
-						<a href="{$settings->site_path}/plans/{$p->id}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span> {tp}View Report{/tp}</a>
-						<button class="btn btn-default btn-xs edit_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-pencil"></span> {tp}Edit{/tp}</button>
-						<button class="btn btn-default btn-xs remove_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-remove"></span> {tp}Remove{/tp}</button>
+					<div class="pull-right clearfix">
+						<a href="{$settings->site_path}/plans/{$p->id}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span> <span class="hidden-xs hidden-sm">{tp}View Report{/tp}</span></a>
+						<button class="btn btn-default btn-xs edit_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-pencil"></span> <span class="hidden-xs hidden-sm">{tp}Edit{/tp}</span></button>
+						<button class="btn btn-default btn-xs remove_plan_button" data-id="{$p->id}"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs hidden-sm">{tp}Remove{/tp}</span></button>
 					</div>
 				</li>
 				{/foreach}
@@ -51,7 +51,7 @@
 
 
 		<div class="row">
-			<div class="col-xs-6">
+			<div class="col-sm-6">
 				<p>{tp}Plan name{/tp}</p>
 
 		        <div class="form-group">
@@ -59,7 +59,7 @@
 					<input type="text" name="input_name" class="form-control" id="input_name" {if $preparedData->name|default:'Undefined' != 'Undefined'}value="{$preparedData->name|escape:'html'}"{/if} placeholder="{t}Plan name{/t}">
 				</div>
 			</div>
-			<div class="col-xs-6">
+			<div class="col-sm-6">
 				<p>{tp}Wallets to use for planning{/tp}</p>
 
 				{if $wallets|count == 0}
@@ -102,7 +102,7 @@
 
 
 		<div class="row">
-			<div class="col-xs-4">
+			<div class="col-sm-4">
 				<p>{tp}Current balance is{/tp}</p>
 
 				<p class="text-center {if $preparedData->start_balance >= 0}text-success{else}text-danger{/if} wallet_total"><strong>
@@ -132,7 +132,7 @@
 
 
 			</div>
-			<div class="col-xs-4">
+			<div class="col-sm-4">
 				<p>{tp}And on{/tp}</p>
 
 				<div style="overflow:hidden;">
@@ -146,7 +146,7 @@
 				</div>
 
 			</div>
-			<div class="col-xs-4">
+			<div class="col-sm-4">
 				<p>{tp}Plan is to keep{/tp}</p>
 
 		        <div class="form-group">

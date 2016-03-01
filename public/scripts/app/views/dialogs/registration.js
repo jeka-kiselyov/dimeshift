@@ -5,12 +5,8 @@ App.Views.Dialogs.Registration = App.Views.Abstract.Dialog.extend({
 	events: {
 		"submit form": "onSubmit"
 	},
+	focusOnInit: '#input_login',
 	initialize: function() {
-		var that = this;
-		this.on('ready', function() {
-			that.$('#input_login').focus();
-		});
-
 		this.show();
 	},
 	onSubmit: function() {

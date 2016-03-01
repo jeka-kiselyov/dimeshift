@@ -5,16 +5,12 @@ App.Views.Dialogs.EditWallet = App.Views.Abstract.Dialog.extend({
 	events: {
 		"submit form": "onSubmit"
 	},
+	focusOnInit: '#input_name',
 	initialize: function(params) {
 		if (typeof(params.item) != 'undefined')
 			this.item = params.item;
 		else
 			throw 'Can not initialize dialog without param.item';
-
-		var that = this;
-		this.on('ready', function() {
-			that.$('#input_name').focus().select();
-		});
 
 		this.show({
 			item: this.item.toJSON()

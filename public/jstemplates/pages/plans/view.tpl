@@ -15,10 +15,10 @@
 
 
 			<div class="row">
-				<div class="col-xs-6">
+				<div class="col-sm-6">
 					<p class="text-center {if $plan->start_balance >= 0}text-success{else}text-danger{/if} wallet_total"><strong>{tp}From:{/tp} {if $plan->start_balance < 0}-{/if}{if $plan->start_currency == 'USD'}${/if}{$plan->start_balance|rational}.<sup>{$plan->start_balance|decimal}</sup>{if $plan->start_currency != 'USD'} {$plan->start_currency}{/if}</strong></p>
 				</div>
-				<div class="col-xs-6">
+				<div class="col-sm-6">
 
 					<p class="text-center {if $plan->goal_balance >= 0}text-success{else}text-danger{/if} wallet_total"><strong>{tp}To:{/tp} {if $plan->goal_balance < 0}-{/if}{if $plan->goal_currency == 'USD'}${/if}{$plan->goal_balance|rational}.<sup>{$plan->goal_balance|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if}</strong></p>
 				</div>
@@ -50,7 +50,7 @@
 <table class="table table-condensed">
 	<tr>
 		<th>{tp}Date{/tp}</th>
-		<th><span style="visibility: hidden;">-</span>{tp}Total On Start{/tp}</th>
+		<th><span style="visibility: hidden;" class="hidden-xs hidden-sm">-</span>{tp}Total On Start{/tp}</th>
 		<th><span class="text-danger">{tp}Spent{/tp}</span></th>
 		<th><span class="text-success">{tp}Profit{/tp}</span></th>
 		<th>{tp}Plan{/tp}</th>
@@ -63,7 +63,7 @@
 			<td>{$s->date->unix|wallet_date}</td>
 			<td>
 				{if $s->date->unix_from < $currentTimestamp && $s->date->unix_to > $currentTimestamp}
-				<strong><span {if $s->currentTotalOnStart >= 0}style="visibility: hidden;"{/if}>-</span>{$s->currentTotalOnStart|rational}.<sup>{$s->currentTotalOnStart|decimal}</sup></strong>
+				<strong><span {if $s->currentTotalOnStart >= 0}style="visibility: hidden;" class="hidden-xs hidden-sm"{/if}>-</span>{$s->currentTotalOnStart|rational}.<sup>{$s->currentTotalOnStart|decimal}</sup></strong>
 				{else}
 				<span {if $s->currentTotalOnStart >= 0}style="visibility: hidden;"{/if}>-</span>{$s->currentTotalOnStart|rational}.<sup>{$s->currentTotalOnStart|decimal}</sup>
 				{/if}

@@ -43,3 +43,12 @@
 .modal-footer {
 	border-top: 0;
 }
+
+@media (max-width: 480px) { 
+        body {
+          font-size: 11px;
+        }
+        h4 {
+        	font-size: 12px;
+        }
+}

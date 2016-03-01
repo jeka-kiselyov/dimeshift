@@ -5,11 +5,8 @@ App.Views.Dialogs.Signin = App.Views.Abstract.Dialog.extend({
 	events: {
 		"submit form": "onSubmit"
 	},
+	focusOnInit: '#input_username',
 	initialize: function() {
-		var that = this;
-		this.on('ready', function() {
-			that.$('#input_username').focus();
-		});
 		this.show();
 	},
 	onSubmit: function() {

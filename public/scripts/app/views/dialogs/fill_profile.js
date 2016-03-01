@@ -5,11 +5,8 @@ App.Views.Dialogs.FillProfile = App.Views.Abstract.Dialog.extend({
 	events: {
 		"submit form": "onSubmit"
 	},
+	focusOnInit: '#input_login',
 	initialize: function() {
-		var that = this;
-		this.on('ready', function() {
-			that.$('#input_login').focus().select();
-		});
 		this.show();
 	},
 	onSubmit: function() {

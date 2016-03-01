@@ -44,10 +44,9 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 				var rulerOffset = $('#screenshots_header_ruler').offset().top;
 				if ($(window).width() > 768 && footerOffset > rulerOffset + 180) {
 					var margin = footerOffset - (rulerOffset + 180);
-					margin = Math.round(margin);
 					$('#screenshots_header').css('margin-top', margin + 'px');
 				} else {
-					$('#screenshots_header').css('margin-top', '0px');
+					$('#screenshots_header').css('margin-top', '20px');
 				}
 			}, 100);
 		}

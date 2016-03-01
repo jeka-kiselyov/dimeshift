@@ -3,6 +3,16 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 
 	el: $("#dialog_wrapper"),
 	isVisible: false,
+	focusOnInit: false,
+	initialFocus: function() {
+		if ('ontouchstart' in window || navigator.maxTouchPoints)
+			return false; /// do not focus on touch devices
+		if (!this.focusOnInit)
+			return false;
+
+		this.$(this.focusOnInit).focus();
+		return true;
+	},
 	show: function(data) {
 		if (!$("#dialog_wrapper").length)
 			$('body').append("<div id='dialog_wrapper'></div>");
@@ -19,6 +29,7 @@ App.Views.Abstract.Dialog = Backbone.View.extend({
 		var shown = new $.Deferred();
 
 		$.when(rendered, shown).done(function() {
+			that.initialFocus();
 			that.trigger('ready');
 		});
 		this.$el.children().on('shown.bs.modal', function(e) {

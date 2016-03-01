@@ -13,22 +13,22 @@
 <h4 id="screenshots_header">{tp}Screenshots{/tp}</h4>
 <div class="row">
   <div class="col-sm-3 col-xs-12">
-  	<a href="{$settings->site_path}/images/homepage/screenshots/transactions.jpg" class="image-link" id="image-link-1"><img src="{$settings->site_path}/images/homepage/screenshots/transactions_small.jpg" alt="Internationalization" class="img-thumbnail"></a>
+  	<a href="{$settings->site_path}/images/homepage/screenshots/transactions.jpg" class="image-link" id="image-link-1"><img src="{$settings->site_path}/images/homepage/screenshots/transactions_small.jpg" alt="Internationalization" class="img-thumbnail center-block"></a>
 <div class="hideme" id="image-link-1-title">{tp}Easiest way to manage your personal finances online{/tp}</div>
 <div class="hideme" id="image-link-1-description">{tp}Simple as it is{/tp}</div>
   </div>
   <div class="col-sm-3 col-xs-12">
-  	<a href="{$settings->site_path}/images/homepage/screenshots/wallets.jpg" class="image-link" id="image-link-wallets"><img src="{$settings->site_path}/images/homepage/screenshots/wallets_small.jpg" alt="Internationalization" class="img-thumbnail"></a>
+  	<a href="{$settings->site_path}/images/homepage/screenshots/wallets.jpg" class="image-link" id="image-link-wallets"><img src="{$settings->site_path}/images/homepage/screenshots/wallets_small.jpg" alt="Internationalization" class="img-thumbnail center-block"></a>
 <div class="hideme" id="image-link-wallets-title">{tp}Any currency{/tp}</div>
 <div class="hideme" id="image-link-wallets-description">{tp}Create as many wallets as you need{/tp}</div>
   </div>
   <div class="col-sm-3 col-xs-12">
-  	<a href="{$settings->site_path}/images/homepage/screenshots/i18n.jpg" class="image-link" id="image-link-2"><img src="{$settings->site_path}/images/homepage/screenshots/i18n_small.jpg" alt="Internationalization" class="img-thumbnail"></a>
+  	<a href="{$settings->site_path}/images/homepage/screenshots/i18n.jpg" class="image-link" id="image-link-2"><img src="{$settings->site_path}/images/homepage/screenshots/i18n_small.jpg" alt="Internationalization" class="img-thumbnail center-block"></a>
 <div class="hideme" id="image-link-2-title">{tp}Internalization{/tp}</div>
 <div class="hideme" id="image-link-2-description">{tp}English and Russian languages supported. Ukrainian and Belarusian coming soon.{/tp}</div>
   </div>
   <div class="col-sm-3 col-xs-12">
-  	<a href="{$settings->site_path}/images/homepage/screenshots/agpl.jpg" class="image-link" id="image-link-agpl"><img src="{$settings->site_path}/images/homepage/screenshots/agpl_small.jpg" alt="Internationalization" class="img-thumbnail"></a>
+  	<a href="{$settings->site_path}/images/homepage/screenshots/agpl.jpg" class="image-link" id="image-link-agpl"><img src="{$settings->site_path}/images/homepage/screenshots/agpl_small.jpg" alt="Internationalization" class="img-thumbnail center-block"></a>
 <div class="hideme" id="image-link-agpl-title">{tp}Open Source!{/tp}</div>
 <div class="hideme" id="image-link-agpl-description">{tp}GNU Affero GPL Licensed. Please feel free to check out the code and fork it!{/tp}</div>
   </div>

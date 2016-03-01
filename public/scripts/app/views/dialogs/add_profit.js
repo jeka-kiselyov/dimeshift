@@ -5,14 +5,9 @@ App.Views.Dialogs.AddProfit = App.Views.Abstract.Dialog.extend({
 	events: {
 		"submit form": "onSubmit"
 	},
+	focusOnInit: '#input_amount',
 	initialize: function(params) {
 		this.wallet = params.wallet || false;
-
-		var that = this;
-		this.on('ready', function() {
-			that.$('#input_amount').focus();
-		});
-
 		this.show();
 	},
 	onSubmit: function() {
