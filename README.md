@@ -41,11 +41,13 @@ Documentation:
 
 Screenshots:
 ----
-![Dimeshift transactions](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/transactions.jpg)
+![Dimeshift transactions](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/transactions.jpg?1mar16)
 
-![Dimeshift wallets](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/wallets.jpg)
+![Dimeshift wallets](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/wallets.jpg?1mar16)
 
-![Dimeshift i18n](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/i18n.jpg)
+![Dimeshift goals](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/goal.jpg?1mar16)
+
+![Dimeshift i18n](https://raw.githubusercontent.com/jeka-kiselyov/dimeshift/master/public/images/homepage/screenshots/i18n.jpg?1mar16)
 
 License
 ----
