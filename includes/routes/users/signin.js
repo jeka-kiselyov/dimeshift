@@ -32,7 +32,7 @@ exports.handler = function(req, res, next) {
 	var username = req.params.username || body.username || '';
 	var password = req.params.password || body.password || '';
 
-	var signedInUser = null;
+	var gotUser = null;
 
 	db.User.signIn({
 		username: username,

@@ -173,7 +173,7 @@ module.exports = function(sequelize, DataTypes) {
 					}).then(function(user) {
 						if (!user)
 							return reject('Invalid reset password code');
-						restore_password_hash = sequelize.db.User.hashPassword(user.id + user.password_restore_code);
+						var restore_password_hash = sequelize.db.User.hashPassword(user.id + user.password_restore_code);
 						if (hash != restore_password_hash)
 							return reject('Invalid reset password code');
 
