@@ -42,8 +42,8 @@ App.Views.Pages.Index = App.Views.Abstract.Page.extend({
 			App.page.__resizeThrottled = _.throttle(function() {
 				var footerOffset = $(window).height() - $('#footer').height() - 20;
 				var rulerOffset = $('#screenshots_header_ruler').offset().top;
-				if ($(window).width() > 768 && footerOffset > rulerOffset + 180) {
-					var margin = footerOffset - (rulerOffset + 180);
+				if ($(window).width() >= 992 && footerOffset > rulerOffset + 190) {
+					var margin = footerOffset - (rulerOffset + 190);
 					$('#screenshots_header').css('margin-top', margin + 'px');
 				} else {
 					$('#screenshots_header').css('margin-top', '20px');

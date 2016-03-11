@@ -14,3 +14,27 @@
 .img-thumbnail {
 	margin-bottom: 10px;
 }
+
+.home_screenshots {
+
+}
+
+.home_screenshots .image-link {
+	display: block;
+	height: 161px;
+	background-size: cover;
+	border: 1px solid #31B0D5;
+	background-position: left top;
+	margin-bottom: 15px;
+	background-repeat: no-repeat;
+}
+
+.home_screenshots .image-link-contain {
+	background-size: contain;
+	background-position: center center;
+}
+
+.home_screenshots .image-link:hover {
+	border: 1px solid #337AB7;
+
+}
