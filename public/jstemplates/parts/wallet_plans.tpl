@@ -13,7 +13,7 @@
 				<a href="{$settings->site_path}/plans/{$p->plan->id}" class="list-group-item">
 					<h4 class="list-group-item-heading">{$p->plan->name|escape:'html'}</h4>
 					{if $areStatsReady}
-						{assign var="allowedToSpend" value=$p->allowedToSpend}
+						{assign var="allowedToSpend" value=$p->allowedToSpendInWalletCurrency}
 						<p class="list-group-item-text">
 						{tp}You{/tp}
 
@@ -23,7 +23,17 @@
 						<span id="preview_get">{tp}have to get{/tp} </span>
 						{/if}
 
-						{if $p->plan->goal_currency == 'USD'}${/if}{$allowedToSpend|rational}.<sup>{$allowedToSpend|decimal}</sup>{if $p->plan->goal_currency != 'USD'} {$p->plan->goal_currency}{/if}
+						<span 
+							{if $wallet->currency != $p->plan->goal_currency} 
+								{assign var="pas" value=$p->allowedToSpend}
+								data-toggle="tooltip" data-placement="top" 
+								title="{if $p->plan->goal_currency == 'USD'}${/if}{$pas|rational}.{$pas|decimal}{if $p->plan->goal_currency != 'USD'} {$wallet->currency}{/if}"
+							{/if}
+							>
+
+							{if $wallet->currency == 'USD'}${/if}{$allowedToSpend|rational}.<sup>{$allowedToSpend|decimal}</sup>{if $wallet->currency != 'USD'} {$wallet->currency}{/if}
+
+						</span>
 
 						{tp}today{/tp}
 						</p>

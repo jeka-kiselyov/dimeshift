@@ -39,11 +39,18 @@ App.Views.Parts.WalletPlans = Backbone.View.extend({
 		if (this.model.plans)
 			for (var i = 0; i < this.model.plans.length; i++) {
 				var allowedToSpend = null;
-				if (this.areStatsReady)
+				var allowedToSpendInWalletCurrency = null;
+
+				if (this.areStatsReady) {
 					allowedToSpend = this.model.plans.at(i).getPlanForToday();
+					allowedToSpendInWalletCurrency = App.exchange.convert(allowedToSpend, this.model.plans.at(i).get('goal_currency'), this.model.get('currency'));
+					console.log(allowedToSpendInWalletCurrency);
+				}
+
 				plans.push({
 					plan: this.model.plans.at(i).toJSON(),
-					allowedToSpend: allowedToSpend
+					allowedToSpend: allowedToSpend,
+					allowedToSpendInWalletCurrency: allowedToSpendInWalletCurrency
 				});
 			}
 
@@ -55,6 +62,7 @@ App.Views.Parts.WalletPlans = Backbone.View.extend({
 		var that = this;
 		App.templateManager.fetch(this.templateName, data, function(html) {
 			that.$el.html(html);
+			that.$('[data-toggle="tooltip"]').tooltip();
 			that.trigger('render');
 			that.trigger('loaded');
 		});
