@@ -7,6 +7,7 @@ App.log = {
 	hasToForce: false,
 	setURL: function(url) {
 		if (url != this.currentURL) {
+			this.setUserId();
 			this.hasToForce = true;
 			this.currentURL = url;
 			if (typeof(ga) === 'function') {
@@ -16,6 +17,7 @@ App.log = {
 	},
 	setTitle: function(title) {
 		if (title != this.currentTitle) {
+			this.setUserId();
 			this.currentTitle = title;
 			this.hasToForce = true;
 			if (typeof(ga) === 'function') {
@@ -23,11 +25,16 @@ App.log = {
 			}
 		}
 	},
+	setUserId: function() {
+		if (App && App.currentUser && App.currentUser.id && typeof(ga) === 'function')
+			ga('set', '&uid', '' + App.currentUser.id);
+	},
 	pageView: function() {
 		var time = Date.now();
 
-		if (this.currentVisitTime == null || (time - this.currentVisitTime) > 1000 || this.hasToForce) /// 100 microseconds
+		if (this.currentVisitTime === null || (time - this.currentVisitTime) > 1000 || this.hasToForce) /// 100 microseconds
 		{
+			this.setUserId();
 			if (typeof(ga) === 'function') {
 				ga('send', 'pageview');
 			}
@@ -38,6 +45,7 @@ App.log = {
 		this.currentVisitTime = time;
 	},
 	event: function(category, action, label, count) {
+		this.setUserId();
 		if (typeof(label) === 'undefined')
 			label = '';
 
@@ -48,4 +56,4 @@ App.log = {
 				ga('send', 'event', category, action, label);
 		}
 	}
-}
+};
