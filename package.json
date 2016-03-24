@@ -1,6 +1,6 @@
 {
   "name": "dimeshift",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "Webapp to track and manage personal finances",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,21 @@
   },
   "author": "Jeka Kiselyov <jeka911@gmail.com> (http://www.jeka911.com/)",
   "license": "AGPL-3.0",
-  "keywords": ["finance", "financial", "single page", "single page application", "application", "saas", "api", "currency", "economy", "ukrainian", "russian", "backbonejs", "restify"],
+  "keywords": [
+    "finance",
+    "financial",
+    "single page",
+    "single page application",
+    "application",
+    "saas",
+    "api",
+    "currency",
+    "economy",
+    "ukrainian",
+    "russian",
+    "backbonejs",
+    "restify"
+  ],
   "dependencies": {
     "bower": "^1.6.3",
     "clean-css": "^3.4.5",
