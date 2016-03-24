@@ -33,6 +33,7 @@
     "rfr": "^1.2.2"
   },
   "dependencies": {
+    "rfr": "^1.2.2",
     "bower": "^1.6.3",
     "clean-css": "^3.4.5",
     "escape-regexp-component": "^1.0.2",
