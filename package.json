@@ -29,9 +29,7 @@
     "backbonejs",
     "restify"
   ],
-  "bundleDependencies": {
-    "rfr": "^1.2.2"
-  },
+  "bundledDependencies": ["rfr"],
   "dependencies": {
     "rfr": "^1.2.2",
     "bower": "^1.6.3",
