@@ -6,8 +6,11 @@ var routes = rfr('includes/routes');
 var servers = rfr('includes/servers');
 var pages = rfr('config/pages.json');
 var config = rfr('includes/config.js');
+var path = require('path');
 
-var startServer = function(callback) {
+var startServer = function(options, callback) {
+	options = options || {};
+
 	var server = restify.createServer({
 		name: 'DimeShift',
 	});
@@ -37,8 +40,9 @@ var startServer = function(callback) {
 	});
 
 	// Templates
+	var templatesDirectory = path.join(rfr.root, './public');
 	server.get(/jstemplates\/?.*/, servers.static_file_server({
-		directory: './public',
+		directory: templatesDirectory,
 		suffix: '.tpl'
 	}));
 
@@ -51,17 +55,27 @@ var startServer = function(callback) {
 
 	// App index html file
 	for (var k in pages) {
-		server.get(k, servers.index_server);
+		server.get(k, servers.index_server({
+			indexFile: options.indexFile,
+			indexDirectory: options.indexDirectory
+		}));
 	}
 
 	// Sync db and start server
 	db.sequelize.sync()
 		.then(function(err) {
 			var port = config.port || process.env.PORT || 8080;
-			server.listen(port);
-			console.log("Server started: http://localhost:" + port + "/");
-			if (typeof(callback) === 'function')
-				callback();
+			var doStart = function(selectedPort) {
+				server.listen(selectedPort);
+				console.log("Server started: http://localhost:" + selectedPort + "/");
+				if (typeof(callback) === 'function')
+					callback(selectedPort);
+			}
+
+			if (typeof(port) === 'function')
+				port(doStart);
+			else
+				doStart(port);
 		});
 };
 

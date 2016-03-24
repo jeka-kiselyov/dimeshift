@@ -15,9 +15,9 @@ function serve(name) {
     var type = 'guess';
 
     var cachePath = {
-        cache: 'data/min/' + name + '.min',
-        gzip: 'data/min/' + name + '.min.gz',
-        raw: 'data/min/' + name + '.raw'
+        cache: path.join(rfr.root, 'data/min/' + name + '.min'),
+        gzip: path.join(rfr.root, 'data/min/' + name + '.min.gz'),
+        raw: path.join(rfr.root, 'data/min/' + name + '.raw')
     };
 
     var need_to_minify = config.minify[name] || false;
@@ -144,7 +144,7 @@ function serve(name) {
         __raw += "js.src = fname; js.async = false; document.body.appendChild(js); }\n";
 
         files.forEach(function(file) {
-            file = file.split('./public/').join('/').split('public/').join('/');
+            file = file.split(path.join(rfr.root, '/public/')).join('/').split('./public/').join('/').split('public/').join('/');
             __raw += "inc_js_file(\"" + file + "\");\n";
         })
     }
@@ -180,8 +180,8 @@ function serve(name) {
 
             console.log('Minify css files...');
             new CleanCSS({
-                root: path.join(process.cwd(), 'public'),
-                relativeTo: path.join(process.cwd(), 'public')
+                root: path.join(rfr.root, 'public'),
+                relativeTo: path.join(rfr.root, 'public')
             }).minify(files, function(error, minified) {
                 __result = minified.styles;
                 __raw = __result;
@@ -241,9 +241,9 @@ function serve(name) {
     function init(callback) {
         items.forEach(function(item) {
             if (item.slice(-3) === '.js' || item.slice(-4) === '.css')
-                addFile(item);
+                addFile(path.join(rfr.root, item));
             else
-                addFolder(item);
+                addFolder(path.join(rfr.root, item));
         });
 
 

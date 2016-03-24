@@ -1,8 +1,16 @@
 var restify = require('restify');
 
-var index = restify.serveStatic({
-    directory: './public',
-    file: 'index.html'
-});
 
-module.exports = index;
+function serveIndex(opts) {
+	var indexFile = opts.indexFile || 'index.html';
+	var indexDirectory = opts.indexDirectory || './public';
+
+	var index = restify.serveStatic({
+		directory: indexDirectory,
+		file: indexFile
+	});
+
+	return index;
+}
+
+module.exports = serveIndex;

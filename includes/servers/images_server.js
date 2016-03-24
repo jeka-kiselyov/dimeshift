@@ -1,5 +1,6 @@
 'use strict';
 
+var rfr = require('rfr');
 var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
@@ -78,7 +79,7 @@ function serveImage(opts) {
         var file;
 
         file = decodeURIComponent(req.path()).split('images/').join('');
-        file = path.join('./public/images/', file);
+        file = path.join(rfr.root, './public/images/', file);
 
         if (req.method !== 'GET' && req.method !== 'HEAD') {
             res.writeHead(404, "Not Found");

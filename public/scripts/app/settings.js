@@ -1,7 +1,7 @@
 // settings.js
 App.settings = {
 
-	sitePath: window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : ''),
+	sitePath: site_path,
 	apiEntryPoint: site_path + '/api/',
 	templatePath: site_path + '/jstemplates/',
 	version: (typeof(app_version) !== 'undefined') ? app_version : '',
