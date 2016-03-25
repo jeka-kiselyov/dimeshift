@@ -27,6 +27,22 @@
       "css": false
     }
   },
+  "electron": {
+    "port": 0,
+    "database": {
+      "dialectModulePath": "../../includes/sqlite3.js",
+      "dialect": "sqlite",
+      "storage": "data/database.sqlite"
+    },
+    "smtp": null,
+    "openexchangerates": null,
+    "default_from_email": null,
+    "site_path": null,
+    "minify": {
+      "javascript": true,
+      "css": true
+    }
+  },
   "test": {
     "port": 8081,
     "database": {

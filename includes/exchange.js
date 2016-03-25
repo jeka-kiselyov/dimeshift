@@ -6,11 +6,16 @@ var rfr = require('rfr');
 var yahoo_fx = require('yahoo-currency');
 var config = rfr('includes/config.js');
 
-var openExchangeRatesAppId = config.openexchangerates.app_id || '';
-var openExchangeRatesUpdateInterval = config.openexchangerates.update_interval || 86400;
+var openExchangeRatesAppId = null;
+var openExchangeRatesUpdateInterval = null;
 
-if (config.openexchangerates.use_env_variable)
-	openExchangeRatesAppId = process.env[openExchangeRatesAppId];
+if (config.openexchangerates) {
+	openExchangeRatesAppId = config.openexchangerates.app_id || '';
+	openExchangeRatesUpdateInterval = config.openexchangerates.update_interval || 86400;
+
+	if (config.openexchangerates.use_env_variable)
+		openExchangeRatesAppId = process.env[openExchangeRatesAppId];
+}
 
 var cache_filename = path.join(__dirname, '..', 'data/cache/exchangerates.json');
 var cached = null;
