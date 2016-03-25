@@ -8,6 +8,12 @@ Demo:
 ----
  [DimeShift](http://dimeshift.com/)
 
+Desktop Application:
+----
+
+ [DimeShift Desktop](https://github.com/jeka-kiselyov/dimeshift-desktop). Cross platform desktop app built on [Electron](http://electron.atom.io/)
+ 
+
 Installation:
 ----
 
