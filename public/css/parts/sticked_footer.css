@@ -25,7 +25,7 @@ html, body {
 	border-top: 1px solid #AAA;
 }
 
-#footer .container {
+#footer .container, #footer .container-fluid {
 	padding-top: 14px;
 }
 
