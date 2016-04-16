@@ -3,6 +3,8 @@ HOST: http://dimeshift.com/
 
 # DimeShift
 
+[DimeShift](http://dimeshift.com) ([github.com/jeka-kiselyov/dimeshift](https://github.com/jeka-kiselyov/dimeshift))
+
 DimeShift API is simple. You'll love it.
 
 # Authentication
