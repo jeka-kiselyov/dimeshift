@@ -1,0 +1,248 @@
+# Group Users
+
+### User [GET /api/users]
+### Get Signed In User Details [GET /api/users]
+
+Get currently signed in user details.
+
++ Request
+
+    + Headers
+
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+    {
+        "id": 23, 
+        "email": "example@gmail.com",
+        "login": "userlogin",
+        "is_demo": 0
+    }
+
+
+### List User Wallets [GET /api/users/:user_id/wallets]
+
+Get list of current user's wallets
+
++ Parameters
+    + user_id (number) - ID of the User in the form of an integer
+    
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+        [
+            {
+                "id":4,
+                "name":"Cash",
+                "status":"active",
+                "currency":"EUR",
+                "total":300,
+                "origin":"mine"
+            },
+            {
+                "id":32,
+                "name":"Bitcoins",
+                "status":"active",
+                "currency":"BTC",
+                "total":12.99,
+                "origin":"shared"
+            }
+        ]
+
+### Sign In [POST /api/users/signin]
+
+Sign in user using username and password. Returns user record with auth_code property. Use this auth_code for signing next API calls.
+
++ Request (application/json)
+
+    + Attributes (object)
+        + username: userlogin (string) - username or email
+        + password: Hahahahahaha (string, required)
+
++ Response 200 (application/json)
+
+    + Body
+
+    {
+        "id": 23, 
+        "email": "example@gmail.com",
+        "login": "userlogin",
+        "is_demo": 0,
+        "auth_code": "017957d841c8f6927c612ea1d6602c3f"
+    }
+
+### Register New User [POST /api/users]
+
+Register new user. Returns user record with auth_code property. Use this auth_code for signing next API calls.
+
++ Request (application/json)
+
+    + Attributes (object)
+        + email: example@example.com (string, required)
+        + login: userlogin (string, required)
+        + type: default (string)
+        + password: lovesecurity (string, required)
+
++ Response 200 (application/json)
+
+    + Body
+
+    {
+        "id": 23, 
+        "email": "example@gmail.com",
+        "login": "userlogin",
+        "is_demo": 0,
+        "auth_code": "017957d841c8f6927c612ea1d6602c3f"
+    }
+
+
+### Fill Demo Account [PUT /api/users]
+
+Fill demo account.
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
+    + Attributes (object)
+        + email: example@example.com (string, required)
+        + login: userlogin (string, required)
+        + password: dolovesecurity (string, required)
+
++ Response 200 (application/json)
+
+    + Body
+
+    {
+        "id": 23, 
+        "email": "example@gmail.com",
+        "login": "userlogin",
+        "is_demo": 0
+    }
+
+### Update User Password [PUT /api/users]
+
+Update user password.
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
+    + Attributes (object)
+        + current_password: lovesecurity (string, required)
+        + password: dolovesecurity (string, required)
+
++ Response 200 (application/json)
+
+    + Body
+
+    {
+        "id": 23, 
+        "email": "example@gmail.com",
+        "login": "userlogin",
+        "is_demo": 0
+    }
+
+### Reset User Password [POST /api/users/restore]
+
+Start reset password procedure. Generate restore code and hash and send message to user's email.
+
++ Request (application/json)
+
+    + Attributes (object)
+        + email: example@example.com (string, required)
+
++ Response 200 (application/json)
+
+    + Body
+
+    true
+
+### Set New User Password [POST /api/users/newpassword]
+
+Update user's password using code and hash generated with 'Reset User Password' API method.
+
++ Request (application/json)
+
+    + Attributes (object)
+        + code: 234234 (string, required)
+        + hash: 345345345 (string, required)
+        + password: dolovesecurity (string, required)
+
++ Response 200 (application/json)
+
+    + Body
+
+    true
+
+
+### Sign Out [POST /api/users/signout]
+
+Signs out current user. And invalidates auth_code.
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
+    + Attributes (object)
+        + username: userlogin (string) - username or email
+        + password: Hahahahahaha (string, required)
+
++ Response 200 (application/json)
+
+    + Body
+
+    true
+
+
+### Remove User Account [POST /api/users/{user_id}/removeaccount]
+
+Start user account remove process. Sends email to user with confirmation code.
+
++ Parameters
+    + user_id (number) - ID of the User in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+    true
+
+
+### Confirm User Account Removal [POST /api/users/{user_id}/removeaccount]
+
+Confirm user account removal.
+
++ Parameters
+    + user_id (number) - ID of the User in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+            
+    + Attributes (object)
+        + code: 223425234 (string, required) - confirmation code
+
++ Response 200 (application/json)
+
+    + Body
+
+    true

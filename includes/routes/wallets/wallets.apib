@@ -1,0 +1,183 @@
+# Group Wallets
+
+### List User Wallets [GET /api/wallets]
+
+Get list of current user's wallets
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+        [
+            {
+                "id":4,
+                "name":"Cash",
+                "status":"active",
+                "currency":"EUR",
+                "total":300,
+                "origin":"mine"
+            },
+            {
+                "id":32,
+                "name":"Bitcoins",
+                "status":"active",
+                "currency":"BTC",
+                "total":12.99,
+                "origin":"shared"
+            }
+        ]
+
+
+### Create New Wallet [POST /api/wallets]
+
+Create new wallet under currently signed in user's account
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
+    + Attributes (object)
+        + name: Somewalletname (string, required)
+        + currency: USD (string, required) - currency identifier. USD, EUR, BTC etc
+
++ Response 200 (application/json)
+
+    + Body
+
+        {
+            "type":"default",
+            "status":"active",
+            "total":0,
+            "id":2100,
+            "name":"Name",
+            "currency":"USD",
+            "user_id":1
+        }
+
+### Get Wallet [GET /api/wallets/{wallet_id}]
+
+Get wallet information
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+        [
+            {
+                "id":4,
+                "name":"Cash",
+                "status":"active",
+                "currency":"EUR",
+                "total":300,
+                "origin":"mine"
+            },
+            {
+                "id":32,
+                "name":"Bitcoins",
+                "status":"active",
+                "currency":"BTC",
+                "total":12.99,
+                "origin":"shared"
+            }
+        ]
+
+### Update Wallet [PUT /api/wallets/{wallet_id}]
+
+Update wallet under currently signed in user's account.
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
+    + Attributes (object)
+        + name: Somewalletname (string)
+        + currency: USD (string) - currency identifier. USD, EUR, BTC etc
+        + status: active (string) - 'active' or 'hidden'
+
++ Response 200 (application/json)
+
+    + Body
+
+        {
+            "type":"default",
+            "status":"active",
+            "total":0,
+            "id":2100,
+            "name":"Name",
+            "currency":"USD",
+            "user_id":1
+        }
+
+
+### Remove Wallet [DELETE /api/wallets/{wallet_id}]
+
+Remove wallet from database. As additional protection, this method removes wallet only if its status == 'hidden'. So you have to call PUT method first and set wallet status to 'hidden' and call DELETE after this.
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+        true
+        
+### List Wallet Goals [GET /api/wallets/{wallet_id}/plans]
+
+Get list of wallet's goals
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+    
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+        [
+            {
+                "id":1,
+                "name":"",
+                "goal_balance":1000,
+                "goal_currency":"USD",
+                "goal_datetime":null,
+                "start_balance":2138.02,
+                "start_currency":"USD",
+                "start_datetime":null,
+                "status":"active",
+                "wallets":  [
+                                {
+                                    "id":1,
+                                    "name":"Sample Bank Account Wallet",
+                                    "total":2138.02
+                                }
+                            ]
+            }
+        ]

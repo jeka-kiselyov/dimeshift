@@ -5,14 +5,6 @@ var api = rfr('includes/api.js');
 
 exports.route = '/api/wallets/:wallet_id/accesses';
 exports.method = 'get';
-exports.docs = {
-	description: "Get list of accesses to wallet",
-	params: {},
-	returns: {
-		description: "Array of access objects.",
-		sample: '[{"id":11,"to_email":"example@gmail.com","wallet_id":4,"original_user_id":1,"to_user_id":null}, {"id":12,"to_email":"example2@gmail.com","wallet_id":4,"original_user_id":1,"to_user_id":88}]'
-	}
-};
 
 exports.handler = function(req, res, next) {
 

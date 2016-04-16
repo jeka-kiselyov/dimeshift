@@ -52,13 +52,32 @@ module.exports = function(grunt) {
           livereload: true,
           debounceDelay: 500
         }
+      },
+      javascript: {
+        files: ['includes/**/*.js'],
+        tasks: "test"
       }
     },
     env: {
       options: {},
       test: {
         NODE_ENV: 'test'
+      },
+      apiary: {
+        APIARY_API_KEY: process.env.DIMESHIFT_APIARY_API_KEY // https://login.apiary.io/tokens
       }
+    },
+    concat: {
+      options: {
+        separator: '\n \n',
+      },
+      dist: {
+        src: ["docs/api.md", "includes/routes/**/*.apib"],
+        dest: 'data/cache/api.apib'
+      }
+    },
+    exec: {
+      publish: ['apiary', 'publish', ['--api-name', 'dimeshift'].join('='), ['--path', 'data/cache/api.apib'].join('=')].join(' ')
     },
     run: {
       test_server: {
@@ -90,9 +109,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-cli');
   grunt.loadNpmTasks('grunt-env');
   grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-contrib-concat');
 
   grunt.registerTask('default', ['concurrent']);
   grunt.registerTask('dev', ['concurrent']);
   grunt.registerTask('test', ['env:test', 'run:test_server', 'mochacli', 'stop:test_server']);
+  grunt.registerTask('apiary', ['env:apiary', 'concat', 'exec:publish']);
 
 };

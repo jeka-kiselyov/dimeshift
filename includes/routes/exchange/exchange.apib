@@ -1,0 +1,21 @@
+# Group Exchange Rates
+
+### Get Exchange Rates [GET /api/exchange/rates]
+
+Get cached exchange rates from OpenExchangeRates (if API key is defined in config files) or from Yahoo FX.
+
++ Response 200 (application/json)
+
+    + Body
+
+    {
+        "base":"USD",
+        "rates":    {
+                        "AED":3.673,
+                        "AFN":68.37,
+                        "ZAR":14.5653,
+                        "ZMK":5189.5,
+                        "ZMW":9.2,
+                        "ZWL":322.355
+                    }
+    }

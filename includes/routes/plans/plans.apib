@@ -1,0 +1,137 @@
+# Group Goals
+
+### List User Goals [GET /api/plans]
+
+Get list of user's goals
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+        [
+            {
+                "id":1,
+                "name":"",
+                "goal_balance":1000,
+                "goal_currency":"USD",
+                "goal_datetime":null,
+                "start_balance":2138.02,
+                "start_currency":"USD",
+                "start_datetime":null,
+                "status":"active",
+                "wallets":  [
+                                {
+                                    "id":1,
+                                    "name":"Sample Bank Account Wallet",
+                                    "total":2138.02
+                                }
+                            ]
+            }
+        ]
+
+### Add New Goal [POST /api/plans]
+
+Create new goal for currently signed in user's account
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
+    + Attributes (object)
+        + name: Somegoalname (string, required) - Goal name.
+        + start_currency: USD (string, required) - currency identifier. USD, EUR, BTC etc
+        + goal_currency: USD (string, required) - currency identifier. USD, EUR, BTC etc
+        + start_balance: 2138.02 (number, required) - Current balance of wallets used in this plan
+        + goal_balance: 1000 (number, required) - Current balance of wallets used in this plan
+        + start_datetime: (number, required) - Current unix timestamp
+        + goal_datetime: (number, required) - Goal unix timestamp
+        + wallets: [12,13] (array, required) - Array of wallets ids for this goal
+
++ Response 200 (application/json)
+
+    + Body
+
+        {
+            "id":1,
+            "name":"",
+            "goal_balance":30,
+            "goal_currency":"USD",
+            "goal_datetime":23423,
+            "start_balance":2138.02,
+            "start_currency":"USD",
+            "start_datetime":22333,
+            "status":"active",
+            "wallets":  [
+                            {
+                                "id":1,
+                                "name":"Sample Bank Account Wallet",
+                                "total":2138.02
+                            }
+                        ]
+        }
+
+### Update Goal [PUT /api/plans/{plan_id}]
+
+Update goal
+
++ Parameters
+    + plan_id (number) - ID of the Plan in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
+    + Attributes (object)
+        + name: Somegoalname (string, required) - Goal name.
+        + goal_currency: USD (string, required) - currency identifier. USD, EUR, BTC etc
+        + goal_balance: 1000 (number, required) - Current balance of wallets used in this plan
+        + goal_datetime: (number, required) - Goal unix timestamp
+        + wallets: [12,13] (array, required) - Array of wallets ids for this goal
+
++ Response 200 (application/json)
+
+    + Body
+
+        {
+            "id":1,
+            "name":"",
+            "goal_balance":30,
+            "goal_currency":"USD",
+            "goal_datetime":23423,
+            "start_balance":2138.02,
+            "start_currency":"USD",
+            "start_datetime":22333,
+            "status":"active",
+            "wallets":  [
+                            {
+                                "id":1,
+                                "name":"Sample Bank Account Wallet",
+                                "total":2138.02
+                            }
+                        ]
+        }
+
+### Remove Goal [DELETE /api/plans/{plan_id}]
+
+Remove goal from database
+
++ Parameters
+    + plan_id (number) - ID of the Plan in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+        true

@@ -5,26 +5,6 @@ var api = rfr('includes/api.js');
 
 exports.route = '/api/wallets';
 exports.method = 'post';
-exports.docs = {
-	description: "Create new wallet under currently signed in user's account",
-	params: {
-		"name": {
-			required: true,
-			description: 'Wallet name',
-			type: 'string'
-		},
-		"currency": {
-			required: true,
-			description: 'Currency identifier. USD, EUR, BTC etc',
-			type: 'string'
-		}
-	},
-	returns: {
-		description: "Wallet object",
-		sample: '{"type":"default","status":"active","total":0,"id":2100,"name":"Name","currency":"USD","user_id":1}'
-	}
-};
-
 
 exports.handler = function(req, res, next) {
 

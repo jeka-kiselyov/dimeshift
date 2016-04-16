@@ -1,6 +1,6 @@
 {
   "name": "dimeshift",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "description": "Webapp to track and manage personal finances",
   "main": "index.js",
   "scripts": {
@@ -29,12 +29,15 @@
     "backbonejs",
     "restify"
   ],
-  "bundledDependencies": ["rfr"],
+  "bundledDependencies": [
+    "rfr"
+  ],
   "dependencies": {
-    "rfr": "^1.2.2",
     "bower": "^1.6.3",
     "clean-css": "^3.4.5",
     "escape-regexp-component": "^1.0.2",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-exec": "^0.4.6",
     "mime": "^1.3.4",
     "money": "^0.2.0",
     "mysql": "^2.9.0",
@@ -44,6 +47,7 @@
     "pg-hstore": "^2.3.2",
     "restify": "^4.0.3",
     "restify-cookies": "^0.1.2",
+    "rfr": "^1.2.2",
     "sequelize": "^3.10.0",
     "sqlite3": "^3.1.1",
     "uglify-js": "^2.4.24",

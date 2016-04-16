@@ -31,7 +31,7 @@ var walk = function(dir, done) {
 walk(__dirname, function(err, results) {
   if (err) throw err;
   results.forEach(function(file) {
-    if (file.indexOf('index.js') == -1) {
+    if (file.indexOf('index.js') == -1 && file.slice(-3) === '.js') {
       var name = file.substr(file.lastIndexOf('/'), file.indexOf('.'));
       var inc = require(file);
       routes.push({

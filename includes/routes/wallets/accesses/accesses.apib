@@ -1,0 +1,81 @@
+# Group Wallet Access
+
+### List Wallet Accesses [GET /api/wallets/{wallet_id}/accesses]
+
+Get list of accesses to wallet
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+        [
+            {
+                "id":11,
+                "to_email":"example@gmail.com",
+                "wallet_id":4,
+                "original_user_id":1,
+                "to_user_id":null
+            },
+            {
+                "id":12,
+                "to_email":"example2@gmail.com",
+                "wallet_id":4,
+                "original_user_id":1,
+                "to_user_id":88
+            }
+        ]
+
+### Add new access to wallet [POST /api/wallets/{wallet_id}/accesses]
+
+Add new access to wallet. User registered(already or later) with to_email will be able to view wallet.
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
+    + Attributes (object)
+        + wallet_id: 1 (number, required) - Wallet ID. Should be the same as in URL param
+        + to_email: example2@gmail.com (string, required) - Email
+
++ Response 200 (application/json)
+
+    + Body
+
+        {
+            "id":12,
+            "to_email":"example2@gmail.com",
+            "wallet_id":4,
+            "original_user_id":1,
+            "to_user_id":88
+        }
+
+### Remove Wallet Access [DELETE /api/wallets/{wallet_id}/accesses/{wallet_access_id}]
+
+Remove access to wallet. Works only if called by original wallet owner.
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+    + wallet_access_id (number) - ID of the WalletAccess in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+        true

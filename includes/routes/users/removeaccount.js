@@ -5,20 +5,6 @@ var api = rfr('includes/api.js');
 
 exports.route = '/api/users/:user_id/removeaccount';
 exports.method = 'post';
-exports.docs = {
-	description: "Remove user",
-	params: {
-		"code": {
-			required: false,
-			description: 'Secure code',
-			type: 'string'
-		}
-	},
-	returns: {
-		description: "True on success",
-		sample: 'true'
-	}
-};
 
 
 exports.handler = function(req, res, next) {

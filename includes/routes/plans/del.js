@@ -5,14 +5,6 @@ var api = rfr('includes/api.js');
 
 exports.route = '/api/plans/:plan_id';
 exports.method = 'del';
-exports.docs = {
-	description: "Remove plan from database.",
-	params: {},
-	returns: {
-		description: "True on success",
-		sample: 'true'
-	}
-};
 
 exports.handler = function(req, res, next) {
 

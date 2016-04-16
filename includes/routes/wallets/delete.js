@@ -5,15 +5,6 @@ var api = rfr('includes/api.js');
 
 exports.route = '/api/wallets/:wallet_id';
 exports.method = 'del';
-exports.docs = {
-	description: "Remove wallet from database. As additional protection, this method removes wallet only if its status == 'hidden'. So you have to call PUT method first and set wallet status to 'hidden' and call DELETE after this.",
-	params: {},
-	returns: {
-		description: "True on success",
-		sample: 'true'
-	}
-};
-
 
 exports.handler = function(req, res, next) {
 
