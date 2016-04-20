@@ -307,7 +307,7 @@ module.exports = function(sequelize, DataTypes) {
 					this.login = login;
 					this.email = email;
 					this.password = password;
-					this.is_demo = false;
+					this.is_demo = 0;
 					this.registration_ip = ip;
 
 					sequelize.db.WalletAccess.checkAccessForNewUser(this);
