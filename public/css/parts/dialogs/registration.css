@@ -1,0 +1,41 @@
+
+.social_signin {
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.registration_dialog h3, .signin_dialog h3 {
+	margin: 0;
+	padding: 0 0 10px 0;
+	color: #333;
+	font-size: 15px;
+	font-weight: normal;
+}
+
+.social_signin_divider {
+	margin: 15px 0 18px 0;
+}
+
+.social_signin_divider_h {
+	float: left; 
+	width: 45%; 
+	overflow: hidden; 
+	height: 11px; 
+	border-bottom: 1px solid #333;
+}
+
+.social_signin_divider_or {
+	float: left; 
+	width: 10%; 
+	overflow: hidden; 
+	height: 20px; 
+	font-size: 16px; 
+	vertical-align: middle; 
+	line-height: 20px; 
+	text-align: center; 
+	color: #333
+}
+
+.social_signin_divider_cl {
+	clear: both;
+}

@@ -46,6 +46,7 @@
 		"./public/vendors/mprogress/build/css/mprogress.css",
 		"./public/vendors/magnific-popup/dist/magnific-popup.css",
 		"./public/vendors/bootstrap/dist/css/bootstrap.min.css",
+		"./public/vendors/font-awesome/css/font-awesome.css",
 		"./public/vendors/bootstrap-tour/build/css/bootstrap-tour.min.css",
 		"./public/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
 		"./public/css/main.css",

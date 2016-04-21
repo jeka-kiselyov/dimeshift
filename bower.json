@@ -24,6 +24,7 @@
     "bootstrap-tour": "~0.10.2",
     "js-xlsx": "~0.8.0",
     "moment": "~2.10.6",
-    "eonasdan-bootstrap-datetimepicker": "^4.17.37"
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37",
+    "font-awesome": "fontawesome#^4.6.1"
   }
 }

@@ -39,6 +39,7 @@
     "grunt-contrib-concat": "^1.0.0",
     "grunt-exec": "^0.4.6",
     "mime": "^1.3.4",
+    "moment": "^2.13.0",
     "money": "^0.2.0",
     "mysql": "^2.9.0",
     "nodemailer": "^1.8.0",
@@ -49,7 +50,7 @@
     "restify-cookies": "^0.1.2",
     "rfr": "^1.2.2",
     "sequelize": "^3.10.0",
-    "sqlite3": "^3.1.1",
+    "sqlite3": "^3.1.3",
     "uglify-js": "^2.4.24",
     "yahoo-currency": "0.0.9"
   },

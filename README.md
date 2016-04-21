@@ -26,7 +26,6 @@ mkdir dimeshift
 cd dimeshift
 git clone https://github.com/jeka-kiselyov/dimeshift.git .
 npm install
-bower install
 ```
 * [Install npm](https://docs.npmjs.com/getting-started/installing-node) if you don't have it.
 * [Install bower](http://bower.io/#install-bower) if you don't have it.

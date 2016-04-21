@@ -2,6 +2,7 @@ var crypto = require('crypto');
 var rfr = require('rfr');
 var demo = rfr('includes/demo.js');
 var mailer = rfr('includes/mailer.js');
+var moment = require('moment');
 
 module.exports = function(sequelize, DataTypes) {
 	var User = sequelize.define('User', {
@@ -307,7 +308,7 @@ module.exports = function(sequelize, DataTypes) {
 					this.login = login;
 					this.email = email;
 					this.password = password;
-					this.is_demo = false;
+					this.is_demo = 0;
 					this.registration_ip = ip;
 
 					sequelize.db.WalletAccess.checkAccessForNewUser(this);
@@ -422,6 +423,133 @@ module.exports = function(sequelize, DataTypes) {
 			},
 			getWalletIfHasAccess: function(wallet_id) {
 				return sequelize.db.WalletAccess.getWalletIfHasAccess(this, wallet_id);
+			},
+			getStats: function(params) {
+				var user = this;
+				var period = params.period || 'week';
+				if (period != 'week' && period != 'month' && period != 'year')
+					period = 'week';
+				var utcOffset = params.utcOffset || 0;
+				var wallet_id = params.wallet_id || null;
+
+				return new sequelize.Promise(function(resolve, reject) {
+					var now = moment();
+					now.utcOffset(utcOffset);
+
+					var retPeriods = [];
+					var walletsCurrencies = {};
+
+					var lowestTimestamp = now.unix();
+					var highestTimestamp = now.unix();
+
+					var count = 7; 
+					if (period == 'month')
+						count = 31;
+					else if (period == 'year')
+						count = 12;
+
+					for (var i = 0; i < count; i++)
+					{
+						var newPeriod = {
+							month: now.month() + 1, 
+							year: now.year(),
+							utcOffset: now.format('Z')
+						};
+
+						if (period == 'year')
+							now.startOf('month');
+						else {
+							newPeriod.day = now.date();
+							now.startOf('day');
+						}
+						newPeriod.fromTimestamp = now.unix(); // >=
+						if (newPeriod.fromTimestamp < lowestTimestamp)
+							lowestTimestamp = newPeriod.fromTimestamp;
+						if (period == 'year')
+							now.endOf('month');
+						else
+							now.endOf('day');
+						newPeriod.toTimestamp = now.unix(); // <=
+						if (newPeriod.toTimestamp > highestTimestamp)
+							highestTimestamp = newPeriod.toTimestamp;
+
+						if (period == 'year')
+							now.subtract(1, 'months');
+						else
+							now.subtract(1, 'days');
+
+						retPeriods.push(newPeriod);
+					}
+
+
+					user.getWallets().then(function(wallets){
+						var foundWallet = false;
+						if (wallets) {
+							for (var k in wallets) {
+								if ((wallet_id && wallets[k].id == wallet_id) || !wallet_id)
+								{
+									walletsCurrencies[wallets[k].id] = wallets[k].currency;
+									foundWallet = true;
+								}
+							}
+						}
+
+						if (!foundWallet)
+							return resolve(null);
+
+						var allCurrencies = [];
+						for (k in walletsCurrencies)
+							if (allCurrencies.indexOf(walletsCurrencies[k]) == -1)
+								allCurrencies.push(walletsCurrencies[k]);
+
+						for (k in retPeriods) {
+							retPeriods[k].stats = {};
+							for (var ak in allCurrencies)
+								retPeriods[k].stats[allCurrencies[ak]] = {
+									expense: 0,
+									profit: 0
+								}
+						};
+
+						var where = {
+								user_id: user.id,
+								datetime: {
+									$lte: highestTimestamp,
+									$gte: lowestTimestamp
+								}
+							};
+						if (wallet_id > 0)
+							where.wallet_id = wallet_id;
+
+						sequelize.db.Transaction.findAll({
+							where: where
+						}).then(function(transactions){
+							if (transactions)
+							for (var kt in transactions)
+							for (var kp in retPeriods)
+							{
+								if (transactions[kt].datetime >= retPeriods[kp].fromTimestamp && transactions[kt].datetime <= retPeriods[kp].toTimestamp)
+								{
+									var currency = walletsCurrencies[transactions[kt].wallet_id];
+									if (transactions[kt].amount < 0)
+										retPeriods[kp].stats[currency].expense += Math.abs(transactions[kt].amount);
+									else
+										retPeriods[kp].stats[currency].profit += Math.abs(transactions[kt].amount);
+								}
+							}
+
+							for (var k in retPeriods)
+							{
+								delete retPeriods[k].fromTimestamp;
+								delete retPeriods[k].toTimestamp;
+							}
+
+							resolve(retPeriods);
+						});
+					});
+
+
+				});
 			}
 		}
 	});

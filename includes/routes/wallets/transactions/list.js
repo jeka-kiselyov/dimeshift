@@ -28,7 +28,8 @@ exports.handler = function(req, res, next) {
 							$lte: to,
 							$gt: from
 						}
-					}
+					},
+					order: [['datetime', 'DESC']]
 				});
 			}).then(function(transactions) {
 				res.send(transactions);

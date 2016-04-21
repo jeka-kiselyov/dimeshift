@@ -4,7 +4,17 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="dialog_label">{t}Sign In{/t}</h4>
       </div>
-      <div class="modal-body" style="padding-bottom: 0;">
+      <div class="modal-body signin_dialog" style="padding-bottom: 0;">
+<!-- 
+      <h3>{t}Sign In With{/t}</h3>
+
+      <div class="social_signin">
+        <a href="#" class="btn btn-social btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
+        <a href="#" class="btn btn-social btn-google"><span class="fa fa-google"></span> Google</a>
+        <a href="#" class="btn btn-social btn-twitter"><span class="fa fa-twitter"></span> Twitter</a>
+      </div>
+
+      <h3>{t}Or Sign In With Your DimeShift Account{/t}</h3> -->
 
       <form method="post" action="{$settings->site_path}/user/signin" role="form" id="signin_modal_form">
       <fieldset>

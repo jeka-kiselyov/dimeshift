@@ -1,0 +1,212 @@
+# Group Wallet Statistics
+
+### Get Recent Week Wallet Statistics [GET /api/wallets/{wallet_id}/stats/week]
+
+Get recent week user statistics
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+
++ Request (application/json)
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+    [ 
+        {
+            month: 4,
+            year: 2016,
+            day: 21,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        },
+        {
+            month: 4,
+            year: 2016,
+            day: 20,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        },
+        {
+            month: 4,
+            year: 2016,
+            day: 19,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        },
+        {
+            month: 4,
+            year: 2016,
+            day: 18,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        },
+        {
+            month: 4,
+            year: 2016,
+            day: 17,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        },
+        {
+            month: 4,
+            year: 2016,
+            day: 16,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        },
+        {
+            month: 4,
+            year: 2016,
+            day: 15,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        }
+    ]
+
+
+### Get Recent Month Wallet Statistics [GET /api/wallets/{wallet_id}/stats/month]
+
+Get recent month wallet statistics
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+    [ 
+        {
+            month: 4,
+            year: 2016,
+            day: 21,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        },
+        {
+            month: 3,
+            year: 2016,
+            day: 22,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        }
+    ]
+
+
+
+### Get Recent Year Wallet Statistics [GET /api/wallets/{wallet_id}/stats/year]
+
+Get recent year wallet statistics
+
++ Parameters
+    + wallet_id (number) - ID of the Wallet in the form of an integer
+
++ Request (application/json)
+
+    + Headers
+            authCode: 421a5bbd0624efebf12b2cbe5454b753
+
++ Response 200 (application/json)
+
+    + Body
+
+    [ 
+        {
+            month: 4,
+            year: 2016,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        },
+        {
+            month: 2,
+            year: 2016,
+            utcOffset: '-03:00',
+            stats:  
+            { 
+                USD: 
+                { 
+                    expense: 90, 
+                    profit: 11.99 
+                }
+            } 
+        }
+    ]
