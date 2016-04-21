@@ -8,9 +8,8 @@ exports.method = 'post';
 
 exports.handler = function(req, res, next) {
 
-	var body = req.body || {};
-	var name = body.name || '';
-	var currency = body.currency || 'USD';
+	var name = api.getParam(req, 'name', '');
+	var currency = api.getParam(req, 'currency', 'USD');
 
 	api.requireSignedIn(req, function(user) {
 		user.insertWallet({

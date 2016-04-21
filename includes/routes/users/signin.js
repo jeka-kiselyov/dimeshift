@@ -1,6 +1,7 @@
 var rfr = require('rfr');
 var db = rfr('includes/models');
 var errors = rfr('includes/errors.js');
+var api = rfr('includes/api.js');
 
 exports.route = '/api/users/signin';
 exports.method = 'post';
@@ -9,10 +10,10 @@ exports.handler = function(req, res, next) {
 
 	res.setHeader('Access-Control-Allow-Origin', '*');
 
-	var body = req.body || {};
-	var username = req.params.username || body.username || '';
-	var password = req.params.password || body.password || '';
-
+	var username = api.getParam(req, 'username', '');
+	var password = api.getParam(req, 'password', '');
+	console.log(username);
+	console.log(password);
 	var gotUser = null;
 
 	db.User.signIn({

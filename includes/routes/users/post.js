@@ -10,10 +10,10 @@ exports.handler = function(req, res, next) {
 
 	var body = req.body || {};
 
-	var login = body.login || '';
-	var type = body.type || 'default';
-	var password = body.password || '';
-	var email = body.email || '';
+	var login = api.getParam(req, 'login', '');
+	var type = api.getParam(req, 'type', 'default');
+	var password = api.getParam(req, 'password', '');
+	var email = api.getParam(req, 'email', '');
 
 	var ip = api.getVisitorIp(req);
 

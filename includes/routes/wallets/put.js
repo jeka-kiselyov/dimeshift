@@ -9,10 +9,10 @@ exports.method = 'put';
 exports.handler = function(req, res, next) {
 
 	var wallet_id = req.params.wallet_id || 0;
-	var body = req.body || {};
-	var name = body.name || null;
-	var currency = body.currency || null;
-	var status = body.status || null;
+	
+	var name = api.getParam(req, 'name', null);
+	var currency = api.getParam(req, 'currency', null);
+	var status = api.getParam(req, 'status', null);
 
 	api.requireSignedIn(req, function(user) {
 		db.Wallet.findOne({

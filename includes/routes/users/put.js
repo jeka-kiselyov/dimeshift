@@ -10,14 +10,13 @@ exports.handler = function(req, res, next) {
 
 	var user_id = req.params.user_id;
 
-	var body = req.body || {};
-	var password = body.password || null;
-	var email = body.email || null;
-	var login = body.login || null;
+	var password = api.getParam(req, 'login', null);
+	var email = api.getParam(req, 'email', null);
+	var login = api.getParam(req, 'login', null);
 
+	var current_password = api.getParam(req, 'current_password', null);
+	
 	var ip = api.getVisitorIp(req);
-
-	var current_password = body.current_password || null;
 
 	api.requireSignedIn(req, function(user) {
 

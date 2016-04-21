@@ -10,7 +10,7 @@ exports.method = 'post';
 exports.handler = function(req, res, next) {
 
 	var user_id = parseInt(req.params.user_id || 0, 10);
-	var code = req.params.code || null;
+	var code = api.getParam(req, 'code', null);
 
 	api.requireSignedIn(req, function(user) {
 		if (user_id != user.id)

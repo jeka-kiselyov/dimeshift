@@ -8,6 +8,10 @@ Get recent week user statistics
     + wallet_id (number) - ID of the Wallet in the form of an integer
 
 + Request (application/json)
+
+    + Attributes (object)
+        + utcoffset: (number) - Timezone offset. In hours or minutes. http://momentjs.com/docs/#/manipulating/utc-offset/
+        
     + Headers
             authCode: 421a5bbd0624efebf12b2cbe5454b753
 
@@ -126,6 +130,9 @@ Get recent month wallet statistics
 
 + Request (application/json)
 
+    + Attributes (object)
+        + utcoffset: (number) - Timezone offset. In hours or minutes. http://momentjs.com/docs/#/manipulating/utc-offset/
+        
     + Headers
             authCode: 421a5bbd0624efebf12b2cbe5454b753
 
@@ -175,6 +182,9 @@ Get recent year wallet statistics
 
 + Request (application/json)
 
+    + Attributes (object)
+        + utcoffset: (number) - Timezone offset. In hours or minutes. http://momentjs.com/docs/#/manipulating/utc-offset/
+        
     + Headers
             authCode: 421a5bbd0624efebf12b2cbe5454b753
 

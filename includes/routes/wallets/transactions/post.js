@@ -9,11 +9,12 @@ exports.method = 'post';
 exports.handler = function(req, res, next) {
 
 	var body = req.body || {};
-	var wallet_id = parseInt(body.wallet_id, 10) || 0;
-	var amount = parseFloat(body.amount, 10) || 0;
-	var description = body.description || '';
-	var subtype = body.subtype || 'confirmed';
-	var datetime = body.datetime || null;
+	var wallet_id = api.getParam(req, 'wallet_id', 0);
+	var amount = api.getParam(req, 'amount', 0);
+	var description = api.getParam(req, 'description', '');
+	var subtype = api.getParam(req, 'subtype', 'confirmed');
+
+	var datetime = api.getParam(req, 'datetime', null);
 
 	api.requireSignedIn(req, function(user) {
 		db.Wallet.findOne({

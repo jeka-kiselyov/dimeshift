@@ -49,9 +49,11 @@ exports.geti18njson = function(code) {
 };
 
 var getParam = function(req, name, def) {
-	if (typeof(req.body) === 'undefined' || typeof(req.body[name]) === 'undefined')
-		return def;
-	else
+	if (typeof(req.body) !== 'undefined' && typeof(req.body[name]) !== 'undefined')
 		return req.body[name];
+	else if (typeof(req.params) !== 'undefined' && typeof(req.params[name]) !== 'undefined')
+		return req.params[name];
+	else
+		return def;
 };
 exports.getParam = getParam;

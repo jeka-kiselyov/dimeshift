@@ -139,8 +139,7 @@ describe('API server for statistics', function() {
 
 			expect(data.body[0].stats[wallet_2_currency].expense).to.equal(0);
 			expect(data.body[0].stats[wallet_2_currency].profit).to.equal(198);
-console.log(data.body);
-console.log(data.body[0]);
+			
 			done();
 		});
 	});

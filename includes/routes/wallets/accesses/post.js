@@ -7,9 +7,9 @@ exports.route = '/api/wallets/:wallet_id/accesses';
 exports.method = 'post';
 
 exports.handler = function(req, res, next) {
-	var body = req.body || {};
-	var wallet_id = parseInt(body.wallet_id, 10) || 0;
-	var to_email = body.to_email || '';
+	
+	var wallet_id = parseInt(api.getParam(req, 'wallet_id', 0), 10);
+	var to_email = api.getParam(req, 'to_email', '');
 
 	api.requireSignedIn(req, function(user) {
 		db.Wallet.findOne({

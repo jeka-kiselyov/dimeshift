@@ -1,5 +1,6 @@
 var rfr = require('rfr');
 var db = rfr('includes/models');
+var api = rfr('includes/api.js');
 
 exports.route = '/api/users/signout';
 exports.method = 'post';
