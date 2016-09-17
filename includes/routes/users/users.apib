@@ -105,10 +105,13 @@ Register new user. Returns user record with auth_code property. Use this auth_co
     }
 
 
-### Fill Demo Account [PUT /api/users]
+### Fill Demo Account [PUT /api/users/:user_id]
 
 Fill demo account.
 
++ Parameters
+    + user_id (number) - ID of the User in the form of an integer
+    
 + Request (application/json)
 
     + Headers
@@ -130,9 +133,12 @@ Fill demo account.
         "is_demo": 0
     }
 
-### Update User Password [PUT /api/users]
+### Update User Password [PUT /api/users/:user_id]
 
 Update user password.
+
++ Parameters
+    + user_id (number) - ID of the User in the form of an integer
 
 + Request (application/json)
 
