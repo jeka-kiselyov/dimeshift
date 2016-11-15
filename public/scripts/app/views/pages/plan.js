@@ -63,17 +63,20 @@ App.Views.Pages.Plan = App.Views.Abstract.Page.extend({
 			}
 		}
 
-		todaysPlan = this.model.stats[todayI].allowedToSpend;
-		todaysAlreadyTotal = this.model.stats[todayI].profitsTotal - this.model.stats[todayI].expensesTotal;
-		if (hasTomorrow) {
-			tomorrowPlan = this.model.stats[todayI+1].allowedToSpend;
-			if (hasFuture) {
-				futureMaxPlan = this.model.stats[this.model.stats.length - 1].allowedToSpend; 
-				futureEndDate = this.model.stats[this.model.stats.length - 1].date.unix;
+		if (hasToday) {
+			todaysPlan = this.model.stats[todayI].allowedToSpend;
+			todaysAlreadyTotal = this.model.stats[todayI].profitsTotal - this.model.stats[todayI].expensesTotal;
+			if (hasTomorrow) {
+				tomorrowPlan = this.model.stats[todayI+1].allowedToSpend;
+				if (hasFuture) {
+					futureMaxPlan = this.model.stats[this.model.stats.length - 1].allowedToSpend; 
+					futureEndDate = this.model.stats[this.model.stats.length - 1].date.unix;
+				}
+			} else {
+				todaysDif = todaysPlan - todaysAlreadyTotal;
 			}
-		} else {
-			todaysDif = todaysPlan - todaysAlreadyTotal;
 		}
+
 
 		return {
 			hasToday: hasToday,
