@@ -30,6 +30,50 @@
 						<a class="btn btn-default" href="#" role="button" id="reload_stats_button" data-loading-text="{t}Loading...{/t}"><span class="glyphicon glyphicon-refresh"></span> {tp}Refresh{/tp}</a>
 					</div>
 
+					<p class="text-center" style="margin-top: 10px;" id="advice_today">
+						{if $adviceData.hasToday}
+							{if $adviceData.todaysPlan < 0}
+								<span>Your goal for today is to spend at most {if $plan->goal_currency == 'USD'}${/if}{$adviceData.todaysPlan|rational}.<sup>{$adviceData.todaysPlan|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if}</span>
+							{else}
+								<span>Your goal for today is to earn at least {if $plan->goal_currency == 'USD'}${/if}{$adviceData.todaysPlan|rational}.<sup>{$adviceData.todaysPlan|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if}</span>
+							{/if}
+							{if $adviceData.todaysAlreadyTotal != 0}
+								{if $adviceData.todaysAlreadyTotal < 0}
+									<span>At this point, you've spent {if $plan->goal_currency == 'USD'}${/if}{$adviceData.todaysAlreadyTotal|rational}.<sup>{$adviceData.todaysAlreadyTotal|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if} today already.</span>
+								{else}
+									<span>At this point, you've already earned {if $plan->goal_currency == 'USD'}${/if}{$adviceData.todaysAlreadyTotal|rational}.<sup>{$adviceData.todaysAlreadyTotal|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if} today.</span>
+								{/if}
+							{else}
+								{if $adviceData.todaysPlan < 0}
+									<span>You have no spendings for today.</span>
+								{else}
+									<span>You've earned nothing today.</span>
+								{/if}
+							{/if}
+							{if $adviceData.hasTomorrow}
+								{if $adviceData.tomorrowPlan < 0}
+									<span>Which means you can spend up to {if $plan->goal_currency == 'USD'}${/if}{$adviceData.tomorrowPlan|rational}.<sup>{$adviceData.tomorrowPlan|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if} tomorrow.</span>
+								{else}
+									<span>Which means you have to earn at least {if $plan->goal_currency == 'USD'}${/if}{$adviceData.tomorrowPlan|rational}.<sup>{$adviceData.tomorrowPlan|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if} tomorrow.</span>
+								{/if}
+							{else}
+								{if $adviceData.todaysDif < 0}
+									<span>Today is the last day of your plan, be sure to spend no more than {if $plan->goal_currency == 'USD'}${/if}{$adviceData.todaysDif|rational}.<sup>{$adviceData.todaysDif|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if} more to achieve success with this goal.</span>
+								{else}
+									<span>Today is the last day of your plan, be sure to earn {if $plan->goal_currency == 'USD'}${/if}{$adviceData.todaysDif|rational}.<sup>{$adviceData.todaysDif|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if} more to achieve success with this goal.</span>
+								{/if}
+
+							{/if}
+							{if $adviceData.hasFuture}
+								{if $adviceData.futureMaxPlan < 0}
+									<span>Spend less than DimeShift suggests you each day and you will have more money available for spending each day. Up&nbsp;to&nbsp;{if $plan->goal_currency == 'USD'}${/if}{$adviceData.futureMaxPlan|rational}.<sup>{$adviceData.futureMaxPlan|decimal}</sup>{if $plan->goal_currency != 'USD'} {$plan->goal_currency}{/if}&nbsp;on&nbsp;{$adviceData.futureEndDate|wallet_date}!</span>
+								{else}
+									<span>Of course, feel free to earn more than DimeShift suggests you each day.</span>
+								{/if}
+							{/if}
+						{/if}
+					</p>
+
 				</div>
 			</div>
 

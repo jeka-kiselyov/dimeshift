@@ -292,6 +292,8 @@ App.Views.Pages.Plans = App.Views.Abstract.Page.extend({
 			$('span', element).removeClass('glyphicon-unchecked').addClass('glyphicon-check');
 			$('#button_step1_next').prop('disabled', false);
 		}
+
+		return false;
 	},
 	step1Next: function() {
 		var that = this;
