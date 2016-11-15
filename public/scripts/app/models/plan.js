@@ -64,6 +64,8 @@ App.Models.Plan = Backbone.Model.extend({
 		var daysCount = Math.ceil((this.get('goal_datetime') - this.get('start_datetime')) / (24 * 60 * 60));
 		this.stats = [];
 
+		var lastDayDate = new Date(1000 * this.get('goal_datetime'));
+
 		for (var i = 0; i < daysCount; i++) {
 			var dayStat = {};
 			dayStat.date = {};
@@ -80,7 +82,10 @@ App.Models.Plan = Backbone.Model.extend({
 			dayStat.profitsTotal = 0;
 			dayStat.dayTotal = 0;
 
-			this.stats.push(dayStat);
+			if (dayStat.date.day != lastDayDate.getDate() || dayStat.date.month != lastDayDate.getMonth() + 1 || dayStat.date.year != lastDayDate.getFullYear()) {
+				// push stats othen than for the last day to stats array
+				this.stats.push(dayStat);				
+			}
 		}
 
 		this.once('walletsloadded', function() {
