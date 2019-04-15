@@ -145,6 +145,7 @@ function serve(name) {
 
         files.forEach(function(file) {
             file = file.split(path.join(rfr.root, '/public/')).join('/').split('./public/').join('/').split('public/').join('/');
+            file = file.split("\\").join("/");
             __raw += "inc_js_file(\"" + file + "\");\n";
         })
     }
