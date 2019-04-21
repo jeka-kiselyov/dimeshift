@@ -51,7 +51,7 @@ var startServer = function(options, callback) {
 	server.get('/scripts/*', servers.public_server);
 	server.get('/vendors/*', servers.public_server);
 	server.get('/resources/js.js', servers.minify_server('javascript'));
-	server.get('/resources/css.css', servers.minify_server('css'));
+	server.get('/css.css', servers.minify_server('css'));
 
 	// App index html file
 	for (var k in pages) {

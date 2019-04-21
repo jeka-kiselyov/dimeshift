@@ -154,9 +154,17 @@ function serve(name) {
 
         if (type == 'javascript') {
             console.log('Minify javascript files...');
-            var result = UglifyJS.minify(files, {
+
+            var code = {};
+            for (var fName of files) {
+                code[fName] = fs.readFileSync(fName, "utf8");
+            }
+
+            var result = UglifyJS.minify(code, {
                 compress: false
             });
+
+            // console.log(files);
 
             __result = result.code;
 
@@ -181,8 +189,8 @@ function serve(name) {
 
             console.log('Minify css files...');
             new CleanCSS({
-                root: path.join(rfr.root, 'public'),
-                relativeTo: path.join(rfr.root, 'public')
+                rebaseTo: path.join(rfr.root, 'public/'),
+                // relativeTo: path.join(rfr.root, 'public')
             }).minify(files, function(error, minified) {
                 __result = minified.styles;
                 __raw = __result;
