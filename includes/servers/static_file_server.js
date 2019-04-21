@@ -34,7 +34,7 @@ function serveStatic(opts) {
             });
             res.set('Content-Length', stats.size);
 
-            var mimeType = mime.lookup(file);
+            var mimeType = mime.getType(file);
             if (mimeType == 'application/vnd.groove-tool-template')
                 mimeType = 'text/html';
 

@@ -3,7 +3,6 @@ var oxr = require('open-exchange-rates');
 var fx = require('money');
 var fs = require('fs');
 var rfr = require('rfr');
-var yahoo_fx = require('yahoo-currency');
 var config = rfr('includes/config.js');
 
 var openExchangeRatesAppId = null;
@@ -21,8 +20,11 @@ var cache_filename = path.join(__dirname, '..', 'data/cache/exchangerates.json')
 var cached = null;
 
 var reloadRates = function(callback) {
-	if (!openExchangeRatesAppId)
-		return reloadRatesYahoo(callback);
+	if (!openExchangeRatesAppId) {
+		console.error("Please specify openexchangerates -> app_id in config.json to enable currency conversion");
+		if (typeof(callback) === 'function')
+			callback(cached);
+	}
 
 	oxr.latest(function() {
 		cached = {};
@@ -35,32 +37,6 @@ var reloadRates = function(callback) {
 	});
 };
 
-var reloadRatesYahoo = function(callback) {
-	var currencies = rfr('config/currencies.json');
-	var pairs = [];
-	for (var k in currencies)
-		pairs.push('USD' + k);
-
-	yahoo_fx.rate(pairs).then(function(data) {
-		cached = {};
-		cached.base = 'USD';
-		cached.rates = {};
-
-		for (var k in data) {
-			var value = parseFloat(data[k], 10);
-			if (isNaN(value) || value == 0)
-				value = 1;
-			var currency = k.split('USD').join('');
-			if (currency)
-				cached.rates[currency] = value;
-		}
-
-		fs.writeFile(cache_filename, JSON.stringify(cached, null, 2));
-
-		if (typeof(callback) === 'function')
-			callback(cached);
-	});
-};
 
 var reloadIfNeeded = function(callback) {
 	fs.stat(cache_filename, function(err, stats) {

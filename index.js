@@ -29,8 +29,8 @@ var startServer = function(options, callback) {
 		throw reason;
 	});
 	server.use(CookieParser.parse);
-	server.use(restify.queryParser());
-	server.use(restify.bodyParser());
+	server.use(restify.plugins.queryParser());
+	server.use(restify.plugins.bodyParser());
 
 	// API routes
 	routes(function(routes) {
@@ -41,15 +41,15 @@ var startServer = function(options, callback) {
 
 	// Templates
 	var templatesDirectory = path.join(rfr.root, './public');
-	server.get(/jstemplates\/?.*/, servers.static_file_server({
+	server.get('/jstemplates/*', servers.static_file_server({
 		directory: templatesDirectory,
 		suffix: '.tpl'
 	}));
 
 	// Static files and css/js minification
-	server.get(/images\/?.*/, servers.images_server());
-	server.get(/\/scripts\/?.*/, servers.public_server);
-	server.get(/\/vendors\/?.*/, servers.public_server);
+	server.get('/images/*', servers.images_server());
+	server.get('/scripts/*', servers.public_server);
+	server.get('/vendors/*', servers.public_server);
 	server.get('/resources/js.js', servers.minify_server('javascript'));
 	server.get('/resources/css.css', servers.minify_server('css'));
 

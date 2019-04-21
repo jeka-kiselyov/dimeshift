@@ -5,7 +5,7 @@ function serveIndex(opts) {
 	var indexFile = opts.indexFile || 'index.html';
 	var indexDirectory = opts.indexDirectory || './public';
 
-	var index = restify.serveStatic({
+	var index = restify.plugins.serveStatic({
 		directory: indexDirectory,
 		file: indexFile
 	});

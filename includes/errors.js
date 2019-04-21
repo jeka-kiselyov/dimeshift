@@ -1,8 +1,9 @@
 var restify = require('restify');
 var util = require('util');
+var restifyErrors = require('restify-errors');
 
 function ValidationError(err) {
-  restify.RestError.call(this, {
+  restifyErrors.RestError.call(this, {
     restCode: 'ValidationError',
     statusCode: 666,
     message: [],
@@ -17,11 +18,11 @@ function ValidationError(err) {
     this.message.push("" + err);
   }
 };
-util.inherits(ValidationError, restify.RestError);
+util.inherits(ValidationError, restifyErrors.RestError);
 
 
 function HaveNoRightsError() {
-  restify.RestError.call(this, {
+  restifyErrors.RestError.call(this, {
     restCode: 'HaveNoRightsError',
     statusCode: 6969,
     message: 'You have no rights to call this API method with this parameters. Try to check auth hash',
@@ -29,10 +30,10 @@ function HaveNoRightsError() {
   });
   this.name = 'HaveNoRightsError';
 };
-util.inherits(HaveNoRightsError, restify.RestError);
+util.inherits(HaveNoRightsError, restifyErrors.RestError);
 
 function NotFoundError() {
-  restify.RestError.call(this, {
+  restifyErrors.RestError.call(this, {
     restCode: 'NotFoundError',
     statusCode: 404,
     message: 'Nothing is found. Please check item id',
@@ -40,7 +41,7 @@ function NotFoundError() {
   });
   this.name = 'NotFoundError';
 };
-util.inherits(NotFoundError, restify.RestError);
+util.inherits(NotFoundError, restifyErrors.RestError);
 
 exports.ValidationError = ValidationError;
 exports.HaveNoRightsError = HaveNoRightsError;

@@ -2,7 +2,7 @@
   "development": {
     "port": 8080,
     "database": {
-      "dialect": "mysql",
+      "dialect": "sqlite",
       "username": "root",
       "password": "root",
       "database": "walletjs",
@@ -16,8 +16,8 @@
       "port": "465"
     },
     "openexchangerates": {
-      "use_env_variable": true,
-      "app_id": "OPENEXCHANGERATES_APP_IeD",
+      "use_env_variable": false,
+      "app_id": "OPENEXCHANGERATES_APP_ID",
       "update_interval": 86400
     },
     "default_from_email": "noreply@dimeshift.com",

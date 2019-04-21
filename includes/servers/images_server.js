@@ -17,7 +17,7 @@ function serveImage(opts) {
         }
 
         var vsize = stats.size;
-        var vmime = mime.lookup(file);
+        var vmime = mime.getType(file);
         var vmtime = stats.mtime;
 
         __cache[file] = {
