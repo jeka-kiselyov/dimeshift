@@ -48,7 +48,7 @@
     "mysql2": "^1.6.5",
     "nodemailer": "^6.1.1",
     "open-exchange-rates": "^0.3.0",
-    "pg": "^7.10.0",
+    "pg": "6.4.1",
     "pg-hstore": "^2.3.2",
     "request": "^2.88.0",
     "restify": "^8.3.0",
