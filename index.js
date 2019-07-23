@@ -13,6 +13,7 @@ var startServer = function(options, callback) {
 
 	var server = restify.createServer({
 		name: 'DimeShift',
+		handleUncaughtExceptions: true
 	});
 
 	// Server settings
