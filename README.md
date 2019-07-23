@@ -6,7 +6,7 @@
 
 Demo:
 ----
- [DimeShift](http://dimeshift.com/)
+ [DimeShift](https://dimeshift.com/)
 
 Desktop Application:
 ----
