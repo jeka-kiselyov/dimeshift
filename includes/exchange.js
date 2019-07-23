@@ -30,10 +30,10 @@ var reloadRates = function(callback) {
 		cached = {};
 		cached.rates = oxr.rates;
 		cached.base = oxr.base;
-		fs.writeFile(cache_filename, JSON.stringify(cached, null, 2));
-
-		if (typeof(callback) === 'function')
-			callback(cached);
+		fs.writeFile(cache_filename, JSON.stringify(cached, null, 2), function(){
+			if (typeof(callback) === 'function')
+				callback(cached);
+		});
 	});
 };
 

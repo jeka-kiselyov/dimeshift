@@ -176,9 +176,9 @@ function serve(name) {
                 console.log('Minify javascript files. Done.');
                 __gzip = res;
 
-                fs.writeFile(cachePath.cache, __result);
-                fs.writeFile(cachePath.gzip, __gzip);
-                fs.writeFile(cachePath.raw, __raw);
+                fs.writeFileSync(cachePath.cache, __result);
+                fs.writeFileSync(cachePath.gzip, __gzip);
+                fs.writeFileSync(cachePath.raw, __raw);
 
                 if (typeof callback === 'function')
                     callback();
@@ -199,9 +199,9 @@ function serve(name) {
                 zlib.gzip(buf, function(_, res) {
                     __gzip = res;
 
-                    fs.writeFile(cachePath.cache, __result);
-                    fs.writeFile(cachePath.raw, __raw);
-                    fs.writeFile(cachePath.gzip, __gzip);
+                    fs.writeFileSync(cachePath.cache, __result);
+                    fs.writeFileSync(cachePath.raw, __raw);
+                    fs.writeFileSync(cachePath.gzip, __gzip);
 
                     console.log('Minify css files. Done.');
                     if (typeof callback === 'function')
