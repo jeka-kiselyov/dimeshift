@@ -55,7 +55,7 @@
     "restify-cookies": "^0.2.5",
     "restify-errors": "^7.0.0",
     "rfr": "^1.2.2",
-    "sequelize": "^3.10.0",
+    "sequelize": "^6.3.5",
     "sqlite3": "^4.0.9",
     "uglify-js": "^3.5.6"
   },
